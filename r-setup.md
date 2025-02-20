@@ -90,7 +90,7 @@ pie(
 ```
 
 <div class="figure" style="text-align: center">
-<img src="fig/01-r-setup-rendered-pyramid-1.png" alt="pie chart illusion of a pyramid"  />
+<img src="fig/r-setup-rendered-pyramid-1.png" alt="pie chart illusion of a pyramid"  />
 <p class="caption">Sun arise each and every morning</p>
 </div>
 Or you can use pandoc markdown for static figures with the following syntax:
