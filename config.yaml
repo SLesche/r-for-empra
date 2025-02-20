@@ -65,6 +65,7 @@ contact: 'sven.lesche@psychologie.uni-heidelberg.de'
 
 # Order of episodes in your lesson
 episodes: 
+- 01-r-setup.Rmd
 - introduction.Rmd
 - packages.Rmd
 
