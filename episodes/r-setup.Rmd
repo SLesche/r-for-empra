@@ -42,6 +42,7 @@ When you first open RStudio, you will be greeted by three panels:
   * Environment/History (tabbed in upper right)
   * Files/Plots/Packages/Help/Viewer (tabbed in lower right)
 
+![R Studio Layout with three panes: Console, Environment and Plots](fig/rstudio_layout_screenshot.jpg){alt='Screenshot of the RStudio program.'}
 Once you open files, such as R scripts, an editor panel will also open
 in the top left.
 
@@ -92,7 +93,7 @@ print loop": you type in commands, R tries to execute them, and then returns a r
 
 The simplest thing you could do with R is do arithmetic:
 
-```{r eval=FALSE}
+```{r}
 1 + 100
 ```
 
