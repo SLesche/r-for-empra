@@ -42,6 +42,7 @@ When you first open RStudio, you will be greeted by three panels:
   * Environment/History (tabbed in upper right)
   * Files/Plots/Packages/Help/Viewer (tabbed in lower right)
 
+![R Studio Layout with three panes: Console, Environment and Plots](fig/rstudio_layout_screenshot.jpg){alt='Screenshot of the RStudio program.'}
 Once you open files, such as R scripts, an editor panel will also open
 in the top left.
 
@@ -95,6 +96,10 @@ The simplest thing you could do with R is do arithmetic:
 
 ``` r
 1 + 100
+```
+
+``` output
+[1] 101
 ```
 
 And R will print out the answer, with a preceding "[1]". Don't worry about this
@@ -535,7 +540,7 @@ function (name, pos = -1L, envir = as.environment(pos), all.names = FALSE,
     }
     else all.names
 }
-<bytecode: 0x55acc0bacd60>
+<bytecode: 0x563ddfbc0d60>
 <environment: namespace:base>
 ```
 
