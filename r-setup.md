@@ -100,11 +100,7 @@ The simplest thing you could do with R is do arithmetic:
 
 
 ``` r
-1 + 100
-```
-
-``` output
-[1] 101
+> 1 + 100
 ```
 
 And R will print out the answer, with a preceding "[1]". Don't worry about this
@@ -114,13 +110,7 @@ If you type in an incomplete command, R will wait for you to complete it:
 
 
 ``` r
-1 +
-```
-
-``` error
-Error in parse(text = input): <text>:2:0: unexpected end of input
-1: 1 +
-   ^
+> 1 +
 ```
 
 ```output
@@ -536,7 +526,7 @@ function (name, pos = -1L, envir = as.environment(pos), all.names = FALSE,
     }
     else all.names
 }
-<bytecode: 0x55d2da574e20>
+<bytecode: 0x5618ed7b5e20>
 <environment: namespace:base>
 ```
 
