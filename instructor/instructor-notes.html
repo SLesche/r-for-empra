@@ -342,16 +342,33 @@ any links that you are not going to use.
 
       <section id="aggregate-instructor-notes"><section id="introduction"><h2 class="section-heading"><a href="introduction.html">Introduction</a></h2>
 <hr class="half-width"></section><section id="r-setup"><h2 class="section-heading"><a href="r-setup.html">R Setup</a></h2>
-<hr class="half-width"></section><section id="packages"><h2 class="section-heading"><a href="packages.html">Packages in R</a></h2>
 <hr class="half-width">
-<h3 id="packages-headingInstructor1">
-<a href="packages.html#headingInstructor1">Instructor Note</a><a class="anchor" aria-label="anchor" href="#packages-headingInstructor1"></a>
+<h3 id="r-setup-headingInstructor1">
+<a href="r-setup.html#headingInstructor1">Instructor Note</a><a class="anchor" aria-label="anchor" href="#r-setup-headingInstructor1"></a>
 </h3>
-<p>Inline instructor notes can help inform instructors of timing
-challenges associated with the lessons. They appear in the “Instructor
-View”</p>
+<div id="tip-comparing-numbers" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<div id="tip-comparing-numbers" class="callout-inner">
+<h3 class="callout-title">Tip: Comparing Numbers</h3>
+<div class="callout-content">
+<p>A word of warning about comparing numbers: you should never use
+<code>==</code> to compare two numbers unless they are integers (a data
+type which can specifically represent only whole numbers).</p>
+<p>Computers may only represent decimal numbers with a certain degree of
+precision, so two numbers which look the same when printed out by R, may
+actually have different underlying representations and therefore be
+different by a small margin of error (called Machine numeric
+tolerance).</p>
+<p>Instead you should use the <code>all.equal</code> function.</p>
+<p>Further reading: <a href="http://floating-point-gui.de/" class="external-link">http://floating-point-gui.de/</a></p>
+</div>
+</div>
+</div>
 <hr>
-<br></section></section>
+<br></section><section id="packages"><h2 class="section-heading"><a href="packages.html">Packages in R</a></h2>
+<hr class="half-width"></section></section>
 </div>
     </main>
 </div>
