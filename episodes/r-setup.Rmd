@@ -1,18 +1,16 @@
 ---
 title: 'R Setup'
 teaching: 10
-exercises: 5
+exercises: 0
 ---
 
 ::: questions
 - What is R, what is R Studio?
 - How to work with the R console and R scripts?
 - What is an R package?
-
 :::
 
 ::: objectives
-
 - To gain familiarity with the various panes in the RStudio IDE
 - To gain familiarity with the buttons, short cuts and options in the RStudio IDE
 - To understand variables and how to assign to them
@@ -20,16 +18,15 @@ exercises: 5
 - To be able to use mathematical and comparison operations
 - To be able to call functions
 - Introduction to package management
-
 :::
 
 
 ## Introduction to RStudio
 
-Welcome to the R portion of the Empra.
+Welcome to the R portion of the Empra. This first lesson is adapted from *resbaz's* [introction to R workshop](https://github.com/resbaz/Introductory-R-Workshop?tab=readme-ov-file).
 
 Throughout this lesson, you're going to learn some of the fundamentals of
-the R language as well as some best practices for organising code for
+the R language as well as some best practices for organizing code for
 scientific projects that will make your life easier.
 
 We'll be using RStudio: a free, open source R integrated development
@@ -73,9 +70,9 @@ or 2. select "Run Lines" from the "Code" menu, or 3. hit Ctrl-Enter in Windows
 or Linux or Command-Enter on OS X. (This shortcut can also be seen by hovering
 the mouse over the button). To run a block of code, select it and then `Run`.
 If you have modified a line of code within a block of code you have just run,
-there is no need to reselct the section and `Run`, you can use the next button
+there is no need to reselect the section and `Run`, you can use the next button
 along, `Re-run the previous region`. This will run the previous code block
-inculding the modifications you have made.
+including the modifications you have made.
 
 ::: 
 
@@ -88,27 +85,24 @@ file. This console in RStudio is the same as the one you would get if
 you just typed in `R` in your commandline environment.
 
 The first thing you will see in the R interactive session is a bunch
-of information, followed by a ">" and a blinking cursor. In many ways
-this is similar to the shell environment you learned about during the
-shell lessons: it operates on the same idea of a "Read, evaluate,
-print loop": you type in commands, R tries to execute them, and then
-returns a result.
+of information, followed by a ">" and a blinking cursor. R operates on the idea of a "Read, evaluate,
+print loop": you type in commands, R tries to execute them, and then returns a result.
 
 ## Using R as a calculator
 
 The simplest thing you could do with R is do arithmetic:
 
 ```{r eval=FALSE}
-> 1 + 100
+1 + 100
 ```
 
 And R will print out the answer, with a preceding "[1]". Don't worry about this
-for now, we'll explain that later. For now think of it as indicating ouput.
+for now, we'll explain that later. For now think of it as indicating output.
 
 If you type in an incomplete command, R will wait for you to complete it:
 
 ```{r eval=FALSE}
-> 1 +
+1 +
 ```
 
 ```output
@@ -211,7 +205,7 @@ exp(0.5) # e^(1/2)
 ```
 
 Don't worry about trying to remember every function in R. You
-can simply look them up on google, or if you can remember the
+can simply look them up on Google, or if you can remember the
 start of the function's name, use the tab completion in RStudio.
 
 This is one advantage that RStudio has over R on its own, it
@@ -221,7 +215,7 @@ take.
 
 Typing a `?` before the name of a command will open the help page
 for that command. As well as providing a detailed description of
-the command and how it works, scrolling ot the bottom of the
+the command and how it works, scrolling to the bottom of the
 help page will usually show a collection of code examples which
 illustrate command usage. We'll go through an example later.
 
@@ -253,6 +247,7 @@ We can also do comparison in R:
 1 >= -9 # greater than or equal to
 ```
 
+:::: instructor
 ::: callout
 ## Tip: Comparing Numbers
 
@@ -273,9 +268,9 @@ Instead you should use the `all.equal` function.
 Further reading: [http://floating-point-gui.de/](http://floating-point-gui.de/)
 
 :::
+:::: 
 
 ## Variables and assignment
-
 We can store values in variables using the assignment operator `<-`, like this:
 
 ```{r}
@@ -326,6 +321,18 @@ different conventions for long variable names, these include
 
 What you use is up to you, but **be consistent**.
 
+```{r, eval=FALSE}
+this_is_okay
+
+this.is.also.okay
+
+someUseCamelCase
+
+dont_be.aMenace_toSociety
+```
+
+I always use `snake_case` for variable names in R. `camelCase` is often used in other programming languages such as MATLAB or JavaScript.
+
 It is also possible to use the `=` operator for assignment:
 
 ```{r}
@@ -365,7 +372,7 @@ ls()
 ```
 
 ::: callout
-## Tip: hidden objects {.callout}
+## Tip: hidden objects
 
 Just like in the shell, `ls` will hide any variables or functions starting
 with a "." by default. To list all objects, type `ls(all.names=TRUE)`
@@ -376,11 +383,16 @@ instead
 Note here that we didn't given any arguments to `ls`, but we still
 needed to give the parentheses to tell R to call the function.
 
+::: callout
 If we type `ls` by itself, R will print out the source code for that function!
 
 ```{r}
 ls
 ```
+
+You can do this with any function in R, calling it without parantheses will always return the source code!
+
+::: 
 
 You can use `rm` to delete objects you no longer need:
 
@@ -421,21 +433,6 @@ In both cases, the message that R prints out usually give you clues
 how to fix a problem.
 
 :::
-
-## R Packages
-
-It is possible to add functions to R by writing a package, or by
-obtaining a package written by someone else. As of this writing, there
-are over 7,000 packages available on CRAN (the comprehensive R archive
-network). R and RStudio have functionality for managing packages:
-
-* You can see what packages are installed by typing
-  `installed.packages()`
-* You can install packages by typing `install.packages("packagename")`,
-  where `packagename` is the package name, in quotes.
-* You can update installed packages by typing `update.packages()`
-* You can remove a package with `remove.packages("packagename")`
-* You can make a package available for use with `library(packagename)`
 
 ::: challenge
 ## Challenge 1
@@ -485,15 +482,11 @@ variables.
 
 :::
 
-::: challenge
-## Challenge 5
- 
-Install the following packages: `ggplot2`, `plyr`, `gapminder`
-
-:::
-
 ::::::::::::::::::::::::::::::::::::: keypoints 
 
-- Use this website as an introduction to R
+- R Studio is a shiny environment that helps you write R code
+- You can either write code directly in the console, or use script to organize and save your code
+- You can assign variables using `<-` 
+- Be consistent in naming variables, other people should be able to read and understand your code
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
