@@ -1,111 +1,115 @@
 ---
-title: 'project-and-scripts'
-teaching: 10
+title: 'Using R Scripts and R Projects'
+teaching: 15
 exercises: 2
 ---
 
 :::::::::::::::::::::::::::::::::::::: questions 
 
-- How do you write a lesson using R Markdown and `{sandpaper}`?
+- How do you use scripts in R to document your work?
+- How can you organize scripts effectively?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::: objectives
 
-- Explain how to use markdown with the new lesson template
-- Demonstrate how to include pieces of code, figures, and nested challenge blocks
+- Show how to use scripts to generate reproducible analyses
+- Explain how projects can provide structure
+- Explain what a "working directory" is and how to access files
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
-## Introduction
+## Scripts in R
+For now, we have been only using the R console to execute commands.
+This works great if there are some quick calculations you have to run, but unsuited for more complex analyses. If you want to reproduce the exact steps you took in data cleaning and analyses, you need to write them down - like a recipe. 
 
-This is a lesson created via The Carpentries Workbench. It is written in
-[Pandoc-flavored Markdown][pandoc] for static files (with extension `.md`) and
-[R Markdown][r-markdown] for dynamic files that can render code into output
-(with extension `.Rmd`). Please refer to the [Introduction to The Carpentries
-Workbench][carpentries-workbench] for full documentation.
+This is where R scripts come in. They are basically like a text file (similar to Word) where you can write down all the steps you took. This makes it possible to retrace them and produce the exact same result over and over again.
 
-What you need to know is that there are three sections required for a valid
-Carpentries lesson template:
+In order to use R scripts effectively, you need to do two things. Firstly, you need to write them in a way that is understandable in the future. 
+We will learn more about how to write clean code in future lessons. 
+Secondly (and maybe more importantly) you need to actually **save** these scripts on your computer, and ideally save them in a place where you can find them again. 
+The place where you save your script and especially the place you save your data should ideally be a folder in a sensible place. For example, this script is saved in a sub-folder `episodes/` of the workshop folder `r_for_empra/`. 
+This makes it easy for humans to find the script. Aim for similar clarity in your folder structure!
 
- 1. `questions` are displayed at the beginning of the episode to prime the
-    learner for the content.
- 2. `objectives` are the learning objectives for an episode displayed with
-    the questions.
- 3. `keypoints` are displayed at the end of the episode to reinforce the
-    objectives.
+For this lesson, create a folder called `r_for_empra` somewhere on your computer where it makes sense for you. Then, create a new R script by clicking `File > New File > R Script` or hitting `Ctrl + Shift + N`. Save this script as  `episode_projects_and_scripts.R` in the folder `r_for_empra` created above.
 
-:::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::: instructor
+## Using a script
+Something about vectors
 
-Inline instructor notes can help inform instructors of timing challenges
-associated with the lessons. They appear in the "Instructor View"
+And some first functions like sum() and mean()
 
-::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::
+Maybe some indexing 
 
-::::::::::::::::::::::::::::::::::::: challenge 
+then some slicing (mean of only the first few indices)
 
-## Challenge 1: Can you do it?
+Then some filtering (only some values greater than)
 
-What is the output of this command?
+Then talk about dataframe and how they are 
 
-```r
-paste("This", "new", "lesson", "looks", "good")
-```
+## Working Directory
+It is very important that you keep your files somewhat orderly. This is important both for us humans to understand, but also for computers. 
 
-:::::::::::::::::::::::: solution 
-
-## Output
- 
-```output
-[1] "This new lesson looks good"
-```
-
-:::::::::::::::::::::::::::::::::
+## Projects in R
 
 
-## Challenge 2: how do you nest solutions within challenge blocks?
+::: callout
+## Tip: Running segments of your code
 
-:::::::::::::::::::::::: solution 
+RStudio offers you great flexibility in running code from within the editor
+window. There are buttons, menu choices, and keyboard shortcuts. To run the
+current line, you can 1. click on the `Run` button just above the editor panel,
+or 2. select "Run Lines" from the "Code" menu, or 3. hit Ctrl-Enter in Windows
+or Linux or Command-Enter on OS X. (This shortcut can also be seen by hovering
+the mouse over the button). To run a block of code, select it and then `Run`.
+If you have modified a line of code within a block of code you have just run,
+there is no need to reselect the section and `Run`, you can use the next button
+along, `Re-run the previous region`. This will run the previous code block
+including the modifications you have made.
 
-You can add a line with at least three colons and a `solution` tag.
+::: 
 
-:::::::::::::::::::::::::::::::::
-::::::::::::::::::::::::::::::::::::::::::::::::
+## Challenges
+::: challenge
+## Challenge 1:
 
-## Figures
+(Project was created already)
+Script with vector creation. Save it with variable name.
+:::
 
-You can include figures generated from R Markdown:
+::: challenge
+## Challenge 2: 
 
-```{r pyramid, fig.alt = "pie chart illusion of a pyramid", fig.cap = "Sun arise each and every morning"}
-pie(
-  c(Sky = 78, "Sunny side of pyramid" = 17, "Shady side of pyramid" = 5), 
-  init.angle = 315, 
-  col = c("deepskyblue", "yellow", "yellow3"), 
-  border = FALSE
-)
-```
-Or you can use pandoc markdown for static figures with the following syntax:
+Some basic computation with this vector
+:::
 
-`![optional caption that appears below the figure](figure url){alt='alt text for
-accessibility purposes'}`
+::: challenge
+## Challenge 3: 
 
-![You belong in The Carpentries!](https://raw.githubusercontent.com/carpentries/logo/master/Badge_Carpentries.svg){alt='Blue Carpentries hex person logo with no text.'}
+Where am I?
+Save this vector in a subfolder called data
+(you may need to create this folder first)
+:::
 
-## Math
+::: challenge
+## Challenge 4: Storing data
+:::
 
-One of our episodes contains $\LaTeX$ equations when describing how to create
-dynamic reports with {knitr}, so we now use mathjax to describe this:
+::: challenge
+## Challenge 5: Get a list of available files
+Use list.files() to figure something out
+:::
 
-`$\alpha = \dfrac{1}{(1 - \beta)^2}$` becomes: $\alpha = \dfrac{1}{(1 - \beta)^2}$
+::: challenge 
+## Challenge 6:
+Create a new script for next episode. Save this with an appropriate name
 
-Cool, right?
+In this script. Load the packages `dplyr` and ggplot
+:::
+
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
 
-- Use `.md` files for episodes when you want static content
-- Use `.Rmd` files for episodes when you need to generate output
-- Run `sandpaper::check_lesson()` to identify any issues with your lesson
-- Run `sandpaper::build_lesson()` to preview your lesson locally
+- 
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
