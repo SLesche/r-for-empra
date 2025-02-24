@@ -356,6 +356,7 @@ is_response_valid <- c("yes", "yes", "yes", "yes", "yes",
 ::::::::::::::::::::::::::::::::::::: keypoints 
 
 - Scripts facilitate reproducible research
+- create vectors using `c()`
 - Numeric variables are used for computations, character variables often contain additional information
 - You can index vectors by using `vector[index]` to return or exclude specific indices
 - Use `which()` to filter vectors based on specific conditions
