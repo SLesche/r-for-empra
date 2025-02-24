@@ -20,7 +20,7 @@ carpentry: 'incubator'
 title: 'R - Beginners Workshop'
 
 # Date the lesson was created (YYYY-MM-DD, this is empty by default)
-created: 
+created:
 
 # Comma-separated list of keywords for the lesson
 keywords: 'R, beginner, tidyverse, empra, data, lesson, The Carpentries'
@@ -64,22 +64,23 @@ contact: 'sven.lesche@psychologie.uni-heidelberg.de'
 # - another-learner.md
 
 # Order of episodes in your lesson
-episodes: 
+episodes:
 - introduction.Rmd
 - r-setup.Rmd
 - packages.Rmd
-- project-and-scripts.Rmd
+- scripts-and-vectors.Rmd
+- projects.Rmd
 - data-visualization-01.Rmd
 - data-visualization-02.Rmd
 
 # Information for Learners
-learners: 
+learners:
 
 # Information for Instructors
-instructors: 
+instructors:
 
 # Learner Profiles
-profiles: 
+profiles:
 
 # Customisation ---------------------------------------------
 #
