@@ -1,7 +1,7 @@
 ---
 title: 'R Setup'
 teaching: 10
-exercises: 0
+exercises: 5
 ---
 
 ::: questions
@@ -43,6 +43,7 @@ When you first open RStudio, you will be greeted by three panels:
   * Files/Plots/Packages/Help/Viewer (tabbed in lower right)
 
 ![R Studio Layout with three panes: Console, Environment and Plots](fig/rstudio_layout_screenshot.jpg){alt='Screenshot of the RStudio program.'}
+
 Once you open files, such as R scripts, an editor panel will also open
 in the top left.
 
@@ -60,25 +61,10 @@ interactive R console.
    * You will be able to run the file you create from within RStudio
    or using R's `source()`  function.
 
-::: callout
+For now, let's stick with the console. We will learn more about how to use R scripts later.
+Feel free to run all code examples provided here on your own machine and figure out what they do.
 
-## Tip: Running segments of your code
-
-RStudio offers you great flexibility in running code from within the editor
-window. There are buttons, menu choices, and keyboard shortcuts. To run the
-current line, you can 1. click on the `Run` button just above the editor panel,
-or 2. select "Run Lines" from the "Code" menu, or 3. hit Ctrl-Enter in Windows
-or Linux or Command-Enter on OS X. (This shortcut can also be seen by hovering
-the mouse over the button). To run a block of code, select it and then `Run`.
-If you have modified a line of code within a block of code you have just run,
-there is no need to reselect the section and `Run`, you can use the next button
-along, `Re-run the previous region`. This will run the previous code block
-including the modifications you have made.
-
-::: 
-
-## Introduction to R
-
+## Introduction to the R console
 Much of your time in R will be spent in the R interactive
 console. This is where you will run all of your code, and can be a
 useful environment to try out ideas before adding them to an R script
@@ -368,8 +354,10 @@ x
 [1] 0.025
 ```
 
+::: instructor
 More precisely, the stored value is a *decimal approximation* of
 this fraction called a [floating point number](http://en.wikipedia.org/wiki/Floating_point).
+:::
 
 Look for the `Environment` tab in one of the panes of RStudio, and you will see that `x` and its value
 have appeared. Our variable `x` can be used in place of a number in any calculation that expects a number:
@@ -400,7 +388,8 @@ x <- x + 1 #notice how RStudio updates its description of x on the top right tab
 ```
 
 The right hand side of the assignment can be any valid R expression.
-The right hand side is *fully evaluated* before the assignment occurs.
+The right hand side is *fully evaluated* before the assignment occurs. 
+This means that in the above example, `x + 1` is evaluated first and the result is only then assigned to the new `x`.
 
 Variable names can contain letters, numbers, underscores and periods. They
 cannot start with a number nor contain spaces at all. Different people use
@@ -425,6 +414,8 @@ dont_be.aMenace_toSociety
 
 I always use `snake_case` for variable names in R. `camelCase` is often used in other programming languages such as MATLAB or JavaScript.
 
+
+::: callout
 It is also possible to use the `=` operator for assignment:
 
 
@@ -436,7 +427,9 @@ But this is much less common among R users.  The most important thing is to
 **be consistent** with the operator you use. There are occasionally places
 where it is less confusing to use `<-` than `=`, and it is the most common
 symbol used in the community. So the recommendation is to use `<-`.
+::: 
 
+::: instructor
 ## Vectorization
 
 One final thing to be aware of is that R is *vectorized*, meaning that
@@ -470,7 +463,7 @@ x <- 1:5
 
 This is incredibly powerful; we will discuss this further in an
 upcoming lesson.
-
+:::
 
 ## Managing your environment
 
@@ -540,12 +533,11 @@ function (name, pos = -1L, envir = as.environment(pos), all.names = FALSE,
     }
     else all.names
 }
-<bytecode: 0x563ddfbc0d60>
+<bytecode: 0x55c97210ee10>
 <environment: namespace:base>
 ```
 
 You can do this with any function in R, calling it without parantheses will always return the source code!
-
 ::: 
 
 You can use `rm` to delete objects you no longer need:
@@ -595,9 +587,12 @@ how to fix a problem.
 
 :::
 
+## Challenges
+
 ::: challenge
 ## Challenge 1
-Which of the following are valid R variable names?
+Which of the following are valid R variable names? 
+Feel free to try them all out in R and figure out which produce errors and why.
 
 ``` r
 min_height
@@ -616,7 +611,8 @@ celsius2kelvin
 ## Challenge 2
 
 What will be the value of each  variable  after each
-statement in the following program?
+statement in the following program? 
+You are encouraged to run these commands in R.
 
 
 ``` r
@@ -637,8 +633,15 @@ compare mass to age. Is mass larger than age?
 :::
 
 ::: challenge
-
 ## Challenge 4
+
+Understand where the variables you just created are showing up in RStudio. Find them all in the "Environment" tab. Then list all of them using code.
+
+:::
+
+::: challenge
+
+## Challenge 5
 
 Clean up your working environment by deleting the mass and age
 variables.

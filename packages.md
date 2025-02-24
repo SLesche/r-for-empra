@@ -7,32 +7,40 @@ exercises: 4
 :::::::::::::::::::::::::::::::::::::: questions 
 
 - What is an R package?
+- How can we use R packages
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::: objectives
 
 - Explain how to use R packages
-- Explain how to use `library()` and the `::` operator
+- Explain how to install R packages
+- Understand the difference between installing and loading an R package
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 ## R Packages
 
-It is possible to add functions to R by writing a package, or by obtaining a package written by someone else. As of this writing, there are over 7,000 packages available on CRAN (the comprehensive R archive network). R and RStudio have functionality for managing packages:
+Per default, R provides you with some basic functions like `sum()`, `mean()` or `t.test()`. These functions can already accomplish a lot, but for more specialized analyses or more user-friendly functions, you might want to use additional functions.
 
-* You can see what packages are installed by typing `installed.packages()`
-* You can install packages by typing `install.packages("packagename")`, where `packagename` is the package name, in quotes.
-* You can update installed packages by typing `update.packages()`
-* You can remove a package with `remove.packages("packagename")`
-* You can make a package available for use with `library(packagename)`
-* You can use a function from a package without loading it entirely using `packagename::functionname()`
+If you are in need of a specific function to achieve your goal, you can either write it yourself (more on this later) or use functions written by other users. These functions are often collected in so-called "packages". The official source for these packages on R is CRAN (the comprehensive R archive network).
+
+::: callout
+## Packages you may encounter
+Packages make R really powerful. For 95% of your analysis-needs, there probably exists a package designed specifically to hand this. For example, some packages you might use often are `tidyverse` for data cleaning, `psych` for some psychology specific functions, `afex` for ANOVAs or `lme4` for multi-level models. You can even use R packages for more complicated analyses like structural equation models (`lavaan`) or bayesian modeling (`brms`). You can even write papers using R using `papaya`. Even this website was written using the R-packages `rmarkdown` and `sandpaper`.
+:::
+
+CRAN makes it really easy to use the over 7000 R packages other users provide. You can install them using `install.packages("packagename")` with the name of the package in quotation marks. This installs all functionalities of this packages on your machine. However, this package is not automatically available to you. Before using it in a script (or the console) you need to tell R to "activate" this package. You can do this using `library(packagename)`. This avoids loading all installed packages every time R is starting (which would take a while).
+
+::: callout
+## Using functions without loading a package
+If you are only using a few functions from a certain package (maybe even only once), you can avoid loading the entire package and only specifically access that function using the `::` operator. You can do this by typing `packagename::function()`. If the package is installed, it will allow you to use that function without calling `library(packagename)` first. This may also be useful in cases where you want to allow the reader of your code to easily understand what package you used for a certain function.
+:::
 
 ### Demonstration
-
+First, we need to install a package. This will often generate a lot of text in your console. This is nothing to worry about. In most cases, it is enough to look at the last few messages, they will tell you what went wrong or whether everything went right.
 
 ``` r
-# Installing a package
 install.packages("dplyr")
 ```
 
@@ -46,8 +54,11 @@ These packages will be installed into "~/work/r-for-empra/r-for-empra/renv/profi
 Successfully installed 1 package in 5.7 milliseconds.
 ```
 
+Then, we will need to load the package to make its functions available for use. For most packages, this will also print a lot of messages in the console in the bottom left. Again, this is usually harmless. If something does go wrong, you will see the word `Error:` along with a message somewhere. `Warnings:` can often be ignored in package installation. 
+
+
 ``` r
-# Loading a package
+# Loading the package dplyr
 library(dplyr)
 ```
 
@@ -68,35 +79,58 @@ The following objects are masked from 'package:base':
     intersect, setdiff, setequal, union
 ```
 
+Now we can use all the functions that `dplyr` provides. Let's start by using `glimpse()` to get a quick glance at some data. For this case, we are using the `iris` data, that comes with your default R installation.
+
+
 ``` r
-# Using a function without loading the entire package
-dplyr::glimpse(mtcars)
+# iris is a dataset provided as default in R
+glimpse(iris)
 ```
 
 ``` output
-Rows: 32
-Columns: 11
-$ mpg  <dbl> 21.0, 21.0, 22.8, 21.4, 18.7, 18.1, 14.3, 24.4, 22.8, 19.2, 17.8,…
-$ cyl  <dbl> 6, 6, 4, 6, 8, 6, 8, 4, 4, 6, 6, 8, 8, 8, 8, 8, 8, 4, 4, 4, 4, 8,…
-$ disp <dbl> 160.0, 160.0, 108.0, 258.0, 360.0, 225.0, 360.0, 146.7, 140.8, 16…
-$ hp   <dbl> 110, 110, 93, 110, 175, 105, 245, 62, 95, 123, 123, 180, 180, 180…
-$ drat <dbl> 3.90, 3.90, 3.85, 3.08, 3.15, 2.76, 3.21, 3.69, 3.92, 3.92, 3.92,…
-$ wt   <dbl> 2.620, 2.875, 2.320, 3.215, 3.440, 3.460, 3.570, 3.190, 3.150, 3.…
-$ qsec <dbl> 16.46, 17.02, 18.61, 19.44, 17.02, 20.22, 15.84, 20.00, 22.90, 18…
-$ vs   <dbl> 0, 0, 1, 1, 0, 1, 0, 1, 1, 1, 1, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 0,…
-$ am   <dbl> 1, 1, 1, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 0, 0,…
-$ gear <dbl> 4, 4, 4, 3, 3, 3, 3, 4, 4, 4, 4, 3, 3, 3, 3, 3, 3, 4, 4, 4, 3, 3,…
-$ carb <dbl> 4, 4, 1, 1, 2, 1, 4, 2, 2, 4, 4, 3, 3, 3, 4, 4, 4, 1, 2, 1, 1, 2,…
+Rows: 150
+Columns: 5
+$ Sepal.Length <dbl> 5.1, 4.9, 4.7, 4.6, 5.0, 5.4, 4.6, 5.0, 4.4, 4.9, 5.4, 4.…
+$ Sepal.Width  <dbl> 3.5, 3.0, 3.2, 3.1, 3.6, 3.9, 3.4, 3.4, 2.9, 3.1, 3.7, 3.…
+$ Petal.Length <dbl> 1.4, 1.4, 1.3, 1.5, 1.4, 1.7, 1.4, 1.5, 1.4, 1.5, 1.5, 1.…
+$ Petal.Width  <dbl> 0.2, 0.2, 0.2, 0.2, 0.2, 0.4, 0.3, 0.2, 0.2, 0.1, 0.2, 0.…
+$ Species      <fct> setosa, setosa, setosa, setosa, setosa, setosa, setosa, s…
 ```
 
-### Why use `::`?
-- Using `::` allows access to a specific function without attaching the entire package.
-- This can help avoid function name conflicts between different packages.
-- It is useful for one-off function calls where loading the full package is unnecessary.
+``` r
+# Using a function without loading the entire package
+# dplyr::glimpse(iris)
+```
+## Challenges
 
 ::: challenge
 ## Challenge 1:
 
+Install the following packages: `dplyr`, `ggplot2`, and `psych`.
+:::
+
+::: challenge
+## Challenge 2:
+
+Load the package `dplyr` and get an overview of the data `mtcars` using `glimpse()`. 
+:::
+
+::: challenge
+## Challenge 3:
+
+Figure out what kind of data `mtcars` contains. Make a list of the columns in the dataset and what they might mean.
+
+:::: callout
+## Hint
+You are allowed to use Google (or other sources) for this. It is common practice to google information you don't know or look online for code that might help.
+::::
+:::
+
+::: challenge
+## Challenge 4:
+Use the function `describe()` from the package `psych` *without* loading it first.
+
+What differences do you notice between `glimpse()` and `describe()`?
 :::
 
 ::: keypoints

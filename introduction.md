@@ -26,6 +26,13 @@ At the end of each episode, you will upload a script containing the solutions to
 The file format should be: `lessonnumber_solutions_name_surname.R`.
 Upload your solutions to a HeiBox folder.
 
+## A word about Chat-GPT
+- Use it and google, this is how programming works
+
+- BUt! You have a machine that can do all your homework
+
+- First, try using it yourself. Ask chat-gpt to give you hints only, not solutions.
+
 ## Accompanying Material
 This course relies heavily on [R for Data Science (2e)](https://r4ds.hadley.nz/), which can be treated as an accompanying textbook.
 
