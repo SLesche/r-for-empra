@@ -130,7 +130,7 @@ If you use Git for version control, R Projects make it simple to track changes, 
 ---
 
 #### 5️⃣ **Easy Switching Between Projects**  
-With R Projects, you can **quickly switch** between different tasks without affecting the working directory or loaded packages. Each project remembers its settings, so you don’t have to reconfigure things every time.  
+With R Projects, you can **quickly switch** between different tasks without affecting the working directory or opening and closing scripts. Each project remembers its settings, so you don’t have to reconfigure things every time.  
 
 ---
 
@@ -164,39 +164,37 @@ To create a project, follow the steps outlined above and give it an appropriate 
 ::: challenge
 ## Challenge 1:
 
+Make sure you have project created.
+
+Filestructure and data-folder (maybe with archive/ folder).
+
+data, raw_data, archive, 
 
 :::
 
 ::: challenge
 ## Challenge 2: 
 
-Some basic computation with this vector
+Read in some dataset (maybe from web) and then save it in the data folder
 :::
 
 ::: challenge
 ## Challenge 3: 
 
-Where am I?
-Save this vector in a subfolder called data
-(you may need to create this folder first)
+Make sure this worked, read in the data set from saved version
 :::
 
 ::: challenge
 ## Challenge 4: Storing data
+
+Compute the mean and sum of something in the dataset
 :::
 
 ::: challenge
-## Challenge 5: Get a list of available files
-Use list.files() to figure something out
+## Challenge 5: 
+
+save the summary statistics under a new name in the data folder
 :::
-
-::: challenge 
-## Challenge 6:
-Create a new script for next episode. Save this with an appropriate name
-
-In this script. Load the packages `dplyr` and ggplot
-:::
-
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
 

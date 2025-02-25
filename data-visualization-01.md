@@ -6,18 +6,23 @@ exercises: 2
 
 :::::::::::::::::::::::::::::::::::::: questions 
 
-- How do you write a lesson using R Markdown and `{sandpaper}`?
+- How can you get an overview of data?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::: objectives
 
-- Explain how to use markdown with the new lesson template
-- Demonstrate how to include pieces of code, figures, and nested challenge blocks
+- 
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
-## Introduction
+## Plotting data
+
+Why plotting is the most powerful tool. Communication.
+
+An example plot that we want to recreate. (Maybe some experimental difference)
+
+
 
 This is a lesson created via The Carpentries Workbench. It is written in
 [Pandoc-flavored Markdown][pandoc] for static files (with extension `.md`) and
