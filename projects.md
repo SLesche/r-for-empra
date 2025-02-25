@@ -81,25 +81,86 @@ Now, R will assume all file paths start from `"C:/Users/YourName/Desktop/MyNewFo
 - It **makes your code portable**, so if you share your project, others won’t need to change file paths manually.
 
 ## R Projects
-There are two main ways to define the working directory that R will use. You can do this using `setwd()` and specify a particular directory you want to start from. Another way to accomplish this is through the use of **R projects**
+There are two main ways to define the working directory that R will use. You can do this using `setwd()` and specify a particular directory you want to start from. Another way to accomplish this is through the use of **R projects**. If you prefer declaring your working directory using `setwd()`, you can place this bit of code `setwd(dirname(rstudioapi::getActiveDocumentContext()$path))` at the beginning of your script. R will then set the working directory to the folder that the script you are working with is located in. 
+
+However, I do not recommend this approach for reasons outlined below. Instead, I would suggest using R projects. When working in **RStudio**, using **R Projects** is one of the best ways to keep your work organized, portable, and efficient. An **R Project** is essentially a self-contained workspace that helps manage files, working directories, and settings automatically.  
+
+---
+
+### Why Use R Projects?  
+
+#### 1️⃣ **Automatic Working Directory Management**  
+When you open an R Project, RStudio **automatically** sets the working directory to the project's folder. This means you don’t have to use `setwd()` manually or worry about absolute file paths.  
+
+Example:  
+- If your project folder is `C:/Users/YourName/Documents/MyProject`, then any file in this folder can be accessed with a **relative path**:  
+
+```r
+read.csv("data/my_data.csv")  # No need for long paths!
+```
+
+---
+
+#### 2️⃣ **Keeps Everything Organized**  
+An R Project keeps **all related files**—scripts, datasets, plots, and outputs—in one place. This is especially useful when working on multiple projects, preventing files from getting mixed up.  
+
+A typical project folder might look like this:  
+```
+MyProject/
+│── data/         # Raw data files
+│── scripts/      # R scripts
+│── output/       # Processed results
+│── MyProject.Rproj  # The project file
+```
+This structure helps keep your work clean and easy to navigate.  
+
+---
+
+#### 3️⃣ **Easier Collaboration & Portability**  
+If you share your project folder, others can open the `.Rproj` file in RStudio and immediately start working—no need to change file paths or set up the environment manually. This makes R Projects ideal for:  
+✅ **Teamwork**  
+✅ **Sharing with collaborators**  
+✅ **Reproducible research**  
+
+---
+
+#### 4️⃣ **Integrated Version Control (Git)**  
+If you use Git for version control, R Projects make it simple to track changes, commit updates, and collaborate through platforms like **GitHub**. You can set up a Git repository directly inside the project.  
+
+---
+
+#### 5️⃣ **Easy Switching Between Projects**  
+With R Projects, you can **quickly switch** between different tasks without affecting the working directory or loaded packages. Each project remembers its settings, so you don’t have to reconfigure things every time.  
+
+---
+
+## How to Create an R Project  
+1️⃣ Open **RStudio**  
+2️⃣ Click **File** → **New Project**  
+3️⃣ Choose **New Directory** (or an existing folder)  
+4️⃣ Select **New Project** and give it a name  
+5️⃣ Click **Create Project** 🎉  
+
+Now, whenever you open the `.Rproj` file, RStudio will automatically set everything up for you! 
+
+You can open a project using `File > Open Project` in the top left of R Studio. You will then notice the projects name appearing in the top right. Furthermore, the `Files` view in the bottom right will automatically go to the destination of your selected project.
 
 ::: callout
+
 ## Why not to use `setwd()`
 Here, say why not
 
 :::
 
-For projects, it’s best to keep all your files inside a single folder and set that folder as your working directory. If you use **RStudio**, an easier way to manage this is by using **Projects** (they automatically set the working directory when opened).
+## Creating an R project
+Let's go through the steps of setting up an R project together. First, decide if you want to use an existing folder or generate a brand new folder for your R project. I would suggest using a folder that is clean. For example, if you already created a folder to save the script from the lesson earlier, we can just use that.
 
-### Which One Should You Use?  
-- **Use absolute paths** if the file is located outside your project folder or if you need a fixed reference.  
-- **Use relative paths** when working within a project, as it makes your code more portable and easier to share with others.  
-
-By understanding how file paths work, you can efficiently load and save data in R without errors! 🚀
+To create a project, follow the steps outlined above and give it an appropriate name. Something along the lines of `r_workshop` or `r_tutorial`. Make sure the creation of your project was successful and you can see the name of your project in the top right corner.
 
 ## Saving Data
 
 ## Challenges
+
 ::: challenge
 ## Challenge 1:
 
@@ -139,6 +200,6 @@ In this script. Load the packages `dplyr` and ggplot
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
 
-- 
+- Some key point
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
