@@ -254,6 +254,8 @@
       <div class="accordion-body">
         <ul><li><a href="#working-directory">Working Directory</a></li>
 <li><a href="#r-projects">R Projects</a></li>
+<li><a href="#how-to-create-an-r-project">How to Create an R Project</a></li>
+<li><a href="#creating-an-r-project">Creating an R project</a></li>
 <li><a href="#saving-data">Saving Data</a></li>
 <li><a href="#challenges">Challenges</a></li>
         </ul></div><!--/div.accordion-body-->
@@ -470,7 +472,95 @@ project, others won’t need to change file paths manually.</li>
 <hr class="half-width"><p>There are two main ways to define the working directory that R will
 use. You can do this using <code>setwd()</code> and specify a particular
 directory you want to start from. Another way to accomplish this is
-through the use of <strong>R projects</strong></p>
+through the use of <strong>R projects</strong>. If you prefer declaring
+your working directory using <code>setwd()</code>, you can place this
+bit of code
+<code>setwd(dirname(rstudioapi::getActiveDocumentContext()$path))</code>
+at the beginning of your script. R will then set the working directory
+to the folder that the script you are working with is located in.</p>
+<p>However, I do not recommend this approach for reasons outlined below.
+Instead, I would suggest using R projects. When working in
+<strong>RStudio</strong>, using <strong>R Projects</strong> is one of
+the best ways to keep your work organized, portable, and efficient. An
+<strong>R Project</strong> is essentially a self-contained workspace
+that helps manage files, working directories, and settings
+automatically.</p>
+<hr><div class="section level3">
+<h3 id="why-use-r-projects">Why Use R Projects?<a class="anchor" aria-label="anchor" href="#why-use-r-projects"></a></h3>
+<div class="section level4">
+<h4 id="automatic-working-directory-management">1️⃣ <strong>Automatic Working Directory Management</strong>
+<a class="anchor" aria-label="anchor" href="#automatic-working-directory-management"></a></h4>
+<p>When you open an R Project, RStudio <strong>automatically</strong>
+sets the working directory to the project’s folder. This means you don’t
+have to use <code>setwd()</code> manually or worry about absolute file
+paths.</p>
+<p>Example:<br>
+- If your project folder is
+<code>C:/Users/YourName/Documents/MyProject</code>, then any file in
+this folder can be accessed with a <strong>relative path</strong>:</p>
+<div class="codewrapper sourceCode" id="cb5">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">read.csv</span><span class="op">(</span><span class="st">"data/my_data.csv"</span><span class="op">)</span>  <span class="co"># No need for long paths!</span></span></code></pre>
+</div>
+<hr></div>
+<div class="section level4">
+<h4 id="keeps-everything-organized">2️⃣ <strong>Keeps Everything Organized</strong>
+<a class="anchor" aria-label="anchor" href="#keeps-everything-organized"></a></h4>
+<p>An R Project keeps <strong>all related files</strong>—scripts,
+datasets, plots, and outputs—in one place. This is especially useful
+when working on multiple projects, preventing files from getting mixed
+up.</p>
+<p>A typical project folder might look like this:</p>
+<pre><code>MyProject/
+│── data/         # Raw data files
+│── scripts/      # R scripts
+│── output/       # Processed results
+│── MyProject.Rproj  # The project file</code></pre>
+<p>This structure helps keep your work clean and easy to navigate.</p>
+<hr></div>
+<div class="section level4">
+<h4 id="easier-collaboration-portability">3️⃣ <strong>Easier Collaboration &amp; Portability</strong>
+<a class="anchor" aria-label="anchor" href="#easier-collaboration-portability"></a></h4>
+<p>If you share your project folder, others can open the
+<code>.Rproj</code> file in RStudio and immediately start working—no
+need to change file paths or set up the environment manually. This makes
+R Projects ideal for:<br>
+✅ <strong>Teamwork</strong><br>
+✅ <strong>Sharing with collaborators</strong><br>
+✅ <strong>Reproducible research</strong></p>
+<hr></div>
+<div class="section level4">
+<h4 id="integrated-version-control-git">4️⃣ <strong>Integrated Version Control (Git)</strong>
+<a class="anchor" aria-label="anchor" href="#integrated-version-control-git"></a></h4>
+<p>If you use Git for version control, R Projects make it simple to
+track changes, commit updates, and collaborate through platforms like
+<strong>GitHub</strong>. You can set up a Git repository directly inside
+the project.</p>
+<hr></div>
+<div class="section level4">
+<h4 id="easy-switching-between-projects">5️⃣ <strong>Easy Switching Between Projects</strong>
+<a class="anchor" aria-label="anchor" href="#easy-switching-between-projects"></a></h4>
+<p>With R Projects, you can <strong>quickly switch</strong> between
+different tasks without affecting the working directory or loaded
+packages. Each project remembers its settings, so you don’t have to
+reconfigure things every time.</p>
+<hr></div>
+</div>
+</section><section><h2 class="section-heading" id="how-to-create-an-r-project">How to Create an R Project<a class="anchor" aria-label="anchor" href="#how-to-create-an-r-project"></a></h2>
+<hr class="half-width"><p>1️⃣ Open <strong>RStudio</strong><br>
+2️⃣ Click <strong>File</strong> → <strong>New Project</strong><br>
+3️⃣ Choose <strong>New Directory</strong> (or an existing folder)<br>
+4️⃣ Select <strong>New Project</strong> and give it a name<br>
+5️⃣ Click <strong>Create Project</strong> 🎉</p>
+<p>Now, whenever you open the <code>.Rproj</code> file, RStudio will
+automatically set everything up for you!</p>
+<p>You can open a project using <code>File &gt; Open Project</code> in
+the top left of R Studio. You will then notice the projects name
+appearing in the top right. Furthermore, the <code>Files</code> view in
+the bottom right will automatically go to the destination of your
+selected project.</p>
 <div id="why-not-to-use-setwd" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
@@ -483,23 +573,17 @@ through the use of <strong>R projects</strong></p>
 </div>
 </div>
 </div>
-<p>For projects, it’s best to keep all your files inside a single folder
-and set that folder as your working directory. If you use
-<strong>RStudio</strong>, an easier way to manage this is by using
-<strong>Projects</strong> (they automatically set the working directory
-when opened).</p>
-<div class="section level3">
-<h3 id="which-one-should-you-use">Which One Should You Use?<a class="anchor" aria-label="anchor" href="#which-one-should-you-use"></a></h3>
-<ul><li>
-<strong>Use absolute paths</strong> if the file is located outside
-your project folder or if you need a fixed reference.<br></li>
-<li>
-<strong>Use relative paths</strong> when working within a project,
-as it makes your code more portable and easier to share with
-others.</li>
-</ul><p>By understanding how file paths work, you can efficiently load and
-save data in R without errors! 🚀</p>
-</div>
+</section><section><h2 class="section-heading" id="creating-an-r-project">Creating an R project<a class="anchor" aria-label="anchor" href="#creating-an-r-project"></a></h2>
+<hr class="half-width"><p>Let’s go through the steps of setting up an R project together.
+First, decide if you want to use an existing folder or generate a brand
+new folder for your R project. I would suggest using a folder that is
+clean. For example, if you already created a folder to save the script
+from the lesson earlier, we can just use that.</p>
+<p>To create a project, follow the steps outlined above and give it an
+appropriate name. Something along the lines of <code>r_workshop</code>
+or <code>r_tutorial</code>. Make sure the creation of your project was
+successful and you can see the name of your project in the top right
+corner.</p>
 </section><section><h2 class="section-heading" id="saving-data">Saving Data<a class="anchor" aria-label="anchor" href="#saving-data"></a></h2>
 <hr class="half-width"></section><section><h2 class="section-heading" id="challenges">Challenges<a class="anchor" aria-label="anchor" href="#challenges"></a></h2>
 <hr class="half-width"><div id="challenge-2" class="callout discussion">
@@ -556,8 +640,8 @@ name</p>
 <div class="callout-inner">
 <h3 class="callout-title">Key Points</h3>
 <div class="callout-content">
-<ul><li>
-</li></ul></div>
+<ul><li>Some key point</li>
+</ul></div>
 </div>
 </div>
 <!--
