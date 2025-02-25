@@ -850,7 +850,7 @@ command usage. We’ll go through an example later.</p>
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor1" aria-expanded="false" aria-controls="collapseInstructor1">
   <h3 class="accordion-header" id="headingInstructor1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Instructor Note </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
 <div class="accordion-body">
 <div id="tip-comparing-numbers" class="callout">
 <div class="callout-square">
@@ -907,7 +907,7 @@ for later in something called a <strong>variable</strong>.
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor2" aria-expanded="false" aria-controls="collapseInstructor2">
   <h3 class="accordion-header" id="headingInstructor2">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Instructor Note </h3>
 </button>
-<div id="collapseInstructor2" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor2" aria-labelledby="headingInstructor2">
+<div id="collapseInstructor2" class="accordion-collapse collapse" aria-labelledby="headingInstructor2" data-bs-parent="#accordionInstructor2">
 <div class="accordion-body">
 <p>More precisely, the stored value is a <em>decimal approximation</em>
 of this fraction called a <a href="http://en.wikipedia.org/wiki/Floating_point" class="external-link">floating point
@@ -1006,7 +1006,7 @@ used in the community. So the recommendation is to use
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor3" aria-expanded="false" aria-controls="collapseInstructor3">
   <h3 class="accordion-header" id="headingInstructor3">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Vectorization </h3>
 </button>
-<div id="collapseInstructor3" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor3" aria-labelledby="headingInstructor3">
+<div id="collapseInstructor3" class="accordion-collapse collapse" aria-labelledby="headingInstructor3" data-bs-parent="#accordionInstructor3">
 <div class="accordion-body">
 <p>One final thing to be aware of is that R is <em>vectorized</em>,
 meaning that variables and functions can have vectors as values. For
@@ -2359,7 +2359,7 @@ any links that you are not going to use.
  -->
 </section></section><section id="aio-projects"><p>Content from <a href="projects.html">Projects</a></p>
 <hr>
-<p>Last updated on 2025-02-24 |
+<p>Last updated on 2025-02-25 |
 
         <a href="https://github.com/SLesche/r-for-empra/edit/main/episodes/projects.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 12 minutes</p>
@@ -2397,40 +2397,151 @@ any links that you are not going to use.
 </h2>
 <hr class="half-width">
 <p>It is very important that you keep your files somewhat orderly. This
-is important both for us humans to understand, but also for
-computers.</p>
-</section><section><h2 class="section-heading" id="saving-data">Saving Data<a class="anchor" aria-label="anchor" href="#saving-data"></a>
-</h2>
-<hr class="half-width">
-<div id="a-word-about-setwd" class="callout">
+is important both for us humans to understand, but also for computers.
+Any time you need to access something outside your present R script, you
+will need to tell R where to find this. Understanding this is extremely
+important, as we will be working with external data a lot! This data
+will be saved somewhere on the computer and needs to find its way into
+the R session.</p>
+<p>Understanding where a file is saved on your computer is key to
+understanding how to tell R to read it into your current session. There
+are two main ways to tell R how to find a file: <em>absolute</em> paths
+and <em>relative</em> paths.</p>
+<div class="section level3">
+<h3 id="absolute-paths">Absolute Paths<a class="anchor" aria-label="anchor" href="#absolute-paths"></a>
+</h3>
+<p>An <strong>absolute path</strong> is the full location of a file on
+your computer, starting from the root of your file system. It tells R
+exactly where to find the file, no matter where your R script is
+located.</p>
+<p>For example, the absolute path to a file stored in the
+<code>Documents/</code> folder most likely looks something like this: -
+<strong>Windows:</strong>
+<code>"C:/Users/YourName/Documents/my_data.csv"</code><br>
+- <strong>Mac/Linux:</strong>
+<code>"/Users/YourName/Documents/my_data.csv"</code></p>
+<div id="how-to-find-the-absolute-path-of-a-file" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
-<div id="a-word-about-setwd" class="callout-inner">
-<h3 class="callout-title">A word about <code>setwd()</code>
+<div id="how-to-find-the-absolute-path-of-a-file" class="callout-inner">
+<h3 class="callout-title">💡 <strong>How to Find the Absolute Path of a
+File</strong>:</h3>
+<div class="callout-content">
+<ul>
+<li><p>On <strong>Windows</strong>, open File Explorer, navigate to your
+file, right-click it, and select <strong>Properties</strong>. The full
+file path will be shown in the “Location” field.</p></li>
+<li><p>On <strong>Mac</strong>, open Finder, right-click the file,
+select <strong>Get Info</strong>, and look at “Where.”<br></p></li>
+</ul>
+</div>
+</div>
+</div>
+</div>
+<div class="section level3">
+<h3 id="relative-paths">Relative Paths<a class="anchor" aria-label="anchor" href="#relative-paths"></a>
+</h3>
+<p>A <strong>relative path</strong> specifies the location of a file in
+relation to the <strong>working directory</strong> of your R session.
+This is useful when working with projects that contain multiple files,
+as it keeps your code flexible and portable.</p>
+<p>The <strong>working directory</strong> is the default folder on your
+computer where R looks for files and saves new ones. Think of it as R’s
+<strong>“home base”</strong>—if you ask R to read or save a file without
+giving a full path, it will assume you’re talking about this
+location.</p>
+<p>You can check your current working directory by running:</p>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">getwd</span><span class="op">(</span><span class="op">)</span>  <span class="co"># This tells you where R is currently looking for files</span></span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>[1] "/home/runner/work/r-for-empra/r-for-empra/site/built"</code></pre>
+</div>
+<p>In our case, this means if you try to read a file like this:</p>
+<div class="codewrapper sourceCode" id="cb3">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">read.csv</span><span class="op">(</span><span class="st">"data.csv"</span><span class="op">)</span></span></code></pre>
+</div>
+<p>R will look for <code>data.csv</code> inside
+/home/runner/work/r-for-empra/r-for-empra/site/built.</p>
+<p>If your files are stored somewhere else, you can change the working
+directory using:</p>
+<div class="codewrapper sourceCode" id="cb4">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">setwd</span><span class="op">(</span><span class="st">"C:/Users/YourName/Desktop/MyNewFolder"</span><span class="op">)</span>  <span class="co"># Set a new working directory</span></span></code></pre>
+</div>
+<p>Now, R will assume all file paths start from
+<code>"C:/Users/YourName/Desktop/MyNewFolder"</code>.</p>
+</div>
+<div class="section level3">
+<h3 id="why-is-the-working-directory-important">Why is the Working Directory Important?<a class="anchor" aria-label="anchor" href="#why-is-the-working-directory-important"></a>
+</h3>
+<ul>
+<li>It <strong>saves you from typing long file paths</strong> every time
+you load data.<br>
+</li>
+<li>It <strong>keeps projects organized</strong> by ensuring all files
+are in a central location.<br>
+</li>
+<li>It <strong>makes your code portable</strong>, so if you share your
+project, others won’t need to change file paths manually.</li>
+</ul>
+</div>
+</section><section><h2 class="section-heading" id="r-projects">R Projects<a class="anchor" aria-label="anchor" href="#r-projects"></a>
+</h2>
+<hr class="half-width">
+<p>There are two main ways to define the working directory that R will
+use. You can do this using <code>setwd()</code> and specify a particular
+directory you want to start from. Another way to accomplish this is
+through the use of <strong>R projects</strong></p>
+<div id="why-not-to-use-setwd" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<div id="why-not-to-use-setwd" class="callout-inner">
+<h3 class="callout-title">Why not to use <code>setwd()</code>
 </h3>
 <div class="callout-content">
-
+<p>Here, say why not</p>
 </div>
 </div>
 </div>
-</section><section><h2 class="section-heading" id="projects-in-r">Projects in R<a class="anchor" aria-label="anchor" href="#projects-in-r"></a>
+<p>For projects, it’s best to keep all your files inside a single folder
+and set that folder as your working directory. If you use
+<strong>RStudio</strong>, an easier way to manage this is by using
+<strong>Projects</strong> (they automatically set the working directory
+when opened).</p>
+<div class="section level3">
+<h3 id="which-one-should-you-use">Which One Should You Use?<a class="anchor" aria-label="anchor" href="#which-one-should-you-use"></a>
+</h3>
+<ul>
+<li>
+<strong>Use absolute paths</strong> if the file is located outside
+your project folder or if you need a fixed reference.<br>
+</li>
+<li>
+<strong>Use relative paths</strong> when working within a project,
+as it makes your code more portable and easier to share with
+others.</li>
+</ul>
+<p>By understanding how file paths work, you can efficiently load and
+save data in R without errors! 🚀</p>
+</div>
+</section><section><h2 class="section-heading" id="saving-data">Saving Data<a class="anchor" aria-label="anchor" href="#saving-data"></a>
 </h2>
 <hr class="half-width"></section><section><h2 class="section-heading" id="challenges">Challenges<a class="anchor" aria-label="anchor" href="#challenges"></a>
 </h2>
 <hr class="half-width">
-<div id="challenge-1" class="callout discussion">
-<div class="callout-square">
-<i class="callout-icon" data-feather="message-circle"></i>
-</div>
-<div id="challenge-1" class="callout-inner">
-<h3 class="callout-title">Challenge 1:</h3>
-<div class="callout-content">
-<p>(Project was created already) Script with vector creation. Save it
-with variable name.</p>
-</div>
-</div>
-</div>
 <div id="challenge-2" class="callout discussion">
 <div class="callout-square">
 <i class="callout-icon" data-feather="message-circle"></i>
@@ -2558,7 +2669,7 @@ reinforce the objectives.</li>
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor1" aria-expanded="false" aria-controls="collapseInstructor1">
   <h3 class="accordion-header" id="headingInstructor1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Instructor Note </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
 <div class="accordion-body">
 <p>Inline instructor notes can help inform instructors of timing
 challenges associated with the lessons. They appear in the “Instructor
@@ -2589,7 +2700,7 @@ View”</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Output </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -2616,7 +2727,7 @@ View”</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <p>You can add a line with at least three colons and a
 <code>solution</code> tag.</p>
@@ -2907,7 +3018,7 @@ any links that you are not going to use.
   "creativeWorkStatus": "active",
   "url": "https://SLesche.github.io/r-for-empra/instructor/aio.html",
   "identifier": "https://SLesche.github.io/r-for-empra/instructor/aio.html",
-  "dateCreated": "2025-02-24",
+  "dateCreated": "2025-02-25",
   "dateModified": "2025-02-25",
   "datePublished": "2025-02-25"
 }
