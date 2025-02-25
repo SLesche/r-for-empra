@@ -850,7 +850,7 @@ command usage. We’ll go through an example later.</p>
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor1" aria-expanded="false" aria-controls="collapseInstructor1">
   <h3 class="accordion-header" id="headingInstructor1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Instructor Note </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
 <div class="accordion-body">
 <div id="tip-comparing-numbers" class="callout">
 <div class="callout-square">
@@ -907,7 +907,7 @@ for later in something called a <strong>variable</strong>.
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor2" aria-expanded="false" aria-controls="collapseInstructor2">
   <h3 class="accordion-header" id="headingInstructor2">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Instructor Note </h3>
 </button>
-<div id="collapseInstructor2" class="accordion-collapse collapse" aria-labelledby="headingInstructor2" data-bs-parent="#accordionInstructor2">
+<div id="collapseInstructor2" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor2" aria-labelledby="headingInstructor2">
 <div class="accordion-body">
 <p>More precisely, the stored value is a <em>decimal approximation</em>
 of this fraction called a <a href="http://en.wikipedia.org/wiki/Floating_point" class="external-link">floating point
@@ -1006,7 +1006,7 @@ used in the community. So the recommendation is to use
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor3" aria-expanded="false" aria-controls="collapseInstructor3">
   <h3 class="accordion-header" id="headingInstructor3">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Vectorization </h3>
 </button>
-<div id="collapseInstructor3" class="accordion-collapse collapse" aria-labelledby="headingInstructor3" data-bs-parent="#accordionInstructor3">
+<div id="collapseInstructor3" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor3" aria-labelledby="headingInstructor3">
 <div class="accordion-body">
 <p>One final thing to be aware of is that R is <em>vectorized</em>,
 meaning that variables and functions can have vectors as values. For
@@ -2585,9 +2585,9 @@ the project.</p>
 <a class="anchor" aria-label="anchor" href="#easy-switching-between-projects"></a>
 </h4>
 <p>With R Projects, you can <strong>quickly switch</strong> between
-different tasks without affecting the working directory or loaded
-packages. Each project remembers its settings, so you don’t have to
-reconfigure things every time.</p>
+different tasks without affecting the working directory or opening and
+closing scripts. Each project remembers its settings, so you don’t have
+to reconfigure things every time.</p>
 <hr>
 </div>
 </div>
@@ -2636,6 +2636,19 @@ corner.</p>
 <hr class="half-width"></section><section><h2 class="section-heading" id="challenges">Challenges<a class="anchor" aria-label="anchor" href="#challenges"></a>
 </h2>
 <hr class="half-width">
+<div id="challenge-1" class="callout discussion">
+<div class="callout-square">
+<i class="callout-icon" data-feather="message-circle"></i>
+</div>
+<div id="challenge-1" class="callout-inner">
+<h3 class="callout-title">Challenge 1:</h3>
+<div class="callout-content">
+<p>Make sure you have project created.</p>
+<p>Filestructure and data-folder (maybe with archive/ folder).</p>
+<p>data, raw_data, archive,</p>
+</div>
+</div>
+</div>
 <div id="challenge-2" class="callout discussion">
 <div class="callout-square">
 <i class="callout-icon" data-feather="message-circle"></i>
@@ -2643,7 +2656,8 @@ corner.</p>
 <div id="challenge-2" class="callout-inner">
 <h3 class="callout-title">Challenge 2:</h3>
 <div class="callout-content">
-<p>Some basic computation with this vector</p>
+<p>Read in some dataset (maybe from web) and then save it in the data
+folder</p>
 </div>
 </div>
 </div>
@@ -2654,32 +2668,29 @@ corner.</p>
 <div id="challenge-3" class="callout-inner">
 <h3 class="callout-title">Challenge 3:</h3>
 <div class="callout-content">
-<p>Where am I? Save this vector in a subfolder called data (you may need
-to create this folder first)</p>
+<p>Make sure this worked, read in the data set from saved version</p>
 </div>
 </div>
 </div>
-<div id="challenge-5-get-a-list-of-available-files" class="callout discussion">
+<div id="challenge-4-storing-data" class="callout discussion">
 <div class="callout-square">
 <i class="callout-icon" data-feather="message-circle"></i>
 </div>
-<div id="challenge-5-get-a-list-of-available-files" class="callout-inner">
-<h3 class="callout-title">Challenge 5: Get a list of available files</h3>
+<div id="challenge-4-storing-data" class="callout-inner">
+<h3 class="callout-title">Challenge 4: Storing data</h3>
 <div class="callout-content">
-<p>Use list.files() to figure something out</p>
+<p>Compute the mean and sum of something in the dataset</p>
 </div>
 </div>
 </div>
-<div id="challenge-6" class="callout discussion">
+<div id="challenge-5" class="callout discussion">
 <div class="callout-square">
 <i class="callout-icon" data-feather="message-circle"></i>
 </div>
-<div id="challenge-6" class="callout-inner">
-<h3 class="callout-title">Challenge 6:</h3>
+<div id="challenge-5" class="callout-inner">
+<h3 class="callout-title">Challenge 5:</h3>
 <div class="callout-content">
-<p>Create a new script for next episode. Save this with an appropriate
-name</p>
-<p>In this script. Load the packages <code>dplyr</code> and ggplot</p>
+<p>save the summary statistics under a new name in the data folder</p>
 </div>
 </div>
 </div>
@@ -2702,7 +2713,7 @@ any links that you are not going to use.
  -->
 </section></section><section id="aio-data-visualization-01"><p>Content from <a href="data-visualization-01.html">data-visualization-01</a></p>
 <hr>
-<p>Last updated on 2025-02-21 |
+<p>Last updated on 2025-02-25 |
 
         <a href="https://github.com/SLesche/r-for-empra/edit/main/episodes/data-visualization-01.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 12 minutes</p>
@@ -2717,8 +2728,7 @@ any links that you are not going to use.
 <div class="inner">
 <h3 class="card-title">Questions</h3>
 <ul>
-<li>How do you write a lesson using R Markdown and
-<a href="https://carpentries.github.io/sandpaper/" class="external-link">sandpaper</a>?</li>
+<li>How can you get an overview of data?</li>
 </ul>
 </div>
 </div>
@@ -2727,19 +2737,19 @@ any links that you are not going to use.
 <div class="card-body">
 <div class="inner bordered">
 <h3 class="card-title">Objectives</h3>
-<ul>
-<li>Explain how to use markdown with the new lesson template</li>
-<li>Demonstrate how to include pieces of code, figures, and nested
-challenge blocks</li>
-</ul>
+<ul><li>
+</li></ul>
 </div>
 </div>
 </div>
 </div>
 </div>
-<section><h2 class="section-heading" id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+<section><h2 class="section-heading" id="plotting-data">Plotting data<a class="anchor" aria-label="anchor" href="#plotting-data"></a>
 </h2>
 <hr class="half-width">
+<p>Why plotting is the most powerful tool. Communication.</p>
+<p>An example plot that we want to recreate. (Maybe some experimental
+difference)</p>
 <p>This is a lesson created via The Carpentries Workbench. It is written
 in <a href="https://pandoc.org/MANUAL.html" class="external-link">Pandoc-flavored Markdown</a>
 for static files (with extension <code>.md</code>) and <a href="https://rmarkdown.rstudio.com/" class="external-link">R Markdown</a> for dynamic files
@@ -2947,7 +2957,7 @@ reinforce the objectives.</li>
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor1" aria-expanded="false" aria-controls="collapseInstructor1">
   <h3 class="accordion-header" id="headingInstructor1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Instructor Note </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
 <div class="accordion-body">
 <p>Inline instructor notes can help inform instructors of timing
 challenges associated with the lessons. They appear in the “Instructor
@@ -2978,7 +2988,7 @@ View”</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Output </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -3005,7 +3015,7 @@ View”</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <p>You can add a line with at least three colons and a
 <code>solution</code> tag.</p>
