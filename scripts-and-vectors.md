@@ -92,11 +92,12 @@ vector_of_numeric_variables
 vector_of_character_variables <- c("This is a character variable", "A second variable", "And another one")
 
 # Show the output
-vector_of_numeric_variables
+vector_of_character_variables
 ```
 
 ``` output
-[1] 4.000000e+00 7.642000e+00 9.000000e+05 1.030928e-02
+[1] "This is a character variable" "A second variable"           
+[3] "And another one"             
 ```
 
 We can not only combine single elements into a vector, but also combine multiple vectors into one long vector.
