@@ -1,7 +1,7 @@
 ---
 title: 'Projects'
 teaching: 10
-exercises: 2
+exercises: 5
 ---
 
 :::::::::::::::::::::::::::::::::::::: questions 
@@ -157,40 +157,63 @@ To create a project, follow the steps outlined above and give it an appropriate 
 ::: challenge
 ## Challenge 1:
 
-Make sure you have project created.
+Make sure you have the project created. In the folder that the project is created in, add the following sub-folders:
+`data`, `processed_data` and `archive`. You can do this either in the file explorer of your computer, or by using the bottom right window of RStudio.
 
-Filestructure and data-folder (maybe with archive/ folder).
+`data` will house all the raw data files that we are working with in this tutorial. `processed_data` will be used to save data that we processed in some way and want to reuse later on. `archive` is a folder to store old scripts or data-sets that you will no longer use. You can also delete those files, but I often find it easier to just "shove them under the bed" so that I *could* still use them later on.
 
-data, raw_data, archive, 
+Get an overview of the folders in your project by running `list.dirs(recursive = FALSE)`. This should return the folders you just created and a folder where R-project information is stored.
 
+If you do not see the folders you just created, make sure you created and opened the project and that the folders are in the same space as your `.Rproj` project file.
 :::
 
 ::: challenge
 ## Challenge 2: 
 
-Read in some dataset (maybe from web) and then save it in the data folder
+Download the following [data](data/roy_kent_f_count.csv) and place it in the `data` folder. Make sure to give it an appropriate name. The data contains information about the number of times the character *Roy Kent* used the f-word in the show *Ted Lasso*.
+
 :::
 
 ::: challenge
 ## Challenge 3: 
 
-Make sure this worked, read in the data set from saved version
+Test the data you just downloaded. Read it into R and give it an appropriate name. 
+
+Hint: You may need to research how to read `.csv` files into R first.
+
+:::: solution
+## Solution
+
+```{r}
+roy_kent_data <- read.csv("data/roy_kent_f_count.csv")
+```
+::::
 :::
 
 ::: challenge
-## Challenge 4: Storing data
+## Challenge 4:
 
-Compute the mean and sum of something in the dataset
+Familiarize yourself with the data. What columns are there (use `colnames(data)`). Compute the average amount of times Roy Kent says "Fuck" in an episode. Compute the total amount of times he said it throughout the series.
+
+:::: solution
+```{r}
+average_f_count <- mean(roy_kent_data$F_count_RK)
+total_f_count <- sum(roy_kent_data$F_count_RK)
+
+# Because, cum_rk_overall is a running (cumulative) total:
+total_f_count <- max(roy_kent_data$cum_rk_overall)
+```
+
+::::
+
 :::
 
-::: challenge
-## Challenge 5: 
+::::::::::::::::::::::::::::::::::::: keypoints  
 
-save the summary statistics under a new name in the data folder
-:::
-
-::::::::::::::::::::::::::::::::::::: keypoints 
-
-- Some key point
+- The **working directory** is where R looks for and saves files.  
+- Absolute paths give full file locations; relative paths use the working directory.  
+- **R Projects** manage the working directory automatically, keeping work organized.  
+- Using R Projects makes code **portable, reproducible, and easier to share**.  
+- A structured project with separate folders for data and scripts improves workflow.  
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
