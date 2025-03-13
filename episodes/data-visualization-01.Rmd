@@ -38,7 +38,44 @@ roy_kent_data <- read.csv("data/roy_kent_f_count.csv")
 
 When starting out with some data you received, it is important to familiarize yourself with the basics of this data first. What columns does it have, what information is contained in each row? What do the columns mean?
 
-One option to get a quick overview of the data is... just looking at it! By clicking on the data in the *Environment* tab or typing `View(roy_kent_data)` in the console, you can inspect the data in R Studio.
+One option to get a quick overview of the data is... just looking at it! By clicking on the data in the *Environment* tab or typing `View(roy_kent_data)` in the console, you can inspect the data in R Studio. This will already show you how many observations (in this case rows) and variables (columns) the data has. We can also inspect the column names and see the first few entries. Look at the data, what might each column represent?
+
+Now, let's go back to using programming to inspect data. We already learned about the handy function `glimpse()`, for which we need the `dplyr` package.
+
+```{r, message = FALSE, warning = FALSE}
+library(dplyr)
+
+glimpse(roy_kent_data)
+```
+
+This will tell us the variable type of each column, too. We can see that the first column `X` is of type *int*, and thus a numeric column. The second column is a character column which just contains the name of the hero of this data *Roy Kent*.
+
+::: callout
+write about X
+:::
+
+write about the background of the show (pics)
+
+Write about the data and its origin (tidytuesday)
+
+visualize the distribution of FCK
+
+delve into data, visualize the amount of FCK by episode (line)
+
+get descriptives of the other columns
+
+visualize the relationship between FCK and Imdb_rating
+
+make a plot of this, color by dating. And then save it
+
+Challenges:
+
+Make plot of IMbd and total fck by roy coaching, what do you notice
+
+Some more descriptives
+
+save the plot
+
 
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
