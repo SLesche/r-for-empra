@@ -336,7 +336,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>data-visualization-01</h1>
-        <p>Last updated on 2025-03-12 |
+        <p>Last updated on 2025-03-13 |
 
         <a href="https://github.com/SLesche/r-for-empra/edit/main/episodes/data-visualization-01.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -414,7 +414,71 @@ columns mean?</p>
 <p>One option to get a quick overview of the data is… just looking at
 it! By clicking on the data in the <em>Environment</em> tab or typing
 <code>View(roy_kent_data)</code> in the console, you can inspect the
-data in R Studio.</p>
+data in R Studio. This will already show you how many observations (in
+this case rows) and variables (columns) the data has. We can also
+inspect the column names and see the first few entries. Look at the
+data, what might each column represent?</p>
+<p>Now, let’s go back to using programming to inspect data. We already
+learned about the handy function <code>glimpse()</code>, for which we
+need the <code>dplyr</code> package.</p>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw">library</span><span class="op">(</span><span class="va">dplyr</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">glimpse</span><span class="op">(</span><span class="va">roy_kent_data</span><span class="op">)</span></span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>Rows: 34
+Columns: 17
+$ X                 &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 1…
+$ Character         &lt;chr&gt; "Roy Kent", "Roy Kent", "Roy Kent", "Roy Kent", "Roy…
+$ Episode_order     &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 1…
+$ Season            &lt;int&gt; 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 2, 2, 2, 2, 2, 2, 2, 2…
+$ Episode           &lt;int&gt; 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 2, 3, 4, 5, 6, 7, …
+$ Season_Episode    &lt;chr&gt; "S1_e1", "S1_e2", "S1_e3", "S1_e4", "S1_e5", "S1_e6"…
+$ F_count_RK        &lt;int&gt; 2, 2, 7, 8, 4, 2, 5, 7, 14, 5, 11, 10, 2, 2, 23, 12,…
+$ F_count_total     &lt;int&gt; 13, 8, 13, 17, 13, 9, 15, 18, 22, 22, 16, 22, 8, 6, …
+$ cum_rk_season     &lt;int&gt; 2, 4, 11, 19, 23, 25, 30, 37, 51, 56, 11, 21, 23, 25…
+$ cum_total_season  &lt;int&gt; 13, 21, 34, 51, 64, 73, 88, 106, 128, 150, 16, 38, 4…
+$ cum_rk_overall    &lt;int&gt; 2, 4, 11, 19, 23, 25, 30, 37, 51, 56, 67, 77, 79, 81…
+$ cum_total_overall &lt;int&gt; 13, 21, 34, 51, 64, 73, 88, 106, 128, 150, 166, 188,…
+$ F_score           &lt;dbl&gt; 0.1538462, 0.2500000, 0.5384615, 0.4705882, 0.307692…
+$ F_perc            &lt;dbl&gt; 15.4, 25.0, 53.8, 47.1, 30.8, 22.2, 33.3, 38.9, 63.6…
+$ Dating_flag       &lt;chr&gt; "No", "No", "No", "No", "No", "No", "No", "Yes", "Ye…
+$ Coaching_flag     &lt;chr&gt; "No", "No", "No", "No", "No", "No", "No", "No", "No"…
+$ Imdb_rating       &lt;dbl&gt; 7.8, 8.1, 8.5, 8.2, 8.9, 8.5, 9.0, 8.7, 8.6, 9.1, 7.…</code></pre>
+</div>
+<p>This will tell us the variable type of each column, too. We can see
+that the first column <code>X</code> is of type <em>int</em>, and thus a
+numeric column. The second column is a character column which just
+contains the name of the hero of this data <em>Roy Kent</em>.</p>
+<div id="callout2" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<div class="callout-inner">
+<h3 class="callout-title">Callout</h3>
+<div class="callout-content">
+<p>write about X</p>
+</div>
+</div>
+</div>
+<p>write about the background of the show (pics)</p>
+<p>Write about the data and its origin (tidytuesday)</p>
+<p>visualize the distribution of FCK</p>
+<p>delve into data, visualize the amount of FCK by episode (line)</p>
+<p>get descriptives of the other columns</p>
+<p>visualize the relationship between FCK and Imdb_rating</p>
+<p>make a plot of this, color by dating. And then save it</p>
+<p>Challenges:</p>
+<p>Make plot of IMbd and total fck by roy coaching, what do you
+notice</p>
+<p>Some more descriptives</p>
+<p>save the plot</p>
 <div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
 <i class="callout-icon" data-feather="key"></i>
@@ -494,9 +558,9 @@ any links that you are not going to use.
   "creativeWorkStatus": "active",
   "url": "https://SLesche.github.io/r-for-empra/data-visualization-01.html",
   "identifier": "https://SLesche.github.io/r-for-empra/data-visualization-01.html",
-  "dateCreated": "2025-03-12",
-  "dateModified": "2025-03-12",
-  "datePublished": "2025-03-12"
+  "dateCreated": "2025-03-13",
+  "dateModified": "2025-03-13",
+  "datePublished": "2025-03-13"
 }
 
   </script><script>
