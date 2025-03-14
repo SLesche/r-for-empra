@@ -24,20 +24,18 @@ This is the accompanying website to the Empra Differentielle Psychologie of Heid
 The entire course is organized in short "Episodes" intended to take around 10-15mins to read and around 5-10mins to complete the challenges below. You will complete approximately one episode per week.
 At the end of each episode, you will upload a script containing the solutions to the challenges.
 The file format should be: `lessonnumber_solutions_name_surname.R`.
-Upload your solutions to a HeiBox folder.
+Upload your solutions to a HeiBox folder and share that folder with me.
 
 ## A word about Chat-GPT
-- Use it and google, this is how programming works
+Chat-GPT is an amazing tool that makes it much easier to just try something out. Importantly, it can take a lot of work off your hands, especially early on in your learning process. Most of the challenges here can just be solved by plugging them into a LLM like Chat-GPT. I encourage you to first try to find a solution yourself. You will learn a lot more by failing yourself first and continuing to try.
 
-- BUt! You have a machine that can do all your homework
-
-- First, try using it yourself. Ask chat-gpt to give you hints only, not solutions.
+Nonetheless, sometimes it may be necessary to ask Chat-GPT or google a solution. In real data analysis, this is done a lot! Nobody knows anything. However, the most important thing for now is that you *understand* the code you write. Thus, if you use Chat-GPT, make it explain to you why this code works and what it is doing or ask it for hints instead of the solution.
 
 ## Accompanying Material
 This course relies heavily on [R for Data Science (2e)](https://r4ds.hadley.nz/), which can be treated as an accompanying textbook.
 
 ## Questions & Support
-This is the first version of the new course material. If you have any questions or notice any inconsistencies / opportunities for improvement, feel free to reach out to to me via mail or Slack.
+This is the first version of the new course material. If you have any questions or notice any inconsistencies / opportunities for improvement, feel free to reach out to to me via mail or Slack. If you feel comfortable using GitHub, also feel free to submit an [issue](https://github.com/SLesche/r-for-empra/issues).
 
 ::::::::::::::::::::::::::::::::::::: keypoints
 - Follow the structured outline to learn R basics and data analysis

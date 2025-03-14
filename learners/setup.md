@@ -16,10 +16,6 @@ RStudio is an integrated development environment, or IDE, for R programming, whi
 
 When you start RStudio, you’ll see two key regions in the interface: the console pane and the output pane. For now, all you need to know is that you type the R code in the console pane and press enter to run it. You’ll learn more as we go along!
 
-
-Figure 2: The RStudio IDE has two key regions: type R code in the console pane on the left, and look for plots in the output pane on the right.
-
-
 ## Data 
 <!--
 FIXME: place any data you want learners to use in `episodes/data` and then use
@@ -28,6 +24,5 @@ FIXME: place any data you want learners to use in `episodes/data` and then use
 -->
 We will make use of some data available in R packages as well as data from real experiments run by me or my colleagues.
 
-I will provide the data you need at each time point using a HeiBox link. If you want to download all data beforehand,
-download the [data zip file](data/lesson-data.zip) and unzip it to your desktop.
+I will provide the data you need at each time point, you can then easily download the required data. If you want to download all data beforehand, download the [data zip file](data/lesson-data.zip) and unzip it to your desktop.
 
