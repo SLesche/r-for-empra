@@ -128,7 +128,7 @@ Coaching_flag*      1.00 -0.34    -1.94  0.09
 Imdb_rating         2.80 -0.81     0.31  0.11
 ```
 
-In my opinion, the most important information in this table are the mean value of a column and the maximum and minimum value. The mean value reveals some important information about the average value of a given variable, duh... And the minimum and maximum value can reveal issues in the data. Is the minimum age -2? Or the maximum IQ 1076? Something might be wrong in this data, and looking at the minimum and maximum values might already give you a clue.
+In my opinion, the most important information in this table are the mean value of a column and the maximum and minimum value. The mean value reveals some important information about the average value of a given variable, duh... And the minimum and maximum value can reveal issues in the data. Is the minimum age -2? Or the maximum IQ 1076? Something might be wrong in this data, and looking at the minimum and maximum values might already give you a clue. In this data, none of the maxima or minima seem to be a problem, as they are all in reasonable ranges.
 
 Let's start visualizing some basic information. I have already proclaimed my love for histograms as a quick and dirty tool to get an overview and the simplicity of its code is a reason why!
 
@@ -147,7 +147,7 @@ hist(roy_kent_data$F_count_RK, breaks = 10)
 ```
 
 <img src="fig/data-visualization-01-rendered-unnamed-chunk-5-1.png" style="display: block; margin: auto;" />
-This already provides us some more useful information. Roy seems to sweat between 0 and 12 times most often and swears a lot in one episode (we will find out later, which one that is).
+This already provides us some more useful information. Roy seems to swear between 0 and 12 times most often and swears a lot in two episodes.
 
 Let's try increasing the number of breaks to 20.
 
@@ -158,7 +158,7 @@ hist(roy_kent_data$F_count_RK, breaks = 20)
 
 <img src="fig/data-visualization-01-rendered-unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
 
-Here, an interesting pattern seems to emerge. Three different clusters of swear counts show up, one where Roy swears between 0 - 7 times, presumably because he has little screen-time in the episode. One cluster where Roy swears between 9-17 times, which more closely resembles his average swearing amount. And finally two episodes where Roy flies of the handle and swears a whopping `max(roy_kent_data$F_count_RK) = ` 23 times!
+Here, an interesting pattern seems to emerge. Three different clusters of swear counts show up, one where Roy swears between 0 - 7 times, presumably because he has little screen-time in the episode. One cluster where Roy swears between 9-17 times, which more closely resembles his average swearing amount. And finally two episodes where Roy flies of the handle and swears a whopping `max(roy_kent_data$F_count_RK) = `23 times!
 
 In order to figure out what makes Roy swear so much, let's plot the number of times Roy swears by episode!
 
@@ -300,8 +300,8 @@ ggplot(
 Now, a clearer picture emerges. Roy starts of pretty slow as a player, but then begins to swear a lot in the episodes that he is coaching in.
 
 ::: callout
-## Making plot prettier using themes
-The basic plots already look okay and are enough for just finding something out about data. But you can make them even prettier quickly using a theme. Themes in ggplot are collections of visual settings that control the background of the plot, the text size of the axis and some other things. 
+## Making plots prettier using themes
+The basic plots already look okay and are enough for just finding something out about data. But you can make them even more enticing by using a theme. Themes in ggplot are collections of visual settings that control the background of the plot, the text size of the axis and some other things. 
 
 I often use `theme_classic()` or `theme_minimal()`, but you can try out different themes or even write your own!
 
@@ -331,6 +331,7 @@ ggplot(
 <img src="fig/data-visualization-01-rendered-unnamed-chunk-15-1.png" style="display: block; margin: auto;" />
 :::
 
+## Challenges
 
 ::: challenge
 ## Challenge 1
