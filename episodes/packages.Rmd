@@ -59,6 +59,9 @@ glimpse(iris)
 # Using a function without loading the entire package
 # dplyr::glimpse(iris)
 ```
+
+Here, we can see that `iris` has 150 rows (or observations) and 5 columns (or variables). The first four variables are size measurements regarding length and width of sepal and petal and the fifth variable is a variable containing the species of flower.
+
 ## Challenges
 
 ::: challenge
