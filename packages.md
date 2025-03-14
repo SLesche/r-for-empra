@@ -51,7 +51,7 @@ These packages will be installed into "~/work/r-for-empra/r-for-empra/renv/profi
 
 # Installing packages --------------------------------------------------------
 - Installing dplyr ...                          OK [linked from cache]
-Successfully installed 1 package in 6.5 milliseconds.
+Successfully installed 1 package in 7.3 milliseconds.
 ```
 
 Then, we will need to load the package to make its functions available for use. For most packages, this will also print a lot of messages in the console in the bottom left. Again, this is usually harmless. If something does go wrong, you will see the word `Error:` along with a message somewhere. `Warnings:` can often be ignored in package installation. 
@@ -101,6 +101,9 @@ $ Species      <fct> setosa, setosa, setosa, setosa, setosa, setosa, setosa, sâ€
 # Using a function without loading the entire package
 # dplyr::glimpse(iris)
 ```
+
+Here, we can see that `iris` has 150 rows (or observations) and 5 columns (or variables). The first four variables are size measurements regarding length and width of sepal and petal and the fifth variable is a variable containing the species of flower.
+
 ## Challenges
 
 ::: challenge
