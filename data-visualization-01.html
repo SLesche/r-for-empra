@@ -265,6 +265,7 @@
 <li><a href="#getting-a-glimpse-of-the-data">Getting a glimpse of the data</a></li>
 <li><a href="#inspecting-important-values">Inspecting important values</a></li>
 <li><a href="#ggplot2">ggplot2</a></li>
+<li><a href="#challenges">Challenges</a></li>
         </ul></div><!--/div.accordion-body-->
     </div><!--/div.accordion-collapse-->
 
@@ -338,7 +339,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Data Visualization (1)</h1>
-        <p>Last updated on 2025-03-13 |
+        <p>Last updated on 2025-03-14 |
 
         <a href="https://github.com/SLesche/r-for-empra/edit/main/episodes/data-visualization-01.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -539,7 +540,8 @@ reveals some important information about the average value of a given
 variable, duh… And the minimum and maximum value can reveal issues in
 the data. Is the minimum age -2? Or the maximum IQ 1076? Something might
 be wrong in this data, and looking at the minimum and maximum values
-might already give you a clue.</p>
+might already give you a clue. In this data, none of the maxima or
+minima seem to be a problem, as they are all in reasonable ranges.</p>
 <p>Let’s start visualizing some basic information. I have already
 proclaimed my love for histograms as a quick and dirty tool to get an
 overview and the simplicity of its code is a reason why!</p>
@@ -559,8 +561,8 @@ adequately, so lets try 10 instead.</p>
 </div>
 <p><img src="fig/data-visualization-01-rendered-unnamed-chunk-5-1.png" style="display: block; margin: auto;" class="figure">
 This already provides us some more useful information. Roy seems to
-sweat between 0 and 12 times most often and swears a lot in one episode
-(we will find out later, which one that is).</p>
+swear between 0 and 12 times most often and swears a lot in two
+episodes.</p>
 <p>Let’s try increasing the number of breaks to 20.</p>
 <div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -574,7 +576,7 @@ times, presumably because he has little screen-time in the episode. One
 cluster where Roy swears between 9-17 times, which more closely
 resembles his average swearing amount. And finally two episodes where
 Roy flies of the handle and swears a whopping
-<code>max(roy_kent_data$F_count_RK) =</code> 23 times!</p>
+<code>max(roy_kent_data$F_count_RK) =</code>23 times!</p>
 <p>In order to figure out what makes Roy swear so much, let’s plot the
 number of times Roy swears by episode!</p>
 </section><section><h2 class="section-heading" id="ggplot2">ggplot2<a class="anchor" aria-label="anchor" href="#ggplot2"></a></h2>
@@ -739,15 +741,15 @@ the dots by whether Roy was coaching or not:</p>
 <figure><img src="fig/data-visualization-01-rendered-unnamed-chunk-14-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>Now, a clearer picture emerges. Roy starts of pretty slow as a
 player, but then begins to swear a lot in the episodes that he is
 coaching in.</p>
-<div id="making-plot-prettier-using-themes" class="callout">
+<div id="making-plots-prettier-using-themes" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
-<div id="making-plot-prettier-using-themes" class="callout-inner">
-<h3 class="callout-title">Making plot prettier using themes</h3>
+<div id="making-plots-prettier-using-themes" class="callout-inner">
+<h3 class="callout-title">Making plots prettier using themes</h3>
 <div class="callout-content">
 <p>The basic plots already look okay and are enough for just finding
-something out about data. But you can make them even prettier quickly
+something out about data. But you can make them even more enticing by
 using a theme. Themes in ggplot are collections of visual settings that
 control the background of the plot, the text size of the axis and some
 other things.</p>
@@ -782,7 +784,8 @@ even write your own!</p>
 <figure><img src="fig/data-visualization-01-rendered-unnamed-chunk-15-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure></div>
 </div>
 </div>
-<div id="challenge-1" class="callout discussion">
+</section><section><h2 class="section-heading" id="challenges">Challenges<a class="anchor" aria-label="anchor" href="#challenges"></a></h2>
+<hr class="half-width"><div id="challenge-1" class="callout discussion">
 <div class="callout-square">
 <i class="callout-icon" data-feather="message-circle"></i>
 </div>
@@ -912,9 +915,9 @@ any links that you are not going to use.
   "creativeWorkStatus": "active",
   "url": "https://SLesche.github.io/r-for-empra/data-visualization-01.html",
   "identifier": "https://SLesche.github.io/r-for-empra/data-visualization-01.html",
-  "dateCreated": "2025-03-13",
-  "dateModified": "2025-03-13",
-  "datePublished": "2025-03-13"
+  "dateCreated": "2025-03-14",
+  "dateModified": "2025-03-14",
+  "datePublished": "2025-03-14"
 }
 
   </script><script>

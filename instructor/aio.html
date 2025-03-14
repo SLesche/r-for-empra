@@ -2085,7 +2085,7 @@ about what happens if you accidentally run the command
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>The first element is going to be excluded twice. This means that the
 vector will lose two elements. In principle, it is a good idea to write
@@ -2780,7 +2780,7 @@ any links that you are not going to use.
  -->
 </section></section><section id="aio-data-visualization-01"><p>Content from <a href="data-visualization-01.html">Data Visualization (1)</a></p>
 <hr>
-<p>Last updated on 2025-03-13 |
+<p>Last updated on 2025-03-14 |
 
         <a href="https://github.com/SLesche/r-for-empra/edit/main/episodes/data-visualization-01.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 20 minutes</p>
@@ -2986,7 +2986,8 @@ reveals some important information about the average value of a given
 variable, duh… And the minimum and maximum value can reveal issues in
 the data. Is the minimum age -2? Or the maximum IQ 1076? Something might
 be wrong in this data, and looking at the minimum and maximum values
-might already give you a clue.</p>
+might already give you a clue. In this data, none of the maxima or
+minima seem to be a problem, as they are all in reasonable ranges.</p>
 <p>Let’s start visualizing some basic information. I have already
 proclaimed my love for histograms as a quick and dirty tool to get an
 overview and the simplicity of its code is a reason why!</p>
@@ -3006,8 +3007,8 @@ adequately, so lets try 10 instead.</p>
 </div>
 <p><img src="../fig/data-visualization-01-rendered-unnamed-chunk-5-1.png" style="display: block; margin: auto;" class="figure">
 This already provides us some more useful information. Roy seems to
-sweat between 0 and 12 times most often and swears a lot in one episode
-(we will find out later, which one that is).</p>
+swear between 0 and 12 times most often and swears a lot in two
+episodes.</p>
 <p>Let’s try increasing the number of breaks to 20.</p>
 <div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -3021,7 +3022,7 @@ times, presumably because he has little screen-time in the episode. One
 cluster where Roy swears between 9-17 times, which more closely
 resembles his average swearing amount. And finally two episodes where
 Roy flies of the handle and swears a whopping
-<code>max(roy_kent_data$F_count_RK) =</code> 23 times!</p>
+<code>max(roy_kent_data$F_count_RK) =</code>23 times!</p>
 <p>In order to figure out what makes Roy swear so much, let’s plot the
 number of times Roy swears by episode!</p>
 </section><section><h2 class="section-heading" id="ggplot2">ggplot2<a class="anchor" aria-label="anchor" href="#ggplot2"></a>
@@ -3188,15 +3189,15 @@ the dots by whether Roy was coaching or not:</p>
 <figure><img src="../fig/data-visualization-01-rendered-unnamed-chunk-14-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>Now, a clearer picture emerges. Roy starts of pretty slow as a
 player, but then begins to swear a lot in the episodes that he is
 coaching in.</p>
-<div id="making-plot-prettier-using-themes" class="callout">
+<div id="making-plots-prettier-using-themes" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
-<div id="making-plot-prettier-using-themes" class="callout-inner">
-<h3 class="callout-title">Making plot prettier using themes</h3>
+<div id="making-plots-prettier-using-themes" class="callout-inner">
+<h3 class="callout-title">Making plots prettier using themes</h3>
 <div class="callout-content">
 <p>The basic plots already look okay and are enough for just finding
-something out about data. But you can make them even prettier quickly
+something out about data. But you can make them even more enticing by
 using a theme. Themes in ggplot are collections of visual settings that
 control the background of the plot, the text size of the axis and some
 other things.</p>
@@ -3232,6 +3233,9 @@ even write your own!</p>
 </div>
 </div>
 </div>
+</section><section><h2 class="section-heading" id="challenges">Challenges<a class="anchor" aria-label="anchor" href="#challenges"></a>
+</h2>
+<hr class="half-width">
 <div id="challenge-1" class="callout discussion">
 <div class="callout-square">
 <i class="callout-icon" data-feather="message-circle"></i>
@@ -3371,7 +3375,7 @@ reinforce the objectives.</li>
 <button class="accordion-button instructor-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseInstructor1" aria-expanded="false" aria-controls="collapseInstructor1">
   <h3 class="accordion-header" id="headingInstructor1">  <div class="note-square"><i aria-hidden="true" class="callout-icon" data-feather="edit-2"></i></div> Instructor Note </h3>
 </button>
-<div id="collapseInstructor1" class="accordion-collapse collapse" data-bs-parent="#accordionInstructor1" aria-labelledby="headingInstructor1">
+<div id="collapseInstructor1" class="accordion-collapse collapse" aria-labelledby="headingInstructor1" data-bs-parent="#accordionInstructor1">
 <div class="accordion-body">
 <p>Inline instructor notes can help inform instructors of timing
 challenges associated with the lessons. They appear in the “Instructor
@@ -3402,7 +3406,7 @@ View”</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Output </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -3429,7 +3433,7 @@ View”</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <p>You can add a line with at least three colons and a
 <code>solution</code> tag.</p>
@@ -3537,9 +3541,9 @@ any links that you are not going to use.
   "creativeWorkStatus": "active",
   "url": "https://SLesche.github.io/r-for-empra/instructor/aio.html",
   "identifier": "https://SLesche.github.io/r-for-empra/instructor/aio.html",
-  "dateCreated": "2025-03-13",
-  "dateModified": "2025-03-13",
-  "datePublished": "2025-03-13"
+  "dateCreated": "2025-03-14",
+  "dateModified": "2025-03-14",
+  "datePublished": "2025-03-14"
 }
 
   </script><script>
