@@ -336,7 +336,9 @@ ggplot(
 ::: challenge
 ## Challenge 1
 
-Figure out what total means, give descriptives of it
+Figure out what total means, give descriptives of it.
+
+Write it into a vector and compute the mean, sd, min and max
 :::
 
 ::: challenge

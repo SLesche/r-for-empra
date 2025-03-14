@@ -23,7 +23,7 @@ exercises: 10
 
 ## Scripts in R
 For now, we have been only using the R console to execute commands.
-This works great if there are some quick calculations you have to run, but unsuited for more complex analyses. If you want to reproduce the exact steps you took in data cleaning and analyses, you need to write them down - like a recipe. 
+This works great if there are some quick calculations you have to run, but is unsuited for more complex analyses. If you want to reproduce the exact steps you took in data cleaning and analyses, you need to write them down - like a recipe. 
 
 This is where R scripts come in. They are basically like a text file (similar to Word) where you can write down all the steps you took. This makes it possible to retrace them and produce the exact same result over and over again.
 
@@ -33,7 +33,7 @@ Secondly (and maybe more importantly) you need to actually **save** these script
 The place where you save your script and especially the place you save your data should ideally be a folder in a sensible place. For example, this script is saved in a sub-folder `episodes/` of the workshop folder `r_for_empra/`. 
 This makes it easy for humans to find the script. Aim for similar clarity in your folder structure!
 
-For this lesson, create a folder called `r_for_empra` somewhere on your computer where it makes sense for you. Then, create a new R script by clicking `File > New File > R Script` or hitting `Ctrl + Shift + N`. Save this script as  `episode_projects_and_scripts.R` in the folder `r_for_empra` created above.
+For this lesson, create a folder called `r_for_empra` somewhere on your computer where it makes sense for you. Then, create a new R script by clicking `File > New File > R Script` or hitting `Ctrl + Shift + N`. Save this script as  `episode_projects_and_scripts.R` in the folder `r_for_empra` created above. Follow along with the episode and note down the commands in your script.
 
 ## Using a script
 Let's start learning about some basic elements of R programming. We have already tried assigning values to variables using the `<-` operator. For example, we might assign the constant `km_to_m` the value 1000.
@@ -60,13 +60,9 @@ If we have multiple distances and want to transform them from km to m at the sam
 RStudio offers you great flexibility in running code from within the editor
 window. There are buttons, menu choices, and keyboard shortcuts. To run the
 current line, you can 1. click on the `Run` button just above the editor panel,
-or 2. select "Run Lines" from the "Code" menu, or 3. hit Ctrl-Enter in Windows
+or 2. select "Run Lines" from the "Code" menu, or 3. hit `Ctrl + Enter` in Windows
 or Linux or Command-Enter on OS X. (This shortcut can also be seen by hovering
-the mouse over the button). To run a block of code, select it and then `Run`.
-If you have modified a line of code within a block of code you have just run,
-there is no need to reselect the section and `Run`, you can use the next button
-along, `Re-run the previous region`. This will run the previous code block
-including the modifications you have made.
+the mouse over the button). To run a block of code, select it and then `Run` via the button or the keyboard-shortcut `Ctrl + Enter`.
 
 ::: 
 
@@ -109,7 +105,7 @@ numeric_vector_2 <- c(6:10) # 6:10 generates the values 6, 7, 8, 9, 10
 combined_vector <- c(numeric_vector_1, numeric_vector_2)
 ```
 
-However, all elements have to be of the same type. We cannot combine numeric vectors with character vectors:
+Recall that all elements have to be of the same type. If you try to combine numeric vectors with character vectors, R will automatically convert everything to a character vector (as this has less restrictions, anything can be a character).
 
 ``` r
 character_vector_1 <- c("5", "6", "7")
@@ -119,7 +115,7 @@ character_vector_1 <- c("5", "6", "7")
 combining_numeric_and_character <- c(numeric_vector_1, character_vector_1)
 ```
 
-We can fix this error by converting the vectors to the same type. Note how the characters are also just numbers, but in quotation marks. Sometimes, this happens in real data, too. Some programs store every variable as a character (sometimes also called *string*). We then have to convert the numbers back to the number format:
+We can fix this issue by converting the vectors to the same type. Note how the characters are also just numbers, but in quotation marks. Sometimes, this happens in real data, too. Some programs store every variable as a character (sometimes also called *string*). We then have to convert the numbers back to the number format:
 
 
 ``` r
@@ -178,21 +174,22 @@ This tells us that there is a character vector, hence *chr*, with 3 elements.
 
 
 ``` r
-str(numeric_vector_1)
+str(1:5)
 ```
 
 ``` output
- num [1:5] 1 2 3 4 5
+ int [1:5] 1 2 3 4 5
 ```
-Note that this prints *int* and not the usual *num*. This is because `numeric_vector_1` only contains integers, so whole numbers. These are stored in a special type that takes up less memory, because the numbers need to be stored with less precision. You can treat it as very similar to a numeric vector, and do all the same wonderful things with it!
+Note that this prints *int* and not the usual *num*. This is because the vector only contains integers, so whole numbers. These are stored in a special type that takes up less memory, because the numbers need to be stored with less precision. You can treat it as very similar to a numeric vector, and do all the same wonderful things with it!
 :::
 
 ## Simple functions for vectors
-Let's use something more exciting than a sequence from 1 to 10 as an example vector. Here, we use the `mtcars` data that you already got to know in an earlier lesson. `mtcars` carries information about cars, like their name, fuel usage, weight, etc. This information is stored in a *data frame*. In order to extract vectors from a data frame we can use the `$` operator. `data$column` extracts a vector.
+Let's use something more exciting than a sequence from 1 to 10 as an example vector. Here, we use the `mtcars` data that you already got to know in an earlier lesson. `mtcars` carries information about cars, like their name, fuel usage, weight, etc. This information is stored in a *data frame*. A data frame is a rectangular collection of variables (in the columns) and observations (in the rows).  In order to extract vectors from a data frame we can use the `$` operator. `data$column` extracts a vector.
 
 
 ``` r
 mtcars_weight_tons <- mtcars$wt 
+
 # note that it is a good idea to include the unit in the variable name
 mtcars_weight_tons
 ```
@@ -337,6 +334,7 @@ The same rules apply for all types of vectors (numeric and character).
 ::: callout
 ## Tip: Think about the future
 Excluding by index is a simple way to clean vectors. However, think about what happens if you accidentally run the command `vector <- vector[-1]` twice, instead of once?
+:::
 
 :::: solution
 The first element is going to be excluded twice. This means that the vector will lose two elements. In principle, it is a good idea to write code that you can run multiple times without causing unwanted issues. To achieve this, either use a different way to exclude the first element that we will talk about later, or simply assign the cleaned vector a new name:
@@ -347,11 +345,10 @@ cleaned_vector <- vector[-1]
 
 Now, no matter how often you run this piece of code, `cleaned_vector` will always be `vector` without the first entry.
 ::::
-:::
 
 ## Filtering vectors
 In most cases, you don't know what the element of the vector is you want to exclude. 
-You might now that some values are impossible or not of interest, but don't know where they are. 
+You might know that some values are impossible or not of interest, but don't know where they are. 
 For example, the accuracy vector of a response time task might look like this:
 
 ``` r
@@ -382,7 +379,9 @@ Therefore, we need to exclude all invalid values before continuing our analysis.
 The above example illustrates something very important. R will not throw an error every time you do something that doesn't make sense. You should be really careful of "silent" errors. The `mean()` function above works exactly as intended, but returns a completely nonsensical value. You should always conduct *sanity checks*. Can mean accuracy be higher than 1? How many entries am I expecting in my data? 
 :::
 
-Now, back to the solution to the wacky accuracy data. Note that R gives us the opportunity to do things in a million different ways. If you came up with something different from what was presented here, great! Make sure it works and if so, use it! First, we need to recode the wrong entry. That `11` was supposed to be a `1`, but someone entered the wrong data in the excel. To do this, we can find the index, the element number, where accuracy is 11. Then, we can replace that entry with 1.
+Now, back to the solution to the wacky accuracy data. Note that R gives us the opportunity to do things in a million different ways. If you came up with something different from what was presented here, great! Make sure it works and if so, use it! 
+
+First, we need to recode the wrong entry. That `11` was supposed to be a `1`, but someone entered the wrong data in the excel. To do this, we can find the index, the element number, where accuracy is 11. Then, we can replace that entry with 1.
 
 ``` r
 index_where_accuracy_11 <- which(accuracy_coded == 11)

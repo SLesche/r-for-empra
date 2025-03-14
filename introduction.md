@@ -24,7 +24,7 @@ This is the accompanying website to the Empra Differentielle Psychologie of Heid
 The entire course is organized in short "Episodes" intended to take around 10-15mins to read and around 5-10mins to complete the challenges below. You will complete approximately one episode per week.
 At the end of each episode, you will upload a script containing the solutions to the challenges.
 The file format should be: `lessonnumber_solutions_name_surname.R`.
-Upload your solutions to a HeiBox folder and share that folder with me.
+Upload the script containing your solutions to a HeiBox folder and share that folder with me.
 
 ## A word about Chat-GPT
 Chat-GPT is an amazing tool that makes it much easier to just try something out. Importantly, it can take a lot of work off your hands, especially early on in your learning process. Most of the challenges here can just be solved by plugging them into a LLM like Chat-GPT. I encourage you to first try to find a solution yourself. You will learn a lot more by failing yourself first and continuing to try.
