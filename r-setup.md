@@ -62,7 +62,7 @@ interactive R console.
    or using R's `source()`  function.
 
 For now, let's stick with the console. We will learn more about how to use R scripts later.
-Feel free to run all code examples provided here on your own machine and figure out what they do.
+Feel free to run all code examples provided here in your own RStudio console and figure out what they do.
 
 ## Introduction to the R console
 Much of your time in R will be spent in the R interactive
@@ -251,11 +251,13 @@ Typing a `?` before the name of a command will open the help page
 for that command. As well as providing a detailed description of
 the command and how it works, scrolling to the bottom of the
 help page will usually show a collection of code examples which
-illustrate command usage. We'll go through an example later.
+illustrate command usage. Try reading the description to the `log()` function by typing `?log()` (or just `?log`) in the console.
 
 ## Comparing things
 
-We can also do comparison in R:
+Another useful feature of R next to functions are comparisons. Quite often, we want to see if one value is bigger than another or only use data with some particular value.
+
+We can check if two values are equal by using the equality operator `==`. 
 
 
 ``` r
@@ -277,11 +279,11 @@ We can also do comparison in R:
 
 
 ``` r
-1 <  2  # less than
+1 <  0  # less than
 ```
 
 ``` output
-[1] TRUE
+[1] FALSE
 ```
 
 
@@ -295,16 +297,16 @@ We can also do comparison in R:
 
 
 ``` r
-1 > 0  # greater than
+1 > 1  # greater than
 ```
 
 ``` output
-[1] TRUE
+[1] FALSE
 ```
 
 
 ``` r
-1 >= -9 # greater than or equal to
+1 >= 1 # greater than or equal to
 ```
 
 ``` output
@@ -335,7 +337,8 @@ Further reading: [http://floating-point-gui.de/](http://floating-point-gui.de/)
 :::: 
 
 ## Variables and assignment
-We can store values in variables using the assignment operator `<-`, like this:
+
+In the previous example, we simply used numbers to do comparisons. However, most work in R will be done using *variables*. A variable can be any quality, quantity or property we might be interested in, like a response time, a score on a personality test or a diagnosis. We can store values in variables using the assignment operator `<-`, like this:
 
 
 ``` r
@@ -380,7 +383,7 @@ x <- 100
 
 `x` used to contain the value 0.025 and and now it has the value 100.
 
-Assignment values can contain the variable being assigned to:
+We can also update the value of a variable and store it with the same name again.
 
 
 ``` r
@@ -414,7 +417,6 @@ dont_be.aMenace_toSociety
 
 I always use `snake_case` for variable names in R. `camelCase` is often used in other programming languages such as MATLAB or JavaScript.
 
-
 ::: callout
 It is also possible to use the `=` operator for assignment:
 
@@ -429,149 +431,16 @@ where it is less confusing to use `<-` than `=`, and it is the most common
 symbol used in the community. So the recommendation is to use `<-`.
 ::: 
 
-::: instructor
-## Vectorization
-
-One final thing to be aware of is that R is *vectorized*, meaning that
-variables and functions can have vectors as values. For example
-
+If we try to give a variable an invalid name, R will throw an error.
 
 ``` r
-1:5
-```
-
-``` output
-[1] 1 2 3 4 5
-```
-
-``` r
-2^(1:5)
-```
-
-``` output
-[1]  2  4  8 16 32
-```
-
-``` r
-x <- 1:5
-2^x
-```
-
-``` output
-[1]  2  4  8 16 32
-```
-
-This is incredibly powerful; we will discuss this further in an
-upcoming lesson.
-:::
-
-## Managing your environment
-
-There are a few useful commands you can use to interact with the R session.
-
-`ls` will list all of the variables and functions stored in the global environment
-(your working R session):
-
-
-``` r
-ls()
-```
-
-``` output
-[1] "x"
-```
-
-::: callout
-## Tip: hidden objects
-
-Just like in the shell, `ls` will hide any variables or functions starting
-with a "." by default. To list all objects, type `ls(all.names=TRUE)`
-instead
-
-:::
-
-Note here that we didn't given any arguments to `ls`, but we still
-needed to give the parentheses to tell R to call the function.
-
-::: callout
-If we type `ls` by itself, R will print out the source code for that function!
-
-
-``` r
-ls
-```
-
-``` output
-function (name, pos = -1L, envir = as.environment(pos), all.names = FALSE, 
-    pattern, sorted = TRUE) 
-{
-    if (!missing(name)) {
-        pos <- tryCatch(name, error = function(e) e)
-        if (inherits(pos, "error")) {
-            name <- substitute(name)
-            if (!is.character(name)) 
-                name <- deparse(name)
-            warning(gettextf("%s converted to character string", 
-                sQuote(name)), domain = NA)
-            pos <- name
-        }
-    }
-    all.names <- .Internal(ls(envir, all.names, sorted))
-    if (!missing(pattern)) {
-        if ((ll <- length(grep("[", pattern, fixed = TRUE))) && 
-            ll != length(grep("]", pattern, fixed = TRUE))) {
-            if (pattern == "[") {
-                pattern <- "\\["
-                warning("replaced regular expression pattern '[' by  '\\\\['")
-            }
-            else if (length(grep("[^\\\\]\\[<-", pattern))) {
-                pattern <- sub("\\[<-", "\\\\\\[<-", pattern)
-                warning("replaced '[<-' by '\\\\[<-' in regular expression pattern")
-            }
-        }
-        grep(pattern, all.names, value = TRUE)
-    }
-    else all.names
-}
-<bytecode: 0x556239e22450>
-<environment: namespace:base>
-```
-
-You can do this with any function in R, calling it without parantheses will always return the source code!
-::: 
-
-You can use `rm` to delete objects you no longer need:
-
-
-``` r
-rm(x)
-```
-
-If you have lots of things in your environment and want to delete all of them,
-you can pass the results of `ls` to the `rm` function:
-
-
-``` r
-rm(list = ls())
-```
-
-In this case we've combined the two. Just like the order of operations, anything
-inside the innermost parentheses is evaluated first, and so on.
-
-In this case we've specified that the results of `ls` should be used for the
-`list` argument in `rm`. When assigning values to arguments by name, you *must*
-use the `=` operator!!
-
-If instead we use `<-`, there will be unintended side effects, or you may just
-get an error message:
-
-
-``` r
-rm(list <- ls())
+2_times_x = 2*x
 ```
 
 ``` error
-Error in rm(list <- ls()): ... must contain names or character strings
+Error in parse(text = input): <text>:1:2: unexpected input
+1: 2_
+     ^
 ```
 
 ::: callout
@@ -584,6 +453,8 @@ hasn't worked as expected.
 
 In both cases, the message that R prints out usually give you clues
 how to fix a problem.
+
+Errors can be frustrating, but they are your friend! They tell you that something went wrong and usually give you an informative message as to what went wrong. If you cannot make something of the error message, try pasting it into Google or Chat-GPT, this will often help.
 
 :::
 
@@ -629,22 +500,6 @@ age <- age - 20
 
 Run the code from the previous challenge, and write a command to
 compare mass to age. Is mass larger than age?
-
-:::
-
-::: challenge
-## Challenge 4
-
-Understand where the variables you just created are showing up in RStudio. Find them all in the "Environment" tab. Then list all of them using code.
-
-:::
-
-::: challenge
-
-## Challenge 5
-
-Clean up your working environment by deleting the mass and age
-variables.
 
 :::
 
