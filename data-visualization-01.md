@@ -73,9 +73,7 @@ $ Imdb_rating       <dbl> 7.8, 8.1, 8.5, 8.2, 8.9, 8.5, 9.0, 8.7, 8.6, 9.1, 7.â€
 
 This will tell us the variable type of each column, too. We can see that the first column is a character column which just contains the name of the hero of this data *Roy Kent*. The second column is an integer (so whole numbers) vector with information about the episode number.
 
-write about the background of the show (pics)
-
-Next, let's try to figure out what each of the column names mean and what type of information is stored here. Some columns are self-explanatory like "Season" oder "Episode". Others might require a bit of background knowledge like "Imdb_rating", which requires you to know about the film-rating platform "Imdb". 
+Next, let's try to figure out what each of the column names mean and what type of information is stored here. Some columns are self-explanatory like `Season` or `Episode`. Others might require a bit of background knowledge like `Imdb_rating`, which requires you to know about the film-rating platform "Imdb". 
 
 Some columns are riddled with abbreviations that make their names easier to write, but harder to understand. `F_count_RK` is using RK as an abbreviation of Roy Kent and F as an abbreviation for... something else. `cum_rk_overall` is a cumulative (running) total of the number of times Roy used the F-word. 
 
@@ -84,7 +82,7 @@ Yet other columns are really difficult to understand, because the implication is
 There is no codebook included in this workshop, but you can find it online. The data is taken from an event called "Tidy-Tuesday", a weekly event about cleaning and presenting interesting data using R. You can find information about the Roy Kent data [here](https://github.com/rfordatascience/tidytuesday/blob/main/data/2023/2023-09-26/readme.md). Give it a read in order to make sure you know what all the columns are about.
 
 ## Inspecting important values
-Now that we understand the structure of the data and the names of the columns, we can start getting a look at the data itself. A good way to get an overview of the columns is `psych::describe()`. This outputs you some basic information of the data.
+Now that we understand the structure of the data and the names of the columns, we can start getting a look at the data itself. A good way to get an overview of data with loads of numeric variables is `psych::describe()`. This outputs you some basic descriptive statistics of the data.
 
 
 ``` r
@@ -158,7 +156,7 @@ hist(roy_kent_data$F_count_RK, breaks = 20)
 
 <img src="fig/data-visualization-01-rendered-unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
 
-Here, an interesting pattern seems to emerge. Three different clusters of swear counts show up, one where Roy swears between 0 - 7 times, presumably because he has little screen-time in the episode. One cluster where Roy swears between 9-17 times, which more closely resembles his average swearing amount. And finally two episodes where Roy flies of the handle and swears a whopping `max(roy_kent_data$F_count_RK) = `23 times!
+Here, an interesting pattern seems to emerge. Three different clusters of swear counts show up, one where Roy swears between 0 - 7 times, presumably because he has little screen-time in the episode. One cluster where Roy swears between 9-17 times, which more closely resembles his average swearing amount. And finally two episodes where Roy flies of the handle and swears a whopping `max(roy_kent_data$F_count_RK) = ` 23 times!
 
 In order to figure out what makes Roy swear so much, let's plot the number of times Roy swears by episode!
 
@@ -166,7 +164,7 @@ In order to figure out what makes Roy swear so much, let's plot the number of ti
 
 For most of our plotting needs (except the beautiful `hist()`), we will make use of the package `ggplot2` which is part of the larger collection of packages `tidyverse` and provides some really useful plotting functions. Most importantly, ggplot provides a useful *grammar* of plotting functions that always follow the same format.
 
-You start out with the function `ggplot()`, simple enough.
+You start out with the function `ggplot()` and give it some data, simple enough.
 
 ``` r
 ggplot(data = roy_kent_data)
@@ -188,7 +186,7 @@ ggplot(data = roy_kent_data)
 
 Now it works, but not really. For now, this code only tells the function which data we are using, not what to do with it.
 
-In order to actually see a plot, we need to provide information about the visual properties, the *aesthetics* that the plot should have. The `mapping` argument tells the function how the data relates to the visual properties defined using `aes()`. Here, we define the columns that we want on the x-axis and y-axis.
+In order to actually see a plot, we need to provide information about the visual properties, the *aesthetics* that the plot should have. The `mapping` argument tells the function how the data relates to the visual properties of the plot. We define this mapping using the function `aes()`. Here, we declare the columns that we want on the x-axis and y-axis.
 
 
 ``` r
@@ -215,7 +213,9 @@ ggplot(
 
 <img src="fig/data-visualization-01-rendered-unnamed-chunk-10-1.png" style="display: block; margin: auto;" />
 
-`geom_point()` adds a simple scatter-plot element to the graph. Now we can also simply change the labels using `labs()`.
+`geom_point()` adds a simple scatter-plot element to the graph. 
+
+We can change the labels to make the graph more polished using `labs()`.
 
 
 ``` r
@@ -272,7 +272,8 @@ table(roy_kent_data$Coaching_flag)
 ```
 It seems to have two values "Yes" and "No", each being represented in the data more than 10 times.
 
-We can also add this to our visualization from earlier, coloring in the dots by whether Roy was coaching or not:
+We can also add this to our visualization from earlier, coloring in the dots by whether Roy was coaching or not. In order to do this, we need to add the `color` variable in the aesthetics mapping in the `ggplot()` function.
+
 
 ``` r
 ggplot(
@@ -331,32 +332,81 @@ ggplot(
 <img src="fig/data-visualization-01-rendered-unnamed-chunk-15-1.png" style="display: block; margin: auto;" />
 :::
 
+
 ## Challenges
 
 ::: challenge
 ## Challenge 1
 
-Figure out what total means, give descriptives of it.
+Figure out what information is stored in the column `F_count_total`. Compute the descriptive information (mean, standard deviation, minimum and maximum) for this variable. 
 
-Write it into a vector and compute the mean, sd, min and max
 :::
 
 ::: challenge
 ## Challenge 2
 
-Plot histogram of total f-words 
-:::
+Compare the descriptive information to those for `F_count_RK`. Which one is bigger, why?
 
+Compute the difference between the two variables. What does it represent. Compare the difference to `F_count_RK`. Which has the higher average value?
+
+:::: solution
+
+``` r
+f_count_others <- roy_kent_data$F_count_total - roy_kent_data$F_count_RK
+
+mean(f_count_others)
+```
+
+``` output
+[1] 13
+```
+
+``` r
+mean(roy_kent_data$F_count_RK)
+```
+
+``` output
+[1] 8.823529
+```
+::::
+
+:::
 ::: challenge
 ## Challenge 3
 
-Visualize the relationship between fck and imdb rating using geom_point()
+Plot a histogram of `F_count_total`. Try different values of `breaks`, which seems most interesting to you?
 :::
 
 ::: challenge
 ## Challenge 4
 
-be creative! What else can you notice in the dataset, make an interesting plot out of this!
+Visualize the relationship between the amount of time Roy Kent said "Fuck" and the Imdb rating of that episode using `geom_point()`.
+
+:::: solution
+
+``` r
+ggplot(
+  data = roy_kent_data,
+  mapping = aes(x = F_count_RK, y = Imdb_rating)
+)+
+  geom_point()+
+  labs(
+    title = "Relationship between F-count and episode rating",
+    x = "# of F*cks",
+    y = "Imdb Rating"
+  )+
+  theme_minimal()
+```
+
+<img src="fig/data-visualization-01-rendered-unnamed-chunk-17-1.png" style="display: block; margin: auto;" />
+
+::::
+:::
+
+::: challenge
+## Challenge 5
+
+Be creative! What else can you notice in the data? Try to make an interesting plot.
 
 :::
 
