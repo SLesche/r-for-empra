@@ -117,11 +117,11 @@
   R - Beginners Workshop
 </div>
 
-<aside class="col-md-12 lesson-progress"><div style="width: 56%" class="percentage">
-    56%
+<aside class="col-md-12 lesson-progress"><div style="width: 52%" class="percentage">
+    52%
   </div>
   <div class="progress incubator">
-    <div class="progress-bar incubator" role="progressbar" style="width: 56%" aria-valuenow="56" aria-label="Lesson Progress" aria-valuemin="0" aria-valuemax="100">
+    <div class="progress-bar incubator" role="progressbar" style="width: 52%" aria-valuenow="52" aria-label="Lesson Progress" aria-valuemin="0" aria-valuemax="100">
     </div>
   </div>
 </aside><div class="container">
@@ -255,7 +255,6 @@
 <li><a href="#r-projects">R Projects</a></li>
 <li><a href="#how-to-create-an-r-project">How to Create an R Project</a></li>
 <li><a href="#creating-an-r-project">Creating an R project</a></li>
-<li><a href="#saving-data">Saving Data</a></li>
 <li><a href="#challenges">Challenges</a></li>
         </ul></div><!--/div.accordion-body-->
     </div><!--/div.accordion-collapse-->
@@ -275,7 +274,7 @@
 <div class="accordion accordion-flush" id="accordionFlush8">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading8">
-        <a href="data-visualization-02.html">7. data-visualization-02</a>
+        <a href="data-visualization-02.html">7. Data Visualization (2)</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -339,7 +338,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Projects</h1>
-        <p>Last updated on 2025-03-13 |
+        <p>Last updated on 2025-03-15 |
 
         <a href="https://github.com/SLesche/r-for-empra/edit/main/episodes/projects.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -375,13 +374,16 @@
 </div>
 </div>
 <section><h2 class="section-heading" id="working-directory">Working Directory<a class="anchor" aria-label="anchor" href="#working-directory"></a></h2>
-<hr class="half-width"><p>It is very important that you keep your files somewhat orderly. This
-is important both for us humans to understand, but also for computers.
-Any time you need to access something outside your present R script, you
-will need to tell R where to find this. Understanding this is extremely
-important, as we will be working with external data a lot! This data
-will be saved somewhere on the computer and needs to find its way into
-the R session.</p>
+<hr class="half-width"><p>Last week we worked with scripts and some basic computations using
+vectors. Most likely, you wrote down a lot of code and saved the script
+somewhere on your computer. Once you start working with multiple scripts
+and datasets, it becomes very important that you keep your files
+somewhat orderly.</p>
+<p>This is important both for us humans to understand, but also for
+computers. Any time you need to access something outside your present R
+script, you will need to tell R where to find this. The data will be
+saved somewhere on the computer and needs to find its way into the R
+session.</p>
 <p>Understanding where a file is saved on your computer is key to
 understanding how to tell R to read it into your current session. There
 are two main ways to tell R how to find a file: <em>absolute</em> paths
@@ -391,20 +393,25 @@ and <em>relative</em> paths.</p>
 <p>An <strong>absolute path</strong> is the full location of a file on
 your computer, starting from the root of your file system. It tells R
 exactly where to find the file, no matter where your R script is
+located. Think of it like an address in a town. <em>1404 Mansfield St,
+Chippewa Falls, WI 54729</em> tells you exactly where a house is
 located.</p>
 <p>For example, the absolute path to a file stored in the
-<code>Documents/</code> folder most likely looks something like this: -
+<code>Documents/</code> folder most likely looks something like
+this:</p>
+<ul><li>
 <strong>Windows:</strong>
-<code>"C:/Users/YourName/Documents/my_data.csv"</code><br>
-- <strong>Mac/Linux:</strong>
-<code>"/Users/YourName/Documents/my_data.csv"</code></p>
-<div id="how-to-find-the-absolute-path-of-a-file" class="callout">
+<code>"C:/Users/YourName/Documents/my_data.csv"</code><br></li>
+<li>
+<strong>Mac/Linux:</strong>
+<code>"/Users/YourName/Documents/my_data.csv"</code>
+</li>
+</ul><div id="how-to-find-the-absolute-path-of-a-file" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
 <div id="how-to-find-the-absolute-path-of-a-file" class="callout-inner">
-<h3 class="callout-title">💡 <strong>How to Find the Absolute Path of a
-File</strong>:</h3>
+<h3 class="callout-title">How to Find the Absolute Path of a File:</h3>
 <div class="callout-content">
 <ul><li><p>On <strong>Windows</strong>, open File Explorer, navigate to your
 file, right-click it, and select <strong>Properties</strong>. The full
@@ -420,7 +427,10 @@ select <strong>Get Info</strong>, and look at “Where.”<br></p></li>
 <p>A <strong>relative path</strong> specifies the location of a file in
 relation to the <strong>working directory</strong> of your R session.
 This is useful when working with projects that contain multiple files,
-as it keeps your code flexible and portable.</p>
+as it keeps your code flexible and portable. Think of this like the
+direction, “just follow the road until the roundabout and then take the
+second exit”. If the starting point is well defined, this is enough
+information to find the target.</p>
 <p>The <strong>working directory</strong> is the default folder on your
 computer where R looks for files and saves new ones. Think of it as R’s
 <strong>“home base”</strong>—if you ask R to read or save a file without
@@ -471,9 +481,11 @@ project, others won’t need to change file paths manually.</li>
 <hr class="half-width"><p>There are two main ways to define the working directory that R will
 use. You can do this using <code>setwd()</code> and specify a particular
 directory you want to start from. Another way to accomplish this is
-through the use of <strong>R projects</strong>. If you prefer declaring
-your working directory using <code>setwd()</code>, you can place this
-bit of code
+through the use of <strong>R projects</strong>. These projects
+automatically set your working directory to the place that the project
+is located.</p>
+<p>If you prefer declaring your working directory using
+<code>setwd()</code>, you can place this bit of code
 <code>setwd(dirname(rstudioapi::getActiveDocumentContext()$path))</code>
 at the beginning of your script. R will then set the working directory
 to the folder that the script you are working with is located in.</p>
@@ -484,8 +496,7 @@ the best ways to keep your work organized, portable, and efficient. An
 <strong>R Project</strong> is essentially a self-contained workspace
 that helps manage files, working directories, and settings
 automatically.</p>
-<hr><div class="section level3">
-<h3 id="why-use-r-projects">Why Use R Projects?<a class="anchor" aria-label="anchor" href="#why-use-r-projects"></a></h3>
+<p>There are several reasons why I prefer R projects:</p>
 <div class="section level4">
 <h4 id="automatic-working-directory-management">1️⃣ <strong>Automatic Working Directory Management</strong>
 <a class="anchor" aria-label="anchor" href="#automatic-working-directory-management"></a></h4>
@@ -503,7 +514,7 @@ this folder can be accessed with a <strong>relative path</strong>:</p>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">read.csv</span><span class="op">(</span><span class="st">"data/my_data.csv"</span><span class="op">)</span>  <span class="co"># No need for long paths!</span></span></code></pre>
 </div>
-<hr></div>
+</div>
 <div class="section level4">
 <h4 id="keeps-everything-organized">2️⃣ <strong>Keeps Everything Organized</strong>
 <a class="anchor" aria-label="anchor" href="#keeps-everything-organized"></a></h4>
@@ -518,7 +529,7 @@ up.</p>
 │── output/       # Processed results
 │── MyProject.Rproj  # The project file</code></pre>
 <p>This structure helps keep your work clean and easy to navigate.</p>
-<hr></div>
+</div>
 <div class="section level4">
 <h4 id="easier-collaboration-portability">3️⃣ <strong>Easier Collaboration &amp; Portability</strong>
 <a class="anchor" aria-label="anchor" href="#easier-collaboration-portability"></a></h4>
@@ -529,7 +540,7 @@ R Projects ideal for:<br>
 ✅ <strong>Teamwork</strong><br>
 ✅ <strong>Sharing with collaborators</strong><br>
 ✅ <strong>Reproducible research</strong></p>
-<hr></div>
+</div>
 <div class="section level4">
 <h4 id="integrated-version-control-git">4️⃣ <strong>Integrated Version Control (Git)</strong>
 <a class="anchor" aria-label="anchor" href="#integrated-version-control-git"></a></h4>
@@ -537,7 +548,7 @@ R Projects ideal for:<br>
 track changes, commit updates, and collaborate through platforms like
 <strong>GitHub</strong>. You can set up a Git repository directly inside
 the project.</p>
-<hr></div>
+</div>
 <div class="section level4">
 <h4 id="easy-switching-between-projects">5️⃣ <strong>Easy Switching Between Projects</strong>
 <a class="anchor" aria-label="anchor" href="#easy-switching-between-projects"></a></h4>
@@ -545,7 +556,6 @@ the project.</p>
 different tasks without affecting the working directory or opening and
 closing scripts. Each project remembers its settings, so you don’t have
 to reconfigure things every time.</p>
-<hr></div>
 </div>
 </section><section><h2 class="section-heading" id="how-to-create-an-r-project">How to Create an R Project<a class="anchor" aria-label="anchor" href="#how-to-create-an-r-project"></a></h2>
 <hr class="half-width"><p>1️⃣ Open <strong>RStudio</strong><br>
@@ -560,31 +570,17 @@ the top left of R Studio. You will then notice the projects name
 appearing in the top right. Furthermore, the <code>Files</code> view in
 the bottom right will automatically go to the destination of your
 selected project.</p>
-<div id="why-not-to-use-setwd" class="callout">
-<div class="callout-square">
-<i class="callout-icon" data-feather="bell"></i>
-</div>
-<div id="why-not-to-use-setwd" class="callout-inner">
-<h3 class="callout-title">Why not to use <code>setwd()</code>
-</h3>
-<div class="callout-content">
-<p>Here, say why not</p>
-</div>
-</div>
-</div>
 </section><section><h2 class="section-heading" id="creating-an-r-project">Creating an R project<a class="anchor" aria-label="anchor" href="#creating-an-r-project"></a></h2>
 <hr class="half-width"><p>Let’s go through the steps of setting up an R project together.
 First, decide if you want to use an existing folder or generate a brand
 new folder for your R project. I would suggest using a folder that is
-clean. For example, if you already created a folder to save the script
-from the lesson earlier, we can just use that.</p>
-<p>To create a project, follow the steps outlined above and give it an
-appropriate name. Something along the lines of <code>r_workshop</code>
-or <code>r_tutorial</code>. Make sure the creation of your project was
-successful and you can see the name of your project in the top right
-corner.</p>
-</section><section><h2 class="section-heading" id="saving-data">Saving Data<a class="anchor" aria-label="anchor" href="#saving-data"></a></h2>
-<hr class="half-width"></section><section><h2 class="section-heading" id="challenges">Challenges<a class="anchor" aria-label="anchor" href="#challenges"></a></h2>
+clean. For example, use the folder <code>r_for_empra</code> that you
+created a couple lessons earlier!</p>
+<p>To create a project, follow the steps outlined above. Make sure the
+creation of your project was successful and you can see the name of your
+project in the top right corner. If you are creating the project in a
+new folder, you will have to give it a sensible name!</p>
+</section><section><h2 class="section-heading" id="challenges">Challenges<a class="anchor" aria-label="anchor" href="#challenges"></a></h2>
 <hr class="half-width"><div id="challenge-1" class="callout discussion">
 <div class="callout-square">
 <i class="callout-icon" data-feather="message-circle"></i>
@@ -777,9 +773,9 @@ any links that you are not going to use.
   "creativeWorkStatus": "active",
   "url": "https://SLesche.github.io/r-for-empra/projects.html",
   "identifier": "https://SLesche.github.io/r-for-empra/projects.html",
-  "dateCreated": "2025-03-14",
-  "dateModified": "2025-03-13",
-  "datePublished": "2025-03-14"
+  "dateCreated": "2025-03-15",
+  "dateModified": "2025-03-15",
+  "datePublished": "2025-03-15"
 }
 
   </script><script>

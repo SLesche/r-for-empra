@@ -313,7 +313,7 @@
 <div class="accordion accordion-flush" id="accordionFlush8">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading8">
-        <a href="data-visualization-02.html">7. data-visualization-02</a>
+        <a href="data-visualization-02.html">7. Data Visualization (2)</a>
     </div>
 <!--/div.accordion-header-->
 
@@ -1880,7 +1880,7 @@ about what happens if you accidentally run the command
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <p>The first element is going to be excluded twice. This means that the
 vector will lose two elements. In principle, it is a good idea to write
@@ -2152,7 +2152,7 @@ any links that you are not going to use.
  -->
 </section></section><section id="aio-projects"><p>Content from <a href="projects.html">Projects</a></p>
 <hr>
-<p>Last updated on 2025-03-13 |
+<p>Last updated on 2025-03-15 |
 
         <a href="https://github.com/SLesche/r-for-empra/edit/main/episodes/projects.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -2188,13 +2188,16 @@ any links that you are not going to use.
 <section><h2 class="section-heading" id="working-directory">Working Directory<a class="anchor" aria-label="anchor" href="#working-directory"></a>
 </h2>
 <hr class="half-width">
-<p>It is very important that you keep your files somewhat orderly. This
-is important both for us humans to understand, but also for computers.
-Any time you need to access something outside your present R script, you
-will need to tell R where to find this. Understanding this is extremely
-important, as we will be working with external data a lot! This data
-will be saved somewhere on the computer and needs to find its way into
-the R session.</p>
+<p>Last week we worked with scripts and some basic computations using
+vectors. Most likely, you wrote down a lot of code and saved the script
+somewhere on your computer. Once you start working with multiple scripts
+and datasets, it becomes very important that you keep your files
+somewhat orderly.</p>
+<p>This is important both for us humans to understand, but also for
+computers. Any time you need to access something outside your present R
+script, you will need to tell R where to find this. The data will be
+saved somewhere on the computer and needs to find its way into the R
+session.</p>
 <p>Understanding where a file is saved on your computer is key to
 understanding how to tell R to read it into your current session. There
 are two main ways to tell R how to find a file: <em>absolute</em> paths
@@ -2205,20 +2208,28 @@ and <em>relative</em> paths.</p>
 <p>An <strong>absolute path</strong> is the full location of a file on
 your computer, starting from the root of your file system. It tells R
 exactly where to find the file, no matter where your R script is
+located. Think of it like an address in a town. <em>1404 Mansfield St,
+Chippewa Falls, WI 54729</em> tells you exactly where a house is
 located.</p>
 <p>For example, the absolute path to a file stored in the
-<code>Documents/</code> folder most likely looks something like this: -
+<code>Documents/</code> folder most likely looks something like
+this:</p>
+<ul>
+<li>
 <strong>Windows:</strong>
 <code>"C:/Users/YourName/Documents/my_data.csv"</code><br>
-- <strong>Mac/Linux:</strong>
-<code>"/Users/YourName/Documents/my_data.csv"</code></p>
+</li>
+<li>
+<strong>Mac/Linux:</strong>
+<code>"/Users/YourName/Documents/my_data.csv"</code>
+</li>
+</ul>
 <div id="how-to-find-the-absolute-path-of-a-file" class="callout">
 <div class="callout-square">
 <i class="callout-icon" data-feather="bell"></i>
 </div>
 <div id="how-to-find-the-absolute-path-of-a-file" class="callout-inner">
-<h3 class="callout-title">💡 <strong>How to Find the Absolute Path of a
-File</strong>:</h3>
+<h3 class="callout-title">How to Find the Absolute Path of a File:</h3>
 <div class="callout-content">
 <ul>
 <li><p>On <strong>Windows</strong>, open File Explorer, navigate to your
@@ -2237,7 +2248,10 @@ select <strong>Get Info</strong>, and look at “Where.”<br></p></li>
 <p>A <strong>relative path</strong> specifies the location of a file in
 relation to the <strong>working directory</strong> of your R session.
 This is useful when working with projects that contain multiple files,
-as it keeps your code flexible and portable.</p>
+as it keeps your code flexible and portable. Think of this like the
+direction, “just follow the road until the roundabout and then take the
+second exit”. If the starting point is well defined, this is enough
+information to find the target.</p>
 <p>The <strong>working directory</strong> is the default folder on your
 computer where R looks for files and saves new ones. Think of it as R’s
 <strong>“home base”</strong>—if you ask R to read or save a file without
@@ -2295,9 +2309,11 @@ project, others won’t need to change file paths manually.</li>
 <p>There are two main ways to define the working directory that R will
 use. You can do this using <code>setwd()</code> and specify a particular
 directory you want to start from. Another way to accomplish this is
-through the use of <strong>R projects</strong>. If you prefer declaring
-your working directory using <code>setwd()</code>, you can place this
-bit of code
+through the use of <strong>R projects</strong>. These projects
+automatically set your working directory to the place that the project
+is located.</p>
+<p>If you prefer declaring your working directory using
+<code>setwd()</code>, you can place this bit of code
 <code>setwd(dirname(rstudioapi::getActiveDocumentContext()$path))</code>
 at the beginning of your script. R will then set the working directory
 to the folder that the script you are working with is located in.</p>
@@ -2308,10 +2324,7 @@ the best ways to keep your work organized, portable, and efficient. An
 <strong>R Project</strong> is essentially a self-contained workspace
 that helps manage files, working directories, and settings
 automatically.</p>
-<hr>
-<div class="section level3">
-<h3 id="why-use-r-projects">Why Use R Projects?<a class="anchor" aria-label="anchor" href="#why-use-r-projects"></a>
-</h3>
+<p>There are several reasons why I prefer R projects:</p>
 <div class="section level4">
 <h4 id="automatic-working-directory-management">1️⃣ <strong>Automatic Working Directory Management</strong>
 <a class="anchor" aria-label="anchor" href="#automatic-working-directory-management"></a>
@@ -2330,7 +2343,6 @@ this folder can be accessed with a <strong>relative path</strong>:</p>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">read.csv</span><span class="op">(</span><span class="st">"data/my_data.csv"</span><span class="op">)</span>  <span class="co"># No need for long paths!</span></span></code></pre>
 </div>
-<hr>
 </div>
 <div class="section level4">
 <h4 id="keeps-everything-organized">2️⃣ <strong>Keeps Everything Organized</strong>
@@ -2347,7 +2359,6 @@ up.</p>
 │── output/       # Processed results
 │── MyProject.Rproj  # The project file</code></pre>
 <p>This structure helps keep your work clean and easy to navigate.</p>
-<hr>
 </div>
 <div class="section level4">
 <h4 id="easier-collaboration-portability">3️⃣ <strong>Easier Collaboration &amp; Portability</strong>
@@ -2360,7 +2371,6 @@ R Projects ideal for:<br>
 ✅ <strong>Teamwork</strong><br>
 ✅ <strong>Sharing with collaborators</strong><br>
 ✅ <strong>Reproducible research</strong></p>
-<hr>
 </div>
 <div class="section level4">
 <h4 id="integrated-version-control-git">4️⃣ <strong>Integrated Version Control (Git)</strong>
@@ -2370,7 +2380,6 @@ R Projects ideal for:<br>
 track changes, commit updates, and collaborate through platforms like
 <strong>GitHub</strong>. You can set up a Git repository directly inside
 the project.</p>
-<hr>
 </div>
 <div class="section level4">
 <h4 id="easy-switching-between-projects">5️⃣ <strong>Easy Switching Between Projects</strong>
@@ -2380,8 +2389,6 @@ the project.</p>
 different tasks without affecting the working directory or opening and
 closing scripts. Each project remembers its settings, so you don’t have
 to reconfigure things every time.</p>
-<hr>
-</div>
 </div>
 </section><section><h2 class="section-heading" id="how-to-create-an-r-project">How to Create an R Project<a class="anchor" aria-label="anchor" href="#how-to-create-an-r-project"></a>
 </h2>
@@ -2398,34 +2405,19 @@ the top left of R Studio. You will then notice the projects name
 appearing in the top right. Furthermore, the <code>Files</code> view in
 the bottom right will automatically go to the destination of your
 selected project.</p>
-<div id="why-not-to-use-setwd" class="callout">
-<div class="callout-square">
-<i class="callout-icon" data-feather="bell"></i>
-</div>
-<div id="why-not-to-use-setwd" class="callout-inner">
-<h3 class="callout-title">Why not to use <code>setwd()</code>
-</h3>
-<div class="callout-content">
-<p>Here, say why not</p>
-</div>
-</div>
-</div>
 </section><section><h2 class="section-heading" id="creating-an-r-project">Creating an R project<a class="anchor" aria-label="anchor" href="#creating-an-r-project"></a>
 </h2>
 <hr class="half-width">
 <p>Let’s go through the steps of setting up an R project together.
 First, decide if you want to use an existing folder or generate a brand
 new folder for your R project. I would suggest using a folder that is
-clean. For example, if you already created a folder to save the script
-from the lesson earlier, we can just use that.</p>
-<p>To create a project, follow the steps outlined above and give it an
-appropriate name. Something along the lines of <code>r_workshop</code>
-or <code>r_tutorial</code>. Make sure the creation of your project was
-successful and you can see the name of your project in the top right
-corner.</p>
-</section><section><h2 class="section-heading" id="saving-data">Saving Data<a class="anchor" aria-label="anchor" href="#saving-data"></a>
-</h2>
-<hr class="half-width"></section><section><h2 class="section-heading" id="challenges">Challenges<a class="anchor" aria-label="anchor" href="#challenges"></a>
+clean. For example, use the folder <code>r_for_empra</code> that you
+created a couple lessons earlier!</p>
+<p>To create a project, follow the steps outlined above. Make sure the
+creation of your project was successful and you can see the name of your
+project in the top right corner. If you are creating the project in a
+new folder, you will have to give it a sensible name!</p>
+</section><section><h2 class="section-heading" id="challenges">Challenges<a class="anchor" aria-label="anchor" href="#challenges"></a>
 </h2>
 <hr class="half-width">
 <div id="challenge-1" class="callout discussion">
@@ -2571,7 +2563,7 @@ any links that you are not going to use.
  -->
 </section></section><section id="aio-data-visualization-01"><p>Content from <a href="data-visualization-01.html">Data Visualization (1)</a></p>
 <hr>
-<p>Last updated on 2025-03-14 |
+<p>Last updated on 2025-03-15 |
 
         <a href="https://github.com/SLesche/r-for-empra/edit/main/episodes/data-visualization-01.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -2693,12 +2685,12 @@ that the first column is a character column which just contains the name
 of the hero of this data <em>Roy Kent</em>. The second column is an
 integer (so whole numbers) vector with information about the episode
 number.</p>
-<p>write about the background of the show (pics)</p>
 <p>Next, let’s try to figure out what each of the column names mean and
 what type of information is stored here. Some columns are
-self-explanatory like “Season” oder “Episode”. Others might require a
-bit of background knowledge like “Imdb_rating”, which requires you to
-know about the film-rating platform “Imdb”.</p>
+self-explanatory like <code>Season</code> or <code>Episode</code>.
+Others might require a bit of background knowledge like
+<code>Imdb_rating</code>, which requires you to know about the
+film-rating platform “Imdb”.</p>
 <p>Some columns are riddled with abbreviations that make their names
 easier to write, but harder to understand. <code>F_count_RK</code> is
 using RK as an abbreviation of Roy Kent and F as an abbreviation for…
@@ -2724,8 +2716,9 @@ about.</p>
 <hr class="half-width">
 <p>Now that we understand the structure of the data and the names of the
 columns, we can start getting a look at the data itself. A good way to
-get an overview of the columns is <code>psych::describe()</code>. This
-outputs you some basic information of the data.</p>
+get an overview of data with loads of numeric variables is
+<code>psych::describe()</code>. This outputs you some basic descriptive
+statistics of the data.</p>
 <div class="codewrapper sourceCode" id="cb4">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -2812,7 +2805,7 @@ times, presumably because he has little screen-time in the episode. One
 cluster where Roy swears between 9-17 times, which more closely
 resembles his average swearing amount. And finally two episodes where
 Roy flies of the handle and swears a whopping
-<code>max(roy_kent_data$F_count_RK) =</code>23 times!</p>
+<code>max(roy_kent_data$F_count_RK) =</code> 23 times!</p>
 <p>In order to figure out what makes Roy swear so much, let’s plot the
 number of times Roy swears by episode!</p>
 </section><section><h2 class="section-heading" id="ggplot2">ggplot2<a class="anchor" aria-label="anchor" href="#ggplot2"></a>
@@ -2824,8 +2817,8 @@ number of times Roy swears by episode!</p>
 <code>tidyverse</code> and provides some really useful plotting
 functions. Most importantly, ggplot provides a useful <em>grammar</em>
 of plotting functions that always follow the same format.</p>
-<p>You start out with the function <code>ggplot()</code>, simple
-enough.</p>
+<p>You start out with the function <code>ggplot()</code> and give it
+some data, simple enough.</p>
 <div class="codewrapper sourceCode" id="cb9">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -2853,8 +2846,9 @@ function which data we are using, not what to do with it.</p>
 <p>In order to actually see a plot, we need to provide information about
 the visual properties, the <em>aesthetics</em> that the plot should
 have. The <code>mapping</code> argument tells the function how the data
-relates to the visual properties defined using <code>aes()</code>. Here,
-we define the columns that we want on the x-axis and y-axis.</p>
+relates to the visual properties of the plot. We define this mapping
+using the function <code>aes()</code>. Here, we declare the columns that
+we want on the x-axis and y-axis.</p>
 <div class="codewrapper sourceCode" id="cb12">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -2886,7 +2880,8 @@ we can use <code>geom_point()</code>.</p>
 <span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span></span></code></pre>
 </div>
 <figure><img src="fig/data-visualization-01-rendered-unnamed-chunk-10-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p><code>geom_point()</code> adds a simple scatter-plot element to the
-graph. Now we can also simply change the labels using
+graph.</p>
+<p>We can change the labels to make the graph more polished using
 <code>labs()</code>.</p>
 <div class="codewrapper sourceCode" id="cb14">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -2951,7 +2946,9 @@ Let’s learn something about it:</p>
 <p>It seems to have two values “Yes” and “No”, each being represented in
 the data more than 10 times.</p>
 <p>We can also add this to our visualization from earlier, coloring in
-the dots by whether Roy was coaching or not:</p>
+the dots by whether Roy was coaching or not. In order to do this, we
+need to add the <code>color</code> variable in the aesthetics mapping in
+the <code>ggplot()</code> function.</p>
 <div class="codewrapper sourceCode" id="cb19">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
@@ -3033,19 +3030,59 @@ even write your own!</p>
 <div id="challenge-1" class="callout-inner">
 <h3 class="callout-title">Challenge 1</h3>
 <div class="callout-content">
-<p>Figure out what total means, give descriptives of it.</p>
-<p>Write it into a vector and compute the mean, sd, min and max</p>
+<p>Figure out what information is stored in the column
+<code>F_count_total</code>. Compute the descriptive information (mean,
+standard deviation, minimum and maximum) for this variable.</p>
 </div>
 </div>
 </div>
-<div id="challenge-2" class="callout discussion">
+<div id="challenge-2" class="callout challenge">
 <div class="callout-square">
-<i class="callout-icon" data-feather="message-circle"></i>
+<i class="callout-icon" data-feather="zap"></i>
 </div>
 <div id="challenge-2" class="callout-inner">
 <h3 class="callout-title">Challenge 2</h3>
 <div class="callout-content">
-<p>Plot histogram of total f-words</p>
+<p>Compare the descriptive information to those for
+<code>F_count_RK</code>. Which one is bigger, why?</p>
+<p>Compute the difference between the two variables. What does it
+represent. Compare the difference to <code>F_count_RK</code>. Which has
+the higher average value?</p>
+</div>
+</div>
+</div>
+<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
+  <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
+</button>
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div class="accordion-body">
+<div class="codewrapper sourceCode" id="cb23">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">f_count_others</span> <span class="op">&lt;-</span> <span class="va">roy_kent_data</span><span class="op">$</span><span class="va">F_count_total</span> <span class="op">-</span> <span class="va">roy_kent_data</span><span class="op">$</span><span class="va">F_count_RK</span></span>
+<span></span>
+<span><span class="fu">mean</span><span class="op">(</span><span class="va">f_count_others</span><span class="op">)</span></span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>[1] 13</code></pre>
+</div>
+<div class="codewrapper sourceCode" id="cb25">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">mean</span><span class="op">(</span><span class="va">roy_kent_data</span><span class="op">$</span><span class="va">F_count_RK</span><span class="op">)</span></span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>[1] 8.823529</code></pre>
+</div>
+</div>
 </div>
 </div>
 </div>
@@ -3056,20 +3093,61 @@ even write your own!</p>
 <div id="challenge-3" class="callout-inner">
 <h3 class="callout-title">Challenge 3</h3>
 <div class="callout-content">
-<p>Visualize the relationship between fck and imdb rating using
-geom_point()</p>
+<p>Plot a histogram of <code>F_count_total</code>. Try different values
+of <code>breaks</code>, which seems most interesting to you?</p>
 </div>
 </div>
 </div>
-<div id="challenge-4" class="callout discussion">
+<div id="challenge-4" class="callout challenge">
 <div class="callout-square">
-<i class="callout-icon" data-feather="message-circle"></i>
+<i class="callout-icon" data-feather="zap"></i>
 </div>
 <div id="challenge-4" class="callout-inner">
 <h3 class="callout-title">Challenge 4</h3>
 <div class="callout-content">
-<p>be creative! What else can you notice in the dataset, make an
-interesting plot out of this!</p>
+<p>Visualize the relationship between the amount of time Roy Kent said
+“Fuck” and the Imdb rating of that episode using
+<code>geom_point()</code>.</p>
+</div>
+</div>
+</div>
+<div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
+  <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
+</button>
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div class="accordion-body">
+<div class="codewrapper sourceCode" id="cb27">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span></span>
+<span>  data <span class="op">=</span> <span class="va">roy_kent_data</span>,</span>
+<span>  mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">F_count_RK</span>, y <span class="op">=</span> <span class="va">Imdb_rating</span><span class="op">)</span></span>
+<span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu">geom_point</span><span class="op">(</span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span></span>
+<span>    title <span class="op">=</span> <span class="st">"Relationship between F-count and episode rating"</span>,</span>
+<span>    x <span class="op">=</span> <span class="st">"# of F*cks"</span>,</span>
+<span>    y <span class="op">=</span> <span class="st">"Imdb Rating"</span></span>
+<span>  <span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu">theme_minimal</span><span class="op">(</span><span class="op">)</span></span></code></pre>
+</div>
+<figure><img src="fig/data-visualization-01-rendered-unnamed-chunk-17-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure>
+</div>
+</div>
+</div>
+</div>
+<div id="challenge-5" class="callout discussion">
+<div class="callout-square">
+<i class="callout-icon" data-feather="message-circle"></i>
+</div>
+<div id="challenge-5" class="callout-inner">
+<h3 class="callout-title">Challenge 5</h3>
+<div class="callout-content">
+<p>Be creative! What else can you notice in the data? Try to make an
+interesting plot.</p>
 </div>
 </div>
 </div>
@@ -3102,9 +3180,9 @@ data and mapping to the plots</li>
 Place links that you need to refer to multiple times across pages here. Delete
 any links that you are not going to use.
  -->
-</section></section><section id="aio-data-visualization-02"><p>Content from <a href="data-visualization-02.html">data-visualization-02</a></p>
+</section></section><section id="aio-data-visualization-02"><p>Content from <a href="data-visualization-02.html">Data Visualization (2)</a></p>
 <hr>
-<p>Last updated on 2025-03-13 |
+<p>Last updated on 2025-03-15 |
 
         <a href="https://github.com/SLesche/r-for-empra/edit/main/episodes/data-visualization-02.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -3117,10 +3195,8 @@ any links that you are not going to use.
 <div class="card-body">
 <div class="inner">
 <h3 class="card-title">Questions</h3>
-<ul>
-<li>How do you write a lesson using R Markdown and
-<a href="https://carpentries.github.io/sandpaper/" class="external-link">sandpaper</a>?</li>
-</ul>
+<ul><li>
+</li></ul>
 </div>
 </div>
 </div>
@@ -3138,114 +3214,9 @@ challenge blocks</li>
 </div>
 </div>
 </div>
-<section><h2 class="section-heading" id="introduction">Introduction<a class="anchor" aria-label="anchor" href="#introduction"></a>
+<section><h2 class="section-heading" id="challenges">Challenges<a class="anchor" aria-label="anchor" href="#challenges"></a>
 </h2>
 <hr class="half-width">
-<p>This is a lesson created via The Carpentries Workbench. It is written
-in <a href="https://pandoc.org/MANUAL.html" class="external-link">Pandoc-flavored Markdown</a>
-for static files (with extension <code>.md</code>) and <a href="https://rmarkdown.rstudio.com/" class="external-link">R Markdown</a> for dynamic files
-that can render code into output (with extension <code>.Rmd</code>).
-Please refer to the <a href="https://carpentries.github.io/sandpaper-docs/" class="external-link">Introduction to The
-Carpentries Workbench</a> for full documentation.</p>
-<p>What you need to know is that there are three sections required for a
-valid Carpentries lesson template:</p>
-<ol style="list-style-type: decimal">
-<li>
-<code>questions</code> are displayed at the beginning of the episode
-to prime the learner for the content.</li>
-<li>
-<code>objectives</code> are the learning objectives for an episode
-displayed with the questions.</li>
-<li>
-<code>keypoints</code> are displayed at the end of the episode to
-reinforce the objectives.</li>
-</ol>
-<div id="challenge-1-can-you-do-it" class="callout challenge">
-<div class="callout-square">
-<i class="callout-icon" data-feather="zap"></i>
-</div>
-<div id="challenge-1-can-you-do-it" class="callout-inner">
-<h3 class="callout-title">Challenge 1: Can you do it?</h3>
-<div class="callout-content">
-<p>What is the output of this command?</p>
-<div class="codewrapper sourceCode" id="cb1">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">paste</span><span class="op">(</span><span class="st">"This"</span>, <span class="st">"new"</span>, <span class="st">"lesson"</span>, <span class="st">"looks"</span>, <span class="st">"good"</span><span class="op">)</span></span></code></pre>
-</div>
-</div>
-</div>
-</div>
-<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
-<div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
-  <h4 class="accordion-header" id="headingSolution1"> Output </h4>
-</button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
-<div class="accordion-body">
-<div class="codewrapper">
-<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="output" tabindex="0"><code>[1] "This new lesson looks good"</code></pre>
-</div>
-</div>
-</div>
-</div>
-</div>
-<div id="challenge-2-how-do-you-nest-solutions-within-challenge-blocks" class="callout challenge">
-<div class="callout-square">
-<i class="callout-icon" data-feather="zap"></i>
-</div>
-<div id="challenge-2-how-do-you-nest-solutions-within-challenge-blocks" class="callout-inner">
-<h3 class="callout-title">Challenge 2: how do you nest solutions within challenge blocks?</h3>
-<div class="callout-content">
-
-</div>
-</div>
-</div>
-<div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
-<div class="accordion-item">
-<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
-  <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
-</button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
-<div class="accordion-body">
-<p>You can add a line with at least three colons and a
-<code>solution</code> tag.</p>
-</div>
-</div>
-</div>
-</div>
-</section><section><h2 class="section-heading" id="figures">Figures<a class="anchor" aria-label="anchor" href="#figures"></a>
-</h2>
-<hr class="half-width">
-<p>You can include figures generated from R Markdown:</p>
-<div class="codewrapper sourceCode" id="cb3">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">pie</span><span class="op">(</span></span>
-<span>  <span class="fu">c</span><span class="op">(</span>Sky <span class="op">=</span> <span class="fl">78</span>, <span class="st">"Sunny side of pyramid"</span> <span class="op">=</span> <span class="fl">17</span>, <span class="st">"Shady side of pyramid"</span> <span class="op">=</span> <span class="fl">5</span><span class="op">)</span>, </span>
-<span>  init.angle <span class="op">=</span> <span class="fl">315</span>, </span>
-<span>  col <span class="op">=</span> <span class="fu">c</span><span class="op">(</span><span class="st">"deepskyblue"</span>, <span class="st">"yellow"</span>, <span class="st">"yellow3"</span><span class="op">)</span>, </span>
-<span>  border <span class="op">=</span> <span class="cn">FALSE</span></span>
-<span><span class="op">)</span></span></code></pre>
-</div>
-<figure style="text-align: center"><img src="fig/data-visualization-02-rendered-pyramid-1.png" alt="pie chart illusion of a pyramid" class="figure mx-auto d-block"><figcaption>
-Sun arise each and every morning
-</figcaption></figure><p>Or you can use pandoc markdown for static figures with the following
-syntax:</p>
-<p><code>![optional caption that appears below the figure](figure url){alt='alt text for accessibility purposes'}</code></p>
-<figure><img src="https://raw.githubusercontent.com/carpentries/logo/master/Badge_Carpentries.svg" alt="Blue Carpentries hex person logo with no text." class="figure mx-auto d-block"><div class="figcaption">You belong in The Carpentries!</div>
-</figure></section><section><h2 class="section-heading" id="math">Math<a class="anchor" aria-label="anchor" href="#math"></a>
-</h2>
-<hr class="half-width">
-<p>One of our episodes contains <span class="math inline">\(\LaTeX\)</span> equations when describing how to
-create dynamic reports with {knitr}, so we now use mathjax to describe
-this:</p>
-<p><code>$\alpha = \dfrac{1}{(1 - \beta)^2}$</code> becomes: <span class="math inline">\(\alpha = \dfrac{1}{(1 - \beta)^2}\)</span></p>
-<p>Cool, right?</p>
 <div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
 <i class="callout-icon" data-feather="key"></i>
@@ -3253,16 +3224,8 @@ this:</p>
 <div class="callout-inner">
 <h3 class="callout-title">Key Points</h3>
 <div class="callout-content">
-<ul>
-<li>Use <code>.md</code> files for episodes when you want static
-content</li>
-<li>Use <code>.Rmd</code> files for episodes when you need to generate
-output</li>
-<li>Run <code>sandpaper::check_lesson()</code> to identify any issues
-with your lesson</li>
-<li>Run <code>sandpaper::build_lesson()</code> to preview your lesson
-locally</li>
-</ul>
+<ul><li>
+</li></ul>
 </div>
 </div>
 </div>
@@ -3317,9 +3280,9 @@ any links that you are not going to use.
   "creativeWorkStatus": "active",
   "url": "https://SLesche.github.io/r-for-empra/aio.html",
   "identifier": "https://SLesche.github.io/r-for-empra/aio.html",
-  "dateCreated": "2025-03-14",
-  "dateModified": "2025-03-14",
-  "datePublished": "2025-03-14"
+  "dateCreated": "2025-03-15",
+  "dateModified": "2025-03-15",
+  "datePublished": "2025-03-15"
 }
 
   </script><script>
