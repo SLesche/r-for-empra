@@ -94,7 +94,8 @@ In order to figure out what makes Roy swear so much, let's plot the number of ti
 
 For most of our plotting needs (except the beautiful `hist()`), we will make use of the package `ggplot2` which is part of the larger collection of packages `tidyverse` and provides some really useful plotting functions. Most importantly, ggplot provides a useful *grammar* of plotting functions that always follow the same format.
 
-You start out with the function `ggplot()` and give it some data, simple enough.
+You start out with the function `ggplot()` and give it our data, simple enough. Here, we start working with the entire dataframe, not just vectors. We can simply pass it into `ggplot()` and later on declare which variables we want to use.
+
 ```{r}
 ggplot(data = roy_kent_data)
 ```
