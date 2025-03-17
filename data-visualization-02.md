@@ -24,7 +24,11 @@ exercises: 5
 
 In this section, we will work with a new set of data. Download this data [here](data/kaggle_dass/data.csv) and place it in your `data` folder. There is also a codebook available to download [here](data/kaggle_dass/codebook.txt). 
 
-Some description of the dass data
+The data originates from an online version of the **Depression Anxiety Stress Scales (DASS)**, collected between **2017-2019** and retrieved from [Kaggle](https://www.kaggle.com/datasets/lucasgreenwell/depression-anxiety-stress-scales-responses/data). Participants took the test to receive personalized results and could opt into a research survey. The dataset includes **responses to 42 DASS items** (rated on a 4-point scale), **response times**, and **question positions**. Additional data includes:  
+
+- **Demographics** (age, gender, education, native language, handedness, religion, sexual orientation, race, marital status, family size, major, country).  
+- **Big Five Personality Traits** (via the Ten Item Personality Inventory - TIPI).  
+- **Vocabulary Check** (includes fake words for validity checks).  
 
 Let's read in the data first. In my case, it is placed inside a subfolder of `data/` called `kaggle_dass/`. You may need to adjust the path on your end.
 
@@ -168,7 +172,9 @@ Warning: Removed 2 rows containing missing values or values outside the scale ra
 ```
 
 <img src="fig/data-visualization-02-rendered-unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
+
 ## Density plots
+
 Often, what interests us is not the number of occurrences for a given value, but rather which values are common and which values are uncommon. By dividing the number of occurrences for a given value by the total number of observation, we can obtain a *density-plot*. In `ggplot` you achieve this by using `geom_density()` instead of `geom_histogram()`.
 
 
@@ -339,18 +345,7 @@ One common problem when creating ggplot2 graphics is to put the + in the wrong p
 
 ``` r
 ggplot(data = mpg) 
-```
-
-<img src="fig/data-visualization-02-rendered-unnamed-chunk-15-1.png" style="display: block; margin: auto;" />
-
-``` r
 + geom_point(mapping = aes(x = displ, y = hwy))
-```
-
-``` error
-Error:
-! Cannot use `+` with a single argument.
-ℹ Did you accidentally put `+` on a new line?
 ```
 
 If you’re still stuck, try the help. You can get help about any R function by running `?function_name` in the console, or highlighting the function name and pressing F1 in RStudio. Don’t worry if the help doesn’t seem that helpful - instead skip down to the examples and look for code that matches what you’re trying to do.
@@ -365,7 +360,7 @@ It's important to understand your data, its sources and quirks *before* you star
 ::: challenge
 
 ## Challenge 1
-Review what we learned about the DASS data so far. Is there anything else important to note?
+Review what we learned about the DASS data so far. What are the key demographic indicators? Is there anything else important to note?
 
 :::
 
@@ -379,28 +374,87 @@ Read the [codebook](data/kaggle_dass/codeboot.txt). What is the difference betwe
 ::: challenge
 
 ## Challenge 3
-Descriptives of the elapse times, what might be outliers?
-
+Provide descriptive statistics of the time it took participants to complete the DASS-part of the survey. What variable is this stored in? What is the average time? Are there any outliers? What is the average time without outliers?
 :::
 
 ::: challenge
 
 ## Challenge 4
-Plot urban and familysize / married
+Plot a distribution of the elapsed test time. What might be a sensible cutoff for outliers?
 
+Plot a distribution of elapsed test time by whether English was the native language. What do you expect? What can you see? What are your thoughts on the distribution?
+
+:::: solution
+
+``` r
+dass_data$engnat <- factor(dass_data$engnat)
+
+ggplot(
+  data = dass_data,
+  mapping = aes(
+    x = testelapse, fill = engnat, group = engnat
+  )
+)+
+  geom_density(alpha = 0.5)+
+  xlim(0, 3000)+
+  labs(
+    title = "Distribution of test completion times",
+    subtitle = "By Mother Tongue",
+    x = "Test completion time (s)",
+    y = "Density"
+  )+
+  theme_minimal()
+```
+
+``` warning
+Warning: Removed 399 rows containing non-finite outside the scale range
+(`stat_density()`).
+```
+
+<img src="fig/data-visualization-02-rendered-unnamed-chunk-16-1.png" style="display: block; margin: auto;" />
+::::
 :::
+
 
 ::: challenge
 
 ## Challenge 5
-Plot elapse time and engnat why might differences be?
+Learn something about the handedness of test-takers. Get the number of test-takers with each handedness using `table` and visualize it using `geom_bar()`. 
 
+Plot the handedness of test-takers by educational status. Do you see any differences?
+
+:::: solution
+
+``` r
+ggplot(
+  data = dass_data,
+  mapping = aes(
+    x = hand,
+    fill = education,
+    group = education
+  )
+)+
+  geom_bar(position = "fill")+
+  labs(
+    title = "Educational attainment by handedness",
+    x = "Handedness (0 = NA, 1 = Right, 2 = Left, 3 = Both)",
+    y = "Proportion"
+  )+
+  theme_minimal()
+```
+
+<img src="fig/data-visualization-02-rendered-unnamed-chunk-17-1.png" style="display: block; margin: auto;" />
+
+::::
 :::
 
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
 
--
+- Get to know new data by inspecting it and computing key descriptive statistics
+- Visualize distributions of key variables in order to learn about factors that impact them
+- Visualize distribution of a numeric and a categorical variable using `geom_density()`
+- Visualize distribution of two categorial variables using `geom_bar()`
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
