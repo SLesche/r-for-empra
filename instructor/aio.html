@@ -378,7 +378,7 @@
         
 <section id="aio-introduction"><p>Content from <a href="introduction.html">Introduction</a></p>
 <hr>
-<p>Last updated on 2025-03-14 |
+<p>Last updated on 2025-03-17 |
 
         <a href="https://github.com/SLesche/r-for-empra/edit/main/episodes/introduction.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <p>Estimated time: <i aria-hidden="true" data-feather="clock"></i> 5 minutes</p>
@@ -461,6 +461,15 @@ textbook.</p>
 questions or notice any inconsistencies / opportunities for improvement,
 feel free to reach out to to me via mail or Slack. If you feel
 comfortable using GitHub, also feel free to submit an <a href="https://github.com/SLesche/r-for-empra/issues" class="external-link">issue</a>.</p>
+<p>Some opportunities for improvement are: - Is the material
+sufficiently explained? Can you follow? - Are the exercises too
+difficult / not enough to practice material learned in an episode? - Are
+you missing any information to complete following episodes? - Is there
+information missing or information that you do not require?` - Are there
+any typos / wrong examples? - Whatever else comes to mind.</p>
+<p>Feel free to reach out to me via any of the channels with your
+feedback. I will try to implement it as soon as possible. Thank you for
+your help in making this course better for coming students!</p>
 <div id="keypoints1" class="callout keypoints">
 <div class="callout-square">
 <i class="callout-icon" data-feather="key"></i>
@@ -1927,7 +1936,7 @@ about what happens if you accidentally run the command
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <p>The first element is going to be excluded twice. This means that the
 vector will lose two elements. In principle, it is a good idea to write
@@ -2531,7 +2540,7 @@ into R first.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb7">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -2562,7 +2571,7 @@ said it throughout the series.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -3280,7 +3289,28 @@ data?</li>
 data <a href="../data/kaggle_dass/data.csv">here</a> and place it in your
 <code>data</code> folder. There is also a codebook available to download
 <a href="../data/kaggle_dass/codebook.txt">here</a>.</p>
-<p>Some description of the dass data</p>
+<p>The data originates from an online version of the <strong>Depression
+Anxiety Stress Scales (DASS)</strong>, collected between
+<strong>2017-2019</strong> and retrieved from <a href="https://www.kaggle.com/datasets/lucasgreenwell/depression-anxiety-stress-scales-responses/data" class="external-link">Kaggle</a>.
+Participants took the test to receive personalized results and could opt
+into a research survey. The dataset includes <strong>responses to 42
+DASS items</strong> (rated on a 4-point scale), <strong>response
+times</strong>, and <strong>question positions</strong>. Additional data
+includes:</p>
+<ul>
+<li>
+<strong>Demographics</strong> (age, gender, education, native
+language, handedness, religion, sexual orientation, race, marital
+status, family size, major, country).<br>
+</li>
+<li>
+<strong>Big Five Personality Traits</strong> (via the Ten Item
+Personality Inventory - TIPI).<br>
+</li>
+<li>
+<strong>Vocabulary Check</strong> (includes fake words for validity
+checks).</li>
+</ul>
 <p>Let’s read in the data first. In my case, it is placed inside a
 subfolder of <code>data/</code> called <code>kaggle_dass/</code>. You
 may need to adjust the path on your end.</p>
@@ -3461,12 +3491,14 @@ the <code>binwidth</code> argument.</p>
 <pre class="warning" tabindex="0"><code>Warning: Removed 2 rows containing missing values or values outside the scale range
 (`geom_bar()`).</code></pre>
 </div>
-<p><img src="../fig/data-visualization-02-rendered-unnamed-chunk-6-1.png" style="display: block; margin: auto;" class="figure">
-## Density plots Often, what interests us is not the number of
-occurrences for a given value, but rather which values are common and
-which values are uncommon. By dividing the number of occurrences for a
-given value by the total number of observation, we can obtain a
-<em>density-plot</em>. In <code>ggplot</code> you achieve this by using
+<figure><img src="../fig/data-visualization-02-rendered-unnamed-chunk-6-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure></section><section><h2 class="section-heading" id="density-plots">Density plots<a class="anchor" aria-label="anchor" href="#density-plots"></a>
+</h2>
+<hr class="half-width">
+<p>Often, what interests us is not the number of occurrences for a given
+value, but rather which values are common and which values are uncommon.
+By dividing the number of occurrences for a given value by the total
+number of observation, we can obtain a <em>density-plot</em>. In
+<code>ggplot</code> you achieve this by using
 <code>geom_density()</code> instead of
 <code>geom_histogram()</code>.</p>
 <div class="codewrapper sourceCode" id="cb23">
@@ -3674,20 +3706,8 @@ this:</p>
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> </span></code></pre>
-</div>
-<figure><img src="../fig/data-visualization-02-rendered-unnamed-chunk-15-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><div class="codewrapper sourceCode" id="cb38">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="op">+</span> <span class="fu">geom_point</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span></span></code></pre>
-</div>
-<div class="codewrapper">
-<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="error" tabindex="0"><code>Error:
-! Cannot use `+` with a single argument.
-ℹ Did you accidentally put `+` on a new line?</code></pre>
+<code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span>data <span class="op">=</span> <span class="va">mpg</span><span class="op">)</span> </span>
+<span><span class="op">+</span> <span class="fu">geom_point</span><span class="op">(</span>mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">displ</span>, y <span class="op">=</span> <span class="va">hwy</span><span class="op">)</span><span class="op">)</span></span></code></pre>
 </div>
 <p>If you’re still stuck, try the help. You can get help about any R
 function by running <code>?function_name</code> in the console, or
@@ -3721,8 +3741,8 @@ on!</p>
 <div id="challenge-1" class="callout-inner">
 <h3 class="callout-title">Challenge 1</h3>
 <div class="callout-content">
-<p>Review what we learned about the DASS data so far. Is there anything
-else important to note?</p>
+<p>Review what we learned about the DASS data so far. What are the key
+demographic indicators? Is there anything else important to note?</p>
 </div>
 </div>
 </div>
@@ -3746,29 +3766,112 @@ is the difference between <code>Q1A</code>, <code>Q1E</code> and
 <div id="challenge-3" class="callout-inner">
 <h3 class="callout-title">Challenge 3</h3>
 <div class="callout-content">
-<p>Descriptives of the elapse times, what might be outliers?</p>
+<p>Provide descriptive statistics of the time it took participants to
+complete the DASS-part of the survey. What variable is this stored in?
+What is the average time? Are there any outliers? What is the average
+time without outliers?</p>
 </div>
 </div>
 </div>
-<div id="challenge-4" class="callout discussion">
+<div id="challenge-4" class="callout challenge">
 <div class="callout-square">
-<i class="callout-icon" data-feather="message-circle"></i>
+<i class="callout-icon" data-feather="zap"></i>
 </div>
 <div id="challenge-4" class="callout-inner">
 <h3 class="callout-title">Challenge 4</h3>
 <div class="callout-content">
-<p>Plot urban and familysize / married</p>
+<p>Plot a distribution of the elapsed test time. What might be a
+sensible cutoff for outliers?</p>
+<p>Plot a distribution of elapsed test time by whether English was the
+native language. What do you expect? What can you see? What are your
+thoughts on the distribution?</p>
 </div>
 </div>
 </div>
-<div id="challenge-5" class="callout discussion">
+<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
+  <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
+</button>
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div class="accordion-body">
+<div class="codewrapper sourceCode" id="cb38">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dass_data</span><span class="op">$</span><span class="va">engnat</span> <span class="op">&lt;-</span> <span class="fu">factor</span><span class="op">(</span><span class="va">dass_data</span><span class="op">$</span><span class="va">engnat</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">ggplot</span><span class="op">(</span></span>
+<span>  data <span class="op">=</span> <span class="va">dass_data</span>,</span>
+<span>  mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span></span>
+<span>    x <span class="op">=</span> <span class="va">testelapse</span>, fill <span class="op">=</span> <span class="va">engnat</span>, group <span class="op">=</span> <span class="va">engnat</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu">geom_density</span><span class="op">(</span>alpha <span class="op">=</span> <span class="fl">0.5</span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu">xlim</span><span class="op">(</span><span class="fl">0</span>, <span class="fl">3000</span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span></span>
+<span>    title <span class="op">=</span> <span class="st">"Distribution of test completion times"</span>,</span>
+<span>    subtitle <span class="op">=</span> <span class="st">"By Mother Tongue"</span>,</span>
+<span>    x <span class="op">=</span> <span class="st">"Test completion time (s)"</span>,</span>
+<span>    y <span class="op">=</span> <span class="st">"Density"</span></span>
+<span>  <span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu">theme_minimal</span><span class="op">(</span><span class="op">)</span></span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">WARNING<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="warning" tabindex="0"><code>Warning: Removed 399 rows containing non-finite outside the scale range
+(`stat_density()`).</code></pre>
+</div>
+<figure><img src="../fig/data-visualization-02-rendered-unnamed-chunk-16-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure>
+</div>
+</div>
+</div>
+</div>
+<div id="challenge-5" class="callout challenge">
 <div class="callout-square">
-<i class="callout-icon" data-feather="message-circle"></i>
+<i class="callout-icon" data-feather="zap"></i>
 </div>
 <div id="challenge-5" class="callout-inner">
 <h3 class="callout-title">Challenge 5</h3>
 <div class="callout-content">
-<p>Plot elapse time and engnat why might differences be?</p>
+<p>Learn something about the handedness of test-takers. Get the number
+of test-takers with each handedness using <code>table</code> and
+visualize it using <code>geom_bar()</code>.</p>
+<p>Plot the handedness of test-takers by educational status. Do you see
+any differences?</p>
+</div>
+</div>
+</div>
+<div id="accordionSolution2" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
+  <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
+</button>
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div class="accordion-body">
+<div class="codewrapper sourceCode" id="cb40">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">ggplot</span><span class="op">(</span></span>
+<span>  data <span class="op">=</span> <span class="va">dass_data</span>,</span>
+<span>  mapping <span class="op">=</span> <span class="fu">aes</span><span class="op">(</span></span>
+<span>    x <span class="op">=</span> <span class="va">hand</span>,</span>
+<span>    fill <span class="op">=</span> <span class="va">education</span>,</span>
+<span>    group <span class="op">=</span> <span class="va">education</span></span>
+<span>  <span class="op">)</span></span>
+<span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu">geom_bar</span><span class="op">(</span>position <span class="op">=</span> <span class="st">"fill"</span><span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu">labs</span><span class="op">(</span></span>
+<span>    title <span class="op">=</span> <span class="st">"Educational attainment by handedness"</span>,</span>
+<span>    x <span class="op">=</span> <span class="st">"Handedness (0 = NA, 1 = Right, 2 = Left, 3 = Both)"</span>,</span>
+<span>    y <span class="op">=</span> <span class="st">"Proportion"</span></span>
+<span>  <span class="op">)</span><span class="op">+</span></span>
+<span>  <span class="fu">theme_minimal</span><span class="op">(</span><span class="op">)</span></span></code></pre>
+</div>
+<figure><img src="../fig/data-visualization-02-rendered-unnamed-chunk-17-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure>
+</div>
 </div>
 </div>
 </div>
@@ -3779,8 +3882,18 @@ is the difference between <code>Q1A</code>, <code>Q1E</code> and
 <div class="callout-inner">
 <h3 class="callout-title">Key Points</h3>
 <div class="callout-content">
-<ul><li>
-</li></ul>
+<ul>
+<li>Get to know new data by inspecting it and computing key descriptive
+statistics</li>
+<li>Visualize distributions of key variables in order to learn about
+factors that impact them</li>
+<li>Visualize distribution of a numeric and a categorical variable using
+<code>geom_density()</code>
+</li>
+<li>Visualize distribution of two categorial variables using
+<code>geom_bar()</code>
+</li>
+</ul>
 </div>
 </div>
 </div>
