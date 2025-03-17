@@ -90,7 +90,9 @@ ggplot(
   geom_histogram(binwidth = 1)+
   xlim(0, 100)
 ```
+
 ## Density plots
+
 Often, what interests us is not the number of occurrences for a given value, but rather which values are common and which values are uncommon. By dividing the number of occurrences for a given value by the total number of observation, we can obtain a *density-plot*. In `ggplot` you achieve this by using `geom_density()` instead of `geom_histogram()`.
 
 ```{r}
@@ -200,7 +202,7 @@ Start by carefully comparing the code that you’re running to the code in the b
 
 One common problem when creating ggplot2 graphics is to put the + in the wrong place: it has to come at the end of the line, not the start. In other words, make sure you haven’t accidentally written code like this:
 
-```{r}
+```{r, eval = FALSE}
 ggplot(data = mpg) 
 + geom_point(mapping = aes(x = displ, y = hwy))
 ```
