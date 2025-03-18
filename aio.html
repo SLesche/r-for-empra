@@ -3079,7 +3079,7 @@ the higher average value?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb23">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -3139,7 +3139,7 @@ of <code>breaks</code>, which seems most interesting to you?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb27">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -3755,7 +3755,7 @@ thoughts on the distribution?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb38">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -3810,7 +3810,7 @@ any differences?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb40">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -3865,7 +3865,7 @@ any links that you are not going to use.
  -->
 </section></section><section id="aio-filtering"><p>Content from <a href="filtering.html">Filtering data</a></p>
 <hr>
-<p>Last updated on 2025-03-17 |
+<p>Last updated on 2025-03-18 |
 
         <a href="https://github.com/SLesche/r-for-empra/edit/main/episodes/filtering.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 <div class="text-end">
@@ -3903,21 +3903,99 @@ code</li>
 </div>
 </div>
 </div>
-<section><h2 class="section-heading" id="tidy-data">Tidy data<a class="anchor" aria-label="anchor" href="#tidy-data"></a>
+<section><h2 class="section-heading" id="filtering">Filtering<a class="anchor" aria-label="anchor" href="#filtering"></a>
 </h2>
-<hr class="half-width"></section><section><h2 class="section-heading" id="filtering">Filtering<a class="anchor" aria-label="anchor" href="#filtering"></a>
+<hr class="half-width">
+<p>In the earlier episodes, we have already seen some impossible values
+in <code>age</code> and <code>testelapse</code>. In our analyses, we
+probably want to exclude those values, or at the very least investigate,
+what is wrong. In order to do that, we need to <em>filter</em> our data
+- to make sure it only has those observations that we actually want. The
+<code>dplyr</code> package provides a useful function for this:
+<code>filter()</code>.</p>
+<p>Let’s start by again loading in our data, and also loading the
+package <code>dplyr</code>.</p>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw">library</span><span class="op">(</span><span class="va">dplyr</span><span class="op">)</span></span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>
+Attaching package: 'dplyr'</code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>The following objects are masked from 'package:stats':
+
+    filter, lag</code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="output" tabindex="0"><code>The following objects are masked from 'package:base':
+
+    intersect, setdiff, setequal, union</code></pre>
+</div>
+<div class="codewrapper sourceCode" id="cb5">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">dass_data</span> <span class="op">&lt;-</span> <span class="fu">read.csv</span><span class="op">(</span><span class="st">"data/kaggle_dass/data.csv"</span><span class="op">)</span></span></code></pre>
+</div>
+<p>The <code>filter</code> function works on arguments data,… filter out
+the age thing. Notice the nmumber of rows. Talk about doing sanity
+checks to see if you actually filtered what you want</p>
+<p>Now we can also filter to include. Lets do that and see what happend
+in the age columns</p>
+</section><section><h2 class="section-heading" id="selecting-columns">Selecting columns<a class="anchor" aria-label="anchor" href="#selecting-columns"></a>
 </h2>
-<hr class="half-width"></section><section><h2 class="section-heading" id="using-the-pipe">Using the pipe <code>%&gt;%</code>
+<hr class="half-width">
+<p>We dont want to inspect the whole thing, but just the columns that
+interest us</p>
+<p>Let’s use select to typr them</p>
+<p>then inspect the age with some key demographics</p>
+<div id="selecting-a-column-twice" class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<div id="selecting-a-column-twice" class="callout-inner">
+<h3 class="callout-title">Selecting a column twice</h3>
+<div class="callout-content">
+<p>What happpens when you type column twice? Using everything() to
+relocate columns</p>
+</div>
+</div>
+</div>
+</section><section><h2 class="section-heading" id="using-the-pipe">Using the pipe <code>%&gt;%</code>
 <a class="anchor" aria-label="anchor" href="#using-the-pipe"></a>
 </h2>
 <hr class="half-width">
+<p>notice what we did before, what could make this easier?</p>
+<p>Introduc3e the pipe, then use it with a plotting function (age dist,
+but now wihtout xlim())</p>
 <ul>
 <li>also something about functions and naming arguments (or not naming
 them)</li>
+</ul>
+<div id="different-pipes-vs." class="callout">
+<div class="callout-square">
+<i class="callout-icon" data-feather="bell"></i>
+</div>
+<div id="different-pipes-vs." class="callout-inner">
+<h3 class="callout-title">Different pipes %&gt;% vs. |&gt;</h3>
+<div class="callout-content">
+<ul>
 <li>a word about base-r pipe |&gt;</li>
-</ul></section><section><h2 class="section-heading" id="selecting-columns">Selecting columns<a class="anchor" aria-label="anchor" href="#selecting-columns"></a>
-</h2>
-<hr class="half-width"></section><section><h2 class="section-heading" id="challenges">Challenges<a class="anchor" aria-label="anchor" href="#challenges"></a>
+</ul>
+</div>
+</div>
+</div>
+</section><section><h2 class="section-heading" id="challenges">Challenges<a class="anchor" aria-label="anchor" href="#challenges"></a>
 </h2>
 <hr class="half-width">
 <p>Filter some column, then compute statistics</p>
@@ -3986,7 +4064,7 @@ any links that you are not going to use.
   "creativeWorkStatus": "active",
   "url": "https://SLesche.github.io/r-for-empra/aio.html",
   "identifier": "https://SLesche.github.io/r-for-empra/aio.html",
-  "dateCreated": "2025-03-17",
+  "dateCreated": "2025-03-18",
   "dateModified": "2025-03-18",
   "datePublished": "2025-03-18"
 }
