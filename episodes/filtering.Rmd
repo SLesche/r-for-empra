@@ -312,16 +312,35 @@ valid_age_dass |>
 
 ## Challenges
 
+::: challenge
+## Challenge 1
 Filter some column, then compute statistics
 
+:::
+
+::: challenge
+## Challenge 2
 Filter based on multiple conditions using chaining
 
+:::
+
+::: challenge
+## Challenge 3
 What is the argument order in some function?
 
+:::
+
+::: challenge
+## Challenge 4
 Give me a specific dataset with columns and filtered stuff
 
+:::
+
+::: challenge
+## Challenge 5
 Save a specific dataset (that we will work with next)
-  
+
+:::
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
 
