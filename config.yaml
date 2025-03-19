@@ -73,6 +73,8 @@ episodes:
 - data-visualization-01.Rmd
 - data-visualization-02.Rmd
 - filtering.Rmd
+- mutating.Rmd
+- count-and-summarize.Rmd
 
 # Information for Learners
 learners: 
