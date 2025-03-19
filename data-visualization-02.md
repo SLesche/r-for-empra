@@ -367,7 +367,7 @@ Review what we learned about the DASS data so far. What are the key demographic 
 ::: challenge
 
 ## Challenge 2
-Read the [codebook](data/kaggle_dass/codeboot.txt). What is the difference between `Q1A`, `Q1E` and `Q1I`?
+Read the [codebook](data/kaggle_dass/codebook.txt). What is the difference between `Q1A`, `Q1E` and `Q1I`?
 
 :::
 
