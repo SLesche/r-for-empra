@@ -33,6 +33,7 @@ dass_data <- read.csv("data/kaggle_dass/data.csv")
 
 The `filter` function works with two key inputs, the data and the arguments that you want to filter by. The data is always the first argument in the filter function. The following arguments are the filter conditions. 
 For example, in order to only include people that are 20 years old, we can run the following code:
+
 ```{r}
 twenty_year_olds <- filter(dass_data, age == 20)
 # Lets make sure this worked
@@ -72,42 +73,135 @@ This seems okay! Only 7 removed cases out of almost 40000 entries is negligible.
 impossible_age_data <- filter(dass_data, age < 0 | age > 100)
 ```
 
-Now we have a dataset that c
+Now we have a dataset that contains only the few cases with invalid ages. We can just look at the ages first:
 
+```{r}
+impossible_age_data$age
+```
 
+Now, let's try investigating the a little deeper. Do the people with invalid entries in age have valid entries in the other columns? Try to figure this out by visually inspecting the data. Where are they from? Do the responses to other questions seem odd?
 
-
-filter out the age thing. Notice the nmumber of rows. Talk about doing sanity checks to see if you actually filtered what you want
-
-Now we can also filter to include. Lets do that and see what happend in the age columns
+This is possible, but somewhat hard to do for data with 170 columns. Looking through all of them might make you a bit tired after the third investigation of invalid data. What we really need is to look at only a few columns that interest us. 
 
 ## Selecting columns
- 
-We dont want to inspect the whole thing, but just the columns that interest us
 
-Let's use select to typr them
+This is where the function `select()` comes in. It enables us to only retain some columns from a dataset for further analysis. You just give it the data as the first argument and then list all of the columns you want to keep.
 
-then inspect the age with some key demographics
+```{r}
+inspection_data_impossible_age <- select(impossible_age_data, age, country, engnat, testelapse)
+
+inspection_data_impossible_age
+```
+
+Here, we can see that our original data is reduced to the four columns we specified above `age, country, engnat, testelapse`. Do any of them look strange? What happened in the age column?
+
+To me, none of the other entries seem strange, the time it took them to complete the survey is plausible, they don't show a clear trend of being from the same country. It seems that some people mistook the age question and entered their year of birth instead. Later on, we can try to fix this.
+
+But before we do that, there are some more things about `select()` that we can learn. It is one of the most useful functions in my daily life, as it allows me to keep only those columns that I am actually interested in. And it has many more features than just listing the columns!
+
+For example, note that the last few columns of the data are all the demographic information. This is starting with `education` and ending with `major`.
+
+To select everything from `education` to `major`:
+```{r}
+select(valid_age_dass, education:major)
+```
+
+We can also select all character columns using `where()`:
+```{r}
+select(valid_age_dass, where(is.character))
+```
+Or we can select all columns that start with the letter "Q":
+
+```{r}
+select(valid_age_dass, starts_with("Q"))
+```
+There are a number of helper functions you can use within `select()`:
+
+- `starts_with("abc")`: matches names that begin with “abc”.
+- `ends_with("xyz")`: matches names that end with “xyz”.
+- `contains("ijk")`: matches names that contain “ijk”.
+- `num_range("x", 1:3)`: matches `x1`, `x2` and `x3`.
+
+You can also remove columns using select by simply negating the argument using `!`:
+```{r}
+select(valid_age_dass, !starts_with("Q"))
+```
+
+Now we will only get those columns that *don't* start with "Q".
 
 ::: callout
 ## Selecting a column twice
-What happpens when you type column twice? Using everything() to relocate columns
+You can also use select to reorder the columns in your dataset. For example, notice that the following two bits of code return differently order data:
+
+```{r}
+select(valid_age_dass, age, country, testelapse)
+```
+
+```{r}
+select(valid_age_dass, testelapse, age, country)
+```
+
+Using the function `everything()`, you can select all columns. 
+
+What happens, when you select a column twice? Try running the following examples, what do you notice about the position of columns?
+
+```{r, eval = FALSE}
+select(valid_age_dass, age, country, age)
+
+select(valid_age_dass, age, country, everything())
+```
 :::
 
-## Using the pipe `%>%` 
-notice what we did before, what could make this easier?
 
-Introduc3e the pipe, then use it with a plotting function (age dist, but now wihtout xlim())
+## Using the pipe `|>` 
+Let's retrace some of the steps that we took. We had the original data `dass_data` and then filtered out those rows with invalid entries in age. Then, we tried selecting only a couple of columns in order to make the data more managable. In code:
+
+```{r, eval = FALSE}
+impossible_age_data <- filter(dass_data, age < 0 | age > 100)
+
+inspection_data_impossible_age <- select(impossible_age_data, age, country, engnat, testelapse)
+```
+
+Notice how the first argument for both the `filter()` and the `select()` function is always the data. This is also true for the `ggplot()` function. And it's no coincidence! In R, there exists a special symbol, called the pipe, that has the following property: It takes the output of the previous function and uses it as the first input in the following function.
+
+This can make our example considerably easier to type:
+```{r}
+dass_data |> 
+  filter(age < 0 | age > 100) |> 
+  select(age, country, engnat, testelapse)
+```
+
+Notice how the pipe is always written at the end of a line. This makes it easier to understand and to read. As we go to the next line, whatever is outputted is used as input in the following line. So the original data `dass_data` is used as the first input in the filter function, and the filtered data is used as the first input in the `select` function.
+
+To use the pipe, you can either type it out yourself or use the Keyboard-Shortcut `Ctrl + Shift + M`.
+
+::: callout 
+## `|>` vs. `%>%`
+If you’ve been using the tidyverse for a while, you might be familiar with the `%>%` pipe provided by the *magrittr* package. The magrittr package is included in the core tidyverse, so you can use `%>%` whenever you load the tidyverse:
+
+```{r}
+library(tidyverse)
+
+mtcars %>% 
+  group_by(cyl) %>%
+  summarize(n = n())
+```
+
+For simple cases, `|>` and `%>%` behave identically. So why do we recommend the base pipe? Firstly, because it’s part of base R, it’s always available for you to use, even when you’re not using the tidyverse. Secondly, `|>` is quite a bit simpler than `%>%`: in the time between the invention of `%>%` in 2014 and the inclusion of `|>` in R 4.1.0 in 2021, we gained a better understanding of the pipe. This allowed the base implementation to jettison infrequently used and less important features.
+
+So, to make use of `|>` instead of `%>%`, go to `Tools > Global Options > Code` and select `Use native pipe operator`.
+:::
+
+## Plotting using the pipe
+Something something firstg argument. Numbered arguments vs. named arguments in functions
+
 
 - also something about functions and naming arguments (or not naming them)
 
-::: callout
-## Different pipes %>% vs. |>
-- a word about base-r pipe |>
-
-:::
-
 ## Common problems
+Forgetting to close the pipe
+
+Using `=` instead of `==` in filter, show error aswell
 
 
 ## Challenges
