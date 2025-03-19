@@ -314,6 +314,7 @@ valid_age_dass |>
 
 ::: challenge
 ## Challenge 1
+Maybe filter country, for two distinct values
 Filter some column, then compute statistics
 
 :::
