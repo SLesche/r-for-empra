@@ -314,40 +314,49 @@ valid_age_dass |>
 
 ::: challenge
 ## Challenge 1
-Maybe filter country, for two distinct values
-Filter some column, then compute statistics
+Filter the complete `dass_data`. Create one dataset containing only entries with people from the United States and one dataset containing only entries from Great Britain. Compare the number of entries in each dataset. What percentage of the total submissions came from these two countries?
+
+What is the average age of participants from the two countries?
 
 :::
 
 ::: challenge
 ## Challenge 2
-Filter based on multiple conditions using chaining
+Create a filtered dataset based on the following conditions:
+
+- Length of test is smaller than 30 minutes
+- English is the native language
+- There is an entry in the field `major`
 
 :::
 
 ::: challenge
 ## Challenge 3
-What is the argument order in some function?
 
+What arguments does the `cut()` function take? Make a list of the arguments and the order in which they have to be provided to the function.
 :::
 
 ::: challenge
 ## Challenge 4
-Give me a specific dataset with columns and filtered stuff
 
+In a singly chain of functions, create a dataset is filtered based on the columns above and contains only the following variables:
+
+- all demographic information
+- all the answers to the DASS (and only the answers, not the position or timing)
 :::
 
 ::: challenge
 ## Challenge 5
-Save a specific dataset (that we will work with next)
+
+Save that dataset to a file `english_university_dass_data.csv` in your `processed_data` folder. You may need to use Google to find a function that can do this.
 
 :::
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
 
-- something about the pipe
-- something about filtering
-- something about select
+- Use the pipe operator `%>%` to link multiple functions together
+- Use `filter()` to filter rows based on certain conditions
+- Use `select()` to keep only those rows that interest you
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
