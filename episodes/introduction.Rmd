@@ -38,6 +38,7 @@ This course relies heavily on [R for Data Science (2e)](https://r4ds.hadley.nz/)
 This is the first version of the new course material. If you have any questions or notice any inconsistencies / opportunities for improvement, feel free to reach out to to me via mail or Slack. If you feel comfortable using GitHub, also feel free to submit an [issue](https://github.com/SLesche/r-for-empra/issues).
 
 Some opportunities for improvement are:
+
 - Is the material sufficiently explained? Can you follow?
 - Are the exercises too difficult / not enough to practice material learned in an episode?
 - Are you missing any information to complete following episodes?

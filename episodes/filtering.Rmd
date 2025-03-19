@@ -153,8 +153,8 @@ select(valid_age_dass, age, country, everything())
 :::
 
 
-## Using the pipe `|>` 
-Let's retrace some of the steps that we took. We had the original data `dass_data` and then filtered out those rows with invalid entries in age. Then, we tried selecting only a couple of columns in order to make the data more managable. In code:
+## Using the pipe `%>%` 
+Let's retrace some of the steps that we took. We had the original data `dass_data` and then filtered out those rows with invalid entries in age. Then, we tried selecting only a couple of columns in order to make the data more manageable. In code:
 
 ```{r, eval = FALSE}
 impossible_age_data <- filter(dass_data, age < 0 | age > 100)
@@ -166,8 +166,8 @@ Notice how the first argument for both the `filter()` and the `select()` functio
 
 This can make our example considerably easier to type:
 ```{r}
-dass_data |> 
-  filter(age < 0 | age > 100) |> 
+dass_data %>% 
+  filter(age < 0 | age > 100) %>% 
   select(age, country, engnat, testelapse)
 ```
 
@@ -175,40 +175,148 @@ Notice how the pipe is always written at the end of a line. This makes it easier
 
 To use the pipe, you can either type it out yourself or use the Keyboard-Shortcut `Ctrl + Shift + M`.
 
-::: callout 
-## `|>` vs. `%>%`
-If you’ve been using the tidyverse for a while, you might be familiar with the `%>%` pipe provided by the *magrittr* package. The magrittr package is included in the core tidyverse, so you can use `%>%` whenever you load the tidyverse:
+## Plotting using the pipe
+
+We have seen that the pipe `%>%` allows us to chain multiple functions together, making our code cleaner and easier to read. This can be particularly useful when working with `ggplot2`, where we often build plots step by step. Since `ggplot()` takes the data as its first argument, we can use the pipe to make our code more readable.
+
+For example, let’s say we want to create a histogram of valid ages in our dataset. Instead of writing:
 
 ```{r}
-library(tidyverse)
-
-mtcars %>% 
-  group_by(cyl) %>%
-  summarize(n = n())
+ggplot(valid_age_dass, aes(x = age)) +
+  geom_histogram(bins = 50)
 ```
 
-For simple cases, `|>` and `%>%` behave identically. So why do we recommend the base pipe? Firstly, because it’s part of base R, it’s always available for you to use, even when you’re not using the tidyverse. Secondly, `|>` is quite a bit simpler than `%>%`: in the time between the invention of `%>%` in 2014 and the inclusion of `|>` in R 4.1.0 in 2021, we gained a better understanding of the pipe. This allowed the base implementation to jettison infrequently used and less important features.
+We can write:
 
-So, to make use of `|>` instead of `%>%`, go to `Tools > Global Options > Code` and select `Use native pipe operator`.
+```{r}
+valid_age_dass %>%
+  ggplot(aes(x = age)) +
+  geom_histogram(bins = 50)
+```
+
+This makes it clear that `valid_age_dass` is the dataset being used, and it improves readability.
+
+::: callout
+## Using the pipe for the second argument
+By default, the pipe places the output of the previous code as the first argument in the following function. In most cases, this is exactly what we want to have. If you want to be more explicit about where the pipe should place the output, you can do this by placing a `.` as the placeholder for piped-data.
+
+```{r}
+n_bins <- 30
+
+n_bins %>%
+  hist(valid_age_dass$age, .)
+```
 :::
 
-## Plotting using the pipe
-Something something firstg argument. Numbered arguments vs. named arguments in functions
+## Numbered vs. Named Arguments
+
+The pipe is made possible because most functions in the packages included in `tidyverse`, like `dplyr` and `ggplot` have the data as their first argument. This makes it simple to pipe-through results from one function to the next, without having to explicitly type `function(data = something)` every time. In principle, almost all functions have a natural order in which they expect arguments to occur. For example: `ggplot()` expects data as the first argument and information about the mapping as the second argument. This is why we always typed:
 
 
-- also something about functions and naming arguments (or not naming them)
+```{r}
+library(ggplot2)
 
-## Common problems
-Forgetting to close the pipe
+ggplot(
+  data = valid_age_dass,
+  mapping = aes(x = age)
+)+
+  geom_density()
+```
 
-Using `=` instead of `==` in filter, show error aswell
+Notice that if we don't specify the argument names, we still receive the same results. The function just uses the inputs you give it to match the arguments in the order in which they occur.
 
+```{r}
+ggplot(
+  valid_age_dass,
+  aes(x = age)
+)+
+  geom_density()
+```
+
+This is what makes this possible:
+```{r}
+valid_age_dass |>
+  ggplot(aes(x = age)) +
+  geom_density()  # This will cause an error!
+```
+
+However, if we try to supply an argument in a place where it doesn't belong, we get an error:
+```{r}
+valid_age_dass |>
+  ggplot(aes(x = age)) +
+  geom_histogram(50)  # This will cause an error!
+```
+
+`geom_histogram` does not expect the number of bins to be the first argument! Therefore, we need to declare this properly:
+```{r}
+valid_age_dass |>
+  ggplot(aes(x = age)) +
+  geom_histogram(n_bins = 50)  # This will cause an error!
+```
+To learn about the order of arguments of a function, use `?function` and inspect the help file.
+
+## Common Problems
+
+### Using one pipe too little
+
+A common mistake is forgetting to use a pipe between arguments of a chain. For example:
+
+```{r}
+valid_age_dass %>% 
+  filter(age > 18)
+  select(age, country)
+```
+
+Here, `select()` is not part of the pipeline because the pipe is missing after `filter(age > 18)`. This can lead to unexpected errors or incorrect results. The correct way to write this is:
+
+```{r}
+valid_age_dass %>% 
+  filter(age > 18) %>% 
+  select(age, country)
+```
+
+### Using one pipe too much
+
+Another common problem is using one pipe too many without having a function following it.
+```{r}
+valid_age_dass %>% 
+  filter(age > 18) %>% 
+  select(age, country) %>% 
+```
+This can cause some really strange errors that never say anything about the pipe being superfluous. Make sure that all your pipe "lead somewhere".
+
+### Using a pipe instead of `+` for `ggplot()`
+A source of confusion stems from the difference between the pipe `%>%` and `ggplot2`'s `+`. They both serve very similar purposes, namely adding together a chain of functions. However, make sure you use `%>%` for everything *except* ggplot-functions. Here, you will also receive an error that is a little more informative:
+
+```{r}
+valid_age_dass %>% 
+  ggplot(aes(x = age)) %>% 
+  geom_density()
+```
+
+### Using `=` Instead of `==` in `filter()`
+
+Another common error is using `=` instead of `==` when filtering data. For example:
+
+```{r}
+valid_age_dass |>
+  filter(country = "US")  # Incorrect!
+```
+
+This will result in an error because `=` is used for assigning values, while `==` is used for comparisons. The correct syntax is:
+
+```{r}
+valid_age_dass |>
+  filter(country == "US")
+```
 
 ## Challenges
 
 Filter some column, then compute statistics
 
 Filter based on multiple conditions using chaining
+
+What is the argument order in some function?
 
 Give me a specific dataset with columns and filtered stuff
 
@@ -217,6 +325,9 @@ Save a specific dataset (that we will work with next)
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
 
+- something about the pipe
+- something about filtering
+- something about select
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
