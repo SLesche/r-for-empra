@@ -88,7 +88,10 @@ This is possible, but somewhat hard to do for data with 170 columns. Looking thr
 This is where the function `select()` comes in. It enables us to only retain some columns from a dataset for further analysis. You just give it the data as the first argument and then list all of the columns you want to keep.
 
 ```{r}
-inspection_data_impossible_age <- select(impossible_age_data, age, country, engnat, testelapse)
+inspection_data_impossible_age <- select(
+    impossible_age_data,
+    age, country, engnat, testelapse
+  )
 
 inspection_data_impossible_age
 ```
@@ -134,11 +137,12 @@ Now we will only get those columns that *don't* start with "Q".
 You can also use select to reorder the columns in your dataset. For example, notice that the following two bits of code return differently order data:
 
 ```{r}
-select(valid_age_dass, age, country, testelapse)
+head(select(valid_age_dass, age, country, testelapse), 10) 
+# head() gives us the first 10 values only
 ```
 
 ```{r}
-select(valid_age_dass, testelapse, age, country)
+head(select(valid_age_dass, testelapse, age, country), 10)
 ```
 
 Using the function `everything()`, you can select all columns. 
@@ -162,7 +166,7 @@ impossible_age_data <- filter(dass_data, age < 0 | age > 100)
 inspection_data_impossible_age <- select(impossible_age_data, age, country, engnat, testelapse)
 ```
 
-Notice how the first argument for both the `filter()` and the `select()` function is always the data. This is also true for the `ggplot()` function. And it's no coincidence! In R, there exists a special symbol, called the pipe, that has the following property: It takes the output of the previous function and uses it as the first input in the following function.
+Notice how the first argument for both the `filter()` and the `select()` function is always the data. This is also true for the `ggplot()` function. And it's no coincidence! In R, there exists a special symbol, called the pipe `%>%`, that has the following property: It takes the output of the previous function and uses it as the first input in the following function.
 
 This can make our example considerably easier to type:
 ```{r}
@@ -182,6 +186,8 @@ We have seen that the pipe `%>%` allows us to chain multiple functions together,
 For example, let’s say we want to create a histogram of valid ages in our dataset. Instead of writing:
 
 ```{r}
+library(ggplot2)
+
 ggplot(valid_age_dass, aes(x = age)) +
   geom_histogram(bins = 50)
 ```
@@ -214,8 +220,6 @@ The pipe is made possible because most functions in the packages included in `ti
 
 
 ```{r}
-library(ggplot2)
-
 ggplot(
   data = valid_age_dass,
   mapping = aes(x = age)
@@ -227,8 +231,8 @@ Notice that if we don't specify the argument names, we still receive the same re
 
 ```{r}
 ggplot(
-  valid_age_dass,
-  aes(x = age)
+  valid_age_dass, # Now it just automatically thinks this is data = 
+  aes(x = age) # and this is mapping = 
 )+
   geom_density()
 ```
@@ -237,21 +241,22 @@ This is what makes this possible:
 ```{r}
 valid_age_dass |>
   ggplot(aes(x = age)) +
-  geom_density()  # This will cause an error!
+  geom_density()
 ```
 
 However, if we try to supply an argument in a place where it doesn't belong, we get an error:
 ```{r}
+n_bins = 50 
 valid_age_dass |>
   ggplot(aes(x = age)) +
-  geom_histogram(50)  # This will cause an error!
+  geom_histogram(n_bins)  # This will cause an error!
 ```
 
-`geom_histogram` does not expect the number of bins to be the first argument! Therefore, we need to declare this properly:
+`geom_histogram` does not expect the number of bins to be the first argument, but rather the mapping! Therefore, we need to declare this properly:
 ```{r}
 valid_age_dass |>
   ggplot(aes(x = age)) +
-  geom_histogram(n_bins = 50)  # This will cause an error!
+  geom_histogram(bins = n_bins)  # This will cause an error!
 ```
 To learn about the order of arguments of a function, use `?function` and inspect the help file.
 
@@ -261,7 +266,7 @@ To learn about the order of arguments of a function, use `?function` and inspect
 
 A common mistake is forgetting to use a pipe between arguments of a chain. For example:
 
-```{r}
+```{r, eval = FALSE, error = TRUE}
 valid_age_dass %>% 
   filter(age > 18)
   select(age, country)
@@ -269,7 +274,7 @@ valid_age_dass %>%
 
 Here, `select()` is not part of the pipeline because the pipe is missing after `filter(age > 18)`. This can lead to unexpected errors or incorrect results. The correct way to write this is:
 
-```{r}
+```{r, eval = FALSE}
 valid_age_dass %>% 
   filter(age > 18) %>% 
   select(age, country)
@@ -278,7 +283,7 @@ valid_age_dass %>%
 ### Using one pipe too much
 
 Another common problem is using one pipe too many without having a function following it.
-```{r}
+```{r, error = TRUE}
 valid_age_dass %>% 
   filter(age > 18) %>% 
   select(age, country) %>% 
@@ -299,15 +304,17 @@ valid_age_dass %>%
 Another common error is using `=` instead of `==` when filtering data. For example:
 
 ```{r}
-valid_age_dass |>
-  filter(country = "US")  # Incorrect!
+valid_age_dass %>% 
+  filter(country = "US") %>%  # Incorrect!
+  head()
 ```
 
 This will result in an error because `=` is used for assigning values, while `==` is used for comparisons. The correct syntax is:
 
 ```{r}
-valid_age_dass |>
-  filter(country == "US")
+valid_age_dass %>% 
+  filter(country == "US") %>% 
+  head()
 ```
 
 ## Challenges
