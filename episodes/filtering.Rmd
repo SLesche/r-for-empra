@@ -164,7 +164,10 @@ Let's retrace some of the steps that we took. We had the original data `dass_dat
 ```{r, eval = FALSE}
 impossible_age_data <- filter(dass_data, age < 0 | age > 100)
 
-inspection_data_impossible_age <- select(impossible_age_data, age, country, engnat, testelapse)
+inspection_data_impossible_age <- select(
+  impossible_age_data,
+  age, country, engnat, testelapse
+  )
 ```
 
 Notice how the first argument for both the `filter()` and the `select()` function is always the data. This is also true for the `ggplot()` function. And it's no coincidence! In R, there exists a special symbol, called the pipe `%>%`, that has the following property: It takes the output of the previous function and uses it as the first input in the following function.
@@ -257,7 +260,7 @@ valid_age_dass |>
 ```{r}
 valid_age_dass |>
   ggplot(aes(x = age)) +
-  geom_histogram(bins = n_bins)  # This will cause an error!
+  geom_histogram(bins = n_bins)
 ```
 To learn about the order of arguments of a function, use `?function` and inspect the help file.
 
@@ -315,6 +318,7 @@ This will result in an error because `=` is used for assigning values, while `==
 ```{r}
 valid_age_dass %>% 
   filter(country == "US") %>% 
+  select(country, engnat, education) %>% 
   head()
 ```
 
