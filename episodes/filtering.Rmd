@@ -106,17 +106,18 @@ For example, note that the last few columns of the data are all the demographic 
 
 To select everything from `education` to `major`:
 ```{r}
-select(valid_age_dass, education:major)
+# colnames() gives us the names of the columns only
+colnames(select(valid_age_dass, education:major))
 ```
 
 We can also select all character columns using `where()`:
 ```{r}
-select(valid_age_dass, where(is.character))
+colnames(select(valid_age_dass, where(is.character)))
 ```
 Or we can select all columns that start with the letter "Q":
 
 ```{r}
-select(valid_age_dass, starts_with("Q"))
+colnames(select(valid_age_dass, starts_with("Q")))
 ```
 There are a number of helper functions you can use within `select()`:
 
@@ -127,7 +128,7 @@ There are a number of helper functions you can use within `select()`:
 
 You can also remove columns using select by simply negating the argument using `!`:
 ```{r}
-select(valid_age_dass, !starts_with("Q"))
+colnames(select(valid_age_dass, !starts_with("Q")))
 ```
 
 Now we will only get those columns that *don't* start with "Q".
@@ -137,8 +138,8 @@ Now we will only get those columns that *don't* start with "Q".
 You can also use select to reorder the columns in your dataset. For example, notice that the following two bits of code return differently order data:
 
 ```{r}
-head(select(valid_age_dass, age, country, testelapse), 10) 
 # head() gives us the first 10 values only
+head(select(valid_age_dass, age, country, testelapse), 10) 
 ```
 
 ```{r}
