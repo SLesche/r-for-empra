@@ -768,7 +768,10 @@ columns in order to make the data more manageable. In code:</p>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">impossible_age_data</span> <span class="op">&lt;-</span> <span class="fu">filter</span><span class="op">(</span><span class="va">dass_data</span>, <span class="va">age</span> <span class="op">&lt;</span> <span class="fl">0</span> <span class="op">|</span> <span class="va">age</span> <span class="op">&gt;</span> <span class="fl">100</span><span class="op">)</span></span>
 <span></span>
-<span><span class="va">inspection_data_impossible_age</span> <span class="op">&lt;-</span> <span class="fu">select</span><span class="op">(</span><span class="va">impossible_age_data</span>, <span class="va">age</span>, <span class="va">country</span>, <span class="va">engnat</span>, <span class="va">testelapse</span><span class="op">)</span></span></code></pre>
+<span><span class="va">inspection_data_impossible_age</span> <span class="op">&lt;-</span> <span class="fu">select</span><span class="op">(</span></span>
+<span>  <span class="va">impossible_age_data</span>,</span>
+<span>  <span class="va">age</span>, <span class="va">country</span>, <span class="va">engnat</span>, <span class="va">testelapse</span></span>
+<span>  <span class="op">)</span></span></code></pre>
 </div>
 <p>Notice how the first argument for both the <code>filter()</code> and
 the <code>select()</code> function is always the data. This is also true
@@ -926,7 +929,7 @@ declare this properly:</p>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">valid_age_dass</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">age</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
-<span>  <span class="fu">geom_histogram</span><span class="op">(</span>bins <span class="op">=</span> <span class="va">n_bins</span><span class="op">)</span>  <span class="co"># This will cause an error!</span></span></code></pre>
+<span>  <span class="fu">geom_histogram</span><span class="op">(</span>bins <span class="op">=</span> <span class="va">n_bins</span><span class="op">)</span></span></code></pre>
 </div>
 <p><img src="fig/filtering-rendered-unnamed-chunk-25-1.png" style="display: block; margin: auto;" class="figure">
 To learn about the order of arguments of a function, use
@@ -1037,102 +1040,19 @@ correct syntax is:</p>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">valid_age_dass</span> <span class="op">%&gt;%</span> </span>
 <span>  <span class="fu">filter</span><span class="op">(</span><span class="va">country</span> <span class="op">==</span> <span class="st">"US"</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="va">country</span>, <span class="va">engnat</span>, <span class="va">education</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
 <span>  <span class="fu">head</span><span class="op">(</span><span class="op">)</span></span></code></pre>
 </div>
 <div class="codewrapper">
 <h3 class="code-label">OUTPUT<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
-<pre class="output" tabindex="0"><code>  Q1A Q1I  Q1E Q2A Q2I  Q2E Q3A Q3I   Q3E Q4A Q4I  Q4E Q5A Q5I  Q5E Q6A Q6I
-1   4   2 8118   1  36 2890   2  35  4777   3  28 3090   4  10 5078   4  40
-2   2  23 5081   3  11 6837   2  37  5521   1  27 4556   3  28 3269   3  26
-3   1  18 6116   1  28 3193   2   2 12542   1   8 6150   3  40 6428   1   4
-4   4   4 3470   4  14 2139   3   1 11043   4  20 1829   3   3 5847   4   7
-5   3  38 3352   1  16 4322   2  28  3083   1  34 2204   3  41 1180   3  23
-6   3  37 4024   3  35 2116   2  18  3408   2  10 2283   4  23 2253   3  20
-    Q6E Q7A Q7I  Q7E Q8A Q8I  Q8E Q9A Q9I  Q9E Q10A Q10I Q10E Q11A Q11I Q11E
-1  2790   3  18 3408   4   1 8342   3  37  916    2   32 1537    2   21 3926
-2  3231   4   2 7138   2  19 3079   3  31 9650    3   17 4179    2    5 5928
-3 17001   1  33 2944   3   7 8626   3  14 9639    2   20 6175    1   34 6008
-4  3529   4  17 1855   4  29 3000   4  31 6066    3   21 2539    4   16 3079
-5  2218   1  29 2378   3  12 2082   1  31 3917    1    5 5533    3   11 2865
-6  2015   1  30 1821   3   5 1593   4   6 5626    3   24 1776    3   21 1717
-  Q12A Q12I  Q12E Q13A Q13I Q13E Q14A Q14I  Q14E Q15A Q15I Q15E Q16A Q16I Q16E
-1    2   25  3691    4   26 2004    4    4  8888    3   27 4109    3   19 4058
-2    1   21  2838    1   20 2560    4   29  5139    2   22 3597    2   35 3336
-3    2   21  9267    1   41 5290    3    1 25694    2    9 7634    4   37 8513
-4    4   11  4134    4   35 1233    3   30  5252    4   32 3588    4    6 2784
-5    2    2 10725    2   37 4205    4   10  4387    2    6 2750    3   27 2600
-6    3   28  2245    3   17 1740    3   29  2235    1   14 2149    1   11 4636
-  Q17A Q17I Q17E Q18A Q18I Q18E Q19A Q19I Q19E Q20A Q20I Q20E Q21A Q21I Q21E
-1    4   12 3692    2    6 3373    1   23 6015    1   16 3023    2   22 2670
-2    3   10 4506    1   14 2695    1   25 8128    2   15 3125    1    6 4061
-3    2   25 9078    1   15 4381    1   23 6647    2   36 6250    1   39 3842
-4    3    2 8302    4   25 4083    4   28 4179    4   42 3284    3   13 5699
-5    2   17 3886    3    8 3073    1   30 3919    1   39 1919    1   24 3385
-6    3    4 2270    2    7 4390    4    8 4437    3   13 2169    2   33 2833
-  Q22A Q22I Q22E Q23A Q23I Q23E Q24A Q24I Q24E Q25A Q25I  Q25E Q26A Q26I Q26E
-1    3    3 5727    1   39 3641    2   33 2670    2    7  7649    3   11 2537
-2    1   40 4272    1   12 4029    1    9 5630    1   18 30631    2   24 9870
-3    1   16 7876    1   27 3124    2   12 6836    1   31 12063    1    3 9264
-4    4   39 3267    4   19 1704    3   36 5733    2   12  9601    4   15 9435
-5    1   18 4127    1   14 6035    3   13 2667    1   25  5481    1   40 3213
-6    4   22 1919    1   15 1561    2   41 2285    3    9  2997    3    2 4831
-  Q27A Q27I  Q27E Q28A Q28I Q28E Q29A Q29I  Q29E Q30A Q30I  Q30E Q31A Q31I Q31E
-1    3    5  2907    4    9 1685    3   41  4726    3   17  6063    2   20 3307
-2    4    4  2411    1   16 9478    3    1  7618    3   32 12639    3   34 5378
-3    1   35  3957    1   42 2537    3   17 10880    2    5  8462    2   32 5615
-4    2   22 10214    4   37 1806    4    8  2983    3   24 10286    4   40 3801
-5    3   26  2452    1   42 2103    3   20  4451    2   32  4967    3    7 2960
-6    2   42  2089    2   16 1998    3   38  1582    3   36  2360    2   39 2781
-  Q32A Q32I  Q32E Q33A Q33I Q33E Q34A Q34I Q34E Q35A Q35I  Q35E Q36A Q36I Q36E
-1    3   14  4995    3   38 2505    2   34 2540    2   31  4359    3   15 3925
-2    1   41  8923    2   38 2977    4    3 5620    1    7 16760    1    8 6427
-3    1   30 11412    4    6 5112    1   29 3070    3   10 13377    2   38 4506
-4    2    9  9552    4   38 1497    4   27 1567    2   23  8033    4   10 2036
-5    3   35  4199    1   22 2516    2   33 2880    3   36  3416    1    4 2400
-6    2   12  2769    4   40 3312    3   31 1412    2   26  5201    3    3 2347
-  Q37A Q37I  Q37E Q38A Q38I Q38E Q39A Q39I  Q39E Q40A Q40I Q40E Q41A Q41I Q41E
-1    4   13  4609    2   30 3755    2   42  2323    1   24 5713    2    8 1334
-2    2   39  3760    1   13 4112    3   42  2769    4   33 4432    4   30 3643
-3    2   24 17227    2   13 7844    1   26 20253    1   22 8528    1   11 4370
-4    4   26  3868    3    5 3682    2   33  2751    4   41 7497    4   34 2179
-5    1   15  4543    2    3 4866    3   21  2149    1    9 5033    1   19 2104
-6    1   32  2439    2   19 1876    4    1  3695    3   34 2816    1   25 1987
-  Q42A Q42I  Q42E country source introelapse testelapse surveyelapse TIPI1
-1    2   29  5562      US      2           1        193          186     6
-2    2   36  3698      US      2           3        261          336     1
-3    2   19 10310      US      2           4        349          213     2
-4    4   18  3662      US      0          17        195          242     1
-5    2    1 10150      US      2           3        162          167     5
-6    2   27  1833      US      2         515        511          121     6
-  TIPI2 TIPI3 TIPI4 TIPI5 TIPI6 TIPI7 TIPI8 TIPI9 TIPI10 VCL1 VCL2 VCL3 VCL4
-1     5     4     7     5     4     7     7     1      5    1    1    0    1
-2     1     7     4     6     4     6     1     6      1    1    0    0    1
-3     1     6     1     7     7     7     2     6      7    1    1    0    1
-4     4     5     7     5     7     6     7     1      4    1    1    0    1
-5     3     6     6     3     4     4     7     5      7    1    0    0    1
-6     5     6     6     6     2     5     3     3      3    1    1    0    1
-  VCL5 VCL6 VCL7 VCL8 VCL9 VCL10 VCL11 VCL12 VCL13 VCL14 VCL15 VCL16 education
-1    1    0    0    0    0     1     0     0     0     1     1     1         2
-2    1    0    0    0    0     1     0     0     0     1     1     1         1
-3    1    0    0    0    0     1     0     0     0     0     1     1         2
-4    1    1    0    0    0     1     0     0     1     1     1     1         2
-5    1    0    0    0    0     0     0     0     1     1     0     0         1
-6    1    0    0    0    0     1     1     0     0     1     1     1         2
-  urban gender engnat age screensize uniquenetworklocation hand religion
-1     3      2      1  16          2                     1    2        7
-2     3      2      1  13          2                     1    2        4
-3     3      2      2  20          2                     1    1        4
-4     3      1      2  16          1                     1    1       12
-5     2      1      1  15          1                     1    1        6
-6     1      2      1  18          1                     1    1        6
-  orientation race voted married familysize      major
-1           0   70     2       1          4
-2           5   70     2       1          5    biology
-3           1   70     2       1          4
-4           2   70     2       1          4 Psychology
-5           1   60     2       1          1
-6           1   60     2       1          2           </code></pre>
+<pre class="output" tabindex="0"><code>  country engnat education
+1      US      1         2
+2      US      1         1
+3      US      2         2
+4      US      2         2
+5      US      1         1
+6      US      1         2</code></pre>
 </div>
 </div>
 </section><section><h2 class="section-heading" id="challenges">Challenges<a class="anchor" aria-label="anchor" href="#challenges"></a></h2>
