@@ -336,8 +336,8 @@ What is the average age of participants from the two countries?
 ## Challenge 2
 Create a filtered dataset based on the following conditions:
 
-- The participant took less than 30 minutes to complete the DASS-part of the survey
-- English is the native language of the participant
+- Length of test is smaller than 30 minutes
+- English is the native language
 - There is an entry in the field `major`
 
 :::
@@ -351,29 +351,16 @@ What arguments does the `cut()` function take? Make a list of the arguments and 
 ::: challenge
 ## Challenge 4
 
-In a single chain of functions, create a dataset is filtered with the same conditions as above and contains only the following variables:
+In a singly chain of functions, create a dataset is filtered based on the columns above and contains only the following variables:
 
-- all demographic information, country information and the duration of the tests
+- all demographic information
 - all the answers to the DASS (and only the answers, not the position or timing)
-
-:::: solution
-```{r}
-english_unversity_dass <- dass_data %>% 
-  filter(testelapse < 1800) %>% 
-  filter(engnat == 1) %>% 
-  filter(major != "") %>% 
-  select(starts_with("Q") & ends_with("A"), contains("elapse"), country, education:major)
-
-write.csv(english_unversity_dass, "data/english_university_dass_data.csv")
-```
-
-:::: solution
 :::
 
 ::: challenge
 ## Challenge 5
 
-Save that dataset to a file `english_university_dass_data.csv` in your `processed_data` folder. You may need to use Google to find a function that you can use to save data.
+Save that dataset to a file `english_university_dass_data.csv` in your `processed_data` folder. You may need to use Google to find a function that can do this.
 
 :::
 
