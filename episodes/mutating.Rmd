@@ -14,16 +14,27 @@ exercises: 2
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
-something about mutating in general
+Introduce another dataset, then make the challenges with the english language one
 
-something about rowMeans and rowSums
-
-maybe something with mutate_at()
-
-maybe some aspects of mutate(across())
-
+Make the examples with dass data, then introduce the empra dataset in challenges. Make specific challenges and then next chapter is small and has more challenges.
 
 ## Challenges
+something about mutating in general
+- make testelapse minutes column
+- make a is_us column
+
+something about rowMeans and rowSums
+- make a dass score
+
+some renaming using mutate and case_when()
+
+as instructor / callout
+maybe something with mutate_across to make some testelapse stuff for multiple columns
+
+
+The next session is then counting / summarizing and after that is a break to do 
+some exploration with the new dataset. Before going into proper analysis.
+
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
 
