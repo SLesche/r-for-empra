@@ -1,7 +1,7 @@
 ---
-title: 'mutating'
-teaching: 10
-exercises: 2
+title: 'Creating new columns'
+teaching: 15
+exercises: 10
 ---
 
 :::::::::::::::::::::::::::::::::::::: questions 
@@ -14,11 +14,26 @@ exercises: 2
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
-Introduce another dataset, then make the challenges with the english language one
+## Making new columns
+So far we have dealt with existing columns and worked on them. We have computed descriptive statistics, plotted basic overviews of data and cut the data just the way we like it using `filter()` and `select()`. Now, we will unlock a new power... the power of creation! Well, actually it's just adding new columns to the dataset, but that's still cool!
 
-Make the examples with dass data, then introduce the empra dataset in challenges. Make specific challenges and then next chapter is small and has more challenges.
+Let's start by reading in our DASS data again and loading the package `dplyr`.
 
-## Challenges
+```{r}
+library(dplyr)
+
+dass_data <- read.csv("data/kaggle_dass/data.csv")
+```
+
+Now, lets start...
+
+Mutate to give a constant number
+
+Mutate to give a running number
+
+Mutate to change columns
+
+## Mutating existing columns
 something about mutating in general
 - make testelapse minutes column
 - make a is_us column
@@ -30,8 +45,12 @@ maybe something with mutate_at()
 some renaming using mutate and case_when()
 
 maybe some aspects of mutate(across())
+
 as instructor / callout
 maybe something with mutate_across to make some testelapse stuff for multiple columns
+
+## Challenges
+Make the examples with dass data, then introduce the empra dataset in challenges. Make specific challenges and then next chapter is small and has more challenges.
 
 
 ## Challenges
