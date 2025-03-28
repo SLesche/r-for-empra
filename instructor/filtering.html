@@ -117,11 +117,11 @@
   R - Beginners Workshop
 </div>
 
-<aside class="col-md-12 lesson-progress"><div style="width: 70%" class="percentage">
-    70%
+<aside class="col-md-12 lesson-progress"><div style="width: 52%" class="percentage">
+    52%
   </div>
   <div class="progress incubator">
-    <div class="progress-bar incubator" role="progressbar" style="width: 70%" aria-valuenow="70" aria-label="Lesson Progress" aria-valuemin="0" aria-valuemax="100">
+    <div class="progress-bar incubator" role="progressbar" style="width: 52%" aria-valuenow="52" aria-label="Lesson Progress" aria-valuemin="0" aria-valuemax="100">
     </div>
   </div>
 </aside><div class="container">
@@ -294,7 +294,7 @@
 <div class="accordion accordion-flush" id="accordionFlush10">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading10">
-        <a href="mutating.html">9. mutating</a>
+        <a href="mutating.html">9. Creating new columns</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -303,7 +303,16 @@
 <div class="accordion accordion-flush" id="accordionFlush11">
   <div class="accordion-item">
     <div class="accordion-header" id="flush-heading11">
-        <a href="count-and-summarize.html">10. count-and-summarize</a>
+        <a href="count-and-summarize.html">10. Summarize and Count</a>
+    </div><!--/div.accordion-header-->
+
+  </div><!--/div.accordion-item-->
+</div><!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush12">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading12">
+        <a href="midterms.html">11. Midterms</a>
     </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
@@ -360,13 +369,13 @@
           Previous: Data Visualization
         </a>
         <a class="chapter-link float-end" href="../instructor/mutating.html" rel="next">
-          Next: mutating...
+          Next: Creating new columns...
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i>
         </a>
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Filtering data</h1>
-        <p>Last updated on 2025-03-20 |
+        <p>Last updated on 2025-03-28 |
 
         <a href="https://github.com/SLesche/r-for-empra/edit/main/episodes/filtering.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -932,8 +941,7 @@ declare this properly:</p>
 <span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">age</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_histogram</span><span class="op">(</span>bins <span class="op">=</span> <span class="va">n_bins</span><span class="op">)</span></span></code></pre>
 </div>
-<p><img src="../fig/filtering-rendered-unnamed-chunk-25-1.png" style="display: block; margin: auto;" class="figure">
-To learn about the order of arguments of a function, use
+<figure><img src="../fig/filtering-rendered-unnamed-chunk-25-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>To learn about the order of arguments of a function, use
 <code>?function</code> and inspect the help file.</p>
 </section><section><h2 class="section-heading" id="common-problems">Common Problems<a class="anchor" aria-label="anchor" href="#common-problems"></a></h2>
 <hr class="half-width"><div class="section level3">
@@ -1081,8 +1089,9 @@ came from these two countries?</p>
 <h3 class="callout-title">Challenge 2</h3>
 <div class="callout-content">
 <p>Create a filtered dataset based on the following conditions:</p>
-<ul><li>Length of test is smaller than 30 minutes</li>
-<li>English is the native language</li>
+<ul><li>The participant took less than 30 minutes to complete the DASS-part
+of the survey</li>
+<li>English is the native language of the participant</li>
 <li>There is an entry in the field <code>major</code>
 </li>
 </ul></div>
@@ -1101,19 +1110,43 @@ function.</p>
 </div>
 </div>
 </div>
-<div id="challenge-4" class="callout discussion">
+<div id="challenge-4" class="callout challenge">
 <div class="callout-square">
-<i class="callout-icon" data-feather="message-circle"></i>
+<i class="callout-icon" data-feather="zap"></i>
 </div>
 <div id="challenge-4" class="callout-inner">
 <h3 class="callout-title">Challenge 4</h3>
 <div class="callout-content">
-<p>In a singly chain of functions, create a dataset is filtered based on
-the columns above and contains only the following variables:</p>
-<ul><li>all demographic information</li>
+<p>In a single chain of functions, create a dataset is filtered with the
+same conditions as above and contains only the following variables:</p>
+<ul><li>all demographic information, country information and the duration of
+the tests</li>
 <li>all the answers to the DASS (and only the answers, not the position
 or timing)</li>
 </ul></div>
+</div>
+</div>
+<div id="accordionSolution1" class="accordion challenge-accordion accordion-flush">
+<div class="accordion-item">
+<button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
+  <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
+</button>
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div class="accordion-body">
+<div class="codewrapper sourceCode" id="cb53">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">english_unversity_dass</span> <span class="op">&lt;-</span> <span class="va">dass_data</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">filter</span><span class="op">(</span><span class="va">testelapse</span> <span class="op">&lt;</span> <span class="fl">1800</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">filter</span><span class="op">(</span><span class="va">engnat</span> <span class="op">==</span> <span class="fl">1</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">filter</span><span class="op">(</span><span class="va">major</span> <span class="op">!=</span> <span class="st">""</span><span class="op">)</span> <span class="op">%&gt;%</span> </span>
+<span>  <span class="fu">select</span><span class="op">(</span><span class="fu">starts_with</span><span class="op">(</span><span class="st">"Q"</span><span class="op">)</span> <span class="op">&amp;</span> <span class="fu">ends_with</span><span class="op">(</span><span class="st">"A"</span><span class="op">)</span>, <span class="fu">contains</span><span class="op">(</span><span class="st">"elapse"</span><span class="op">)</span>, <span class="va">country</span>, <span class="va">education</span><span class="op">:</span><span class="va">major</span><span class="op">)</span></span>
+<span></span>
+<span><span class="fu">write.csv</span><span class="op">(</span><span class="va">english_unversity_dass</span>, <span class="st">"data/english_university_dass_data.csv"</span><span class="op">)</span></span></code></pre>
+</div>
+</div>
+</div>
 </div>
 </div>
 <div id="challenge-5" class="callout discussion">
@@ -1126,7 +1159,7 @@ or timing)</li>
 <p>Save that dataset to a file
 <code>english_university_dass_data.csv</code> in your
 <code>processed_data</code> folder. You may need to use Google to find a
-function that can do this.</p>
+function that you can use to save data.</p>
 </div>
 </div>
 </div>
@@ -1162,7 +1195,7 @@ any links that you are not going to use.
           Previous: Data Visualization
         </a>
         <a class="chapter-link float-end" href="../instructor/mutating.html" rel="next">
-          Next: mutating...
+          Next: Creating new columns...
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i>
         </a>
       </div>
@@ -1207,9 +1240,9 @@ any links that you are not going to use.
   "creativeWorkStatus": "active",
   "url": "https://SLesche.github.io/r-for-empra/instructor/filtering.html",
   "identifier": "https://SLesche.github.io/r-for-empra/instructor/filtering.html",
-  "dateCreated": "2025-03-20",
-  "dateModified": "2025-03-20",
-  "datePublished": "2025-03-20"
+  "dateCreated": "2025-03-28",
+  "dateModified": "2025-03-28",
+  "datePublished": "2025-03-28"
 }
 
   </script><script>
