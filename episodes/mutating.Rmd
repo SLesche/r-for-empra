@@ -1,22 +1,32 @@
 ---
 title: 'Creating new columns'
 teaching: 15
-exercises: 10
+exercises: 15
 ---
 
 :::::::::::::::::::::::::::::::::::::: questions 
 
+- What function is used to create new columns in a dataset?
+- How can you generate a unique ID column for each row?
+- How can you modify an existing column?
+- How can you compute an average value over many columns in your data?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::: objectives
 
+- Understand how to use `mutate()` to create new columns.
+- Learn how to add constant values, computed values, and conditionally assigned values to new columns.
+- Use `ifelse()` to create categorical columns based on conditions.
+- Learn efficient methods for computing row-wise sums and averages using `rowSums()` and `rowMeans()`.
+- Understand the difference between `sum()` and `rowSums()` for column-wise and row-wise operations.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 ## Making new columns
-So far we have dealt with existing columns and worked on them. We have computed descriptive statistics, plotted basic overviews of data and cut the data just the way we like it using `filter()` and `select()`. Now, we will unlock a new power... the power of creation! Well, actually it's just adding new columns to the dataset, but that's still cool!
+So far we have dealt with existing columns and worked on them. We have computed descriptive statistics, plotted basic overviews of data and cut the data just the way we like it using `filter()` and `select()`. Now, we will unlock a new power... the power of creation! Muhahahahaha. 
 
+Well, actually it's just adding new columns to the dataset, but that's still cool!
 Let's start by reading in our DASS data again and loading the package `dplyr`.
 
 ```{r}
@@ -25,44 +35,246 @@ library(dplyr)
 dass_data <- read.csv("data/kaggle_dass/data.csv")
 ```
 
-Now, lets start...
+To add a new column, we need the `dplyr` function `mutate()`. It changes - or *mutates* - columns in the dataset, like adding entirely new ones. The syntax is quite simple. The first argument is the data, allowing easy use of pipes, and the second argument is the code for the new column you want to have.
 
-Mutate to give a constant number
+For example, if we want to create a new column that carries just a single value, we type the following:
+```{r}
+dass_data <- dass_data %>% 
+  mutate(single_value_column = 42)
+```
 
-Mutate to give a running number
+To check if this worked: 
+```{r}
+unique(dass_data$single_value_column)
+```
 
-Mutate to change columns
+::: callout
+## Saving progress
+Notice how we had to assign the dataset to itself in order to save the progress we have made.
+If you do not do this, and just write down the pipeline, the end result will be outputted to the console,
+not stored in an object that we can use later.
+
+```{r}
+dass_data %>% 
+  head(6) %>% 
+  mutate(some_column = "I have a value!") %>% 
+  select(country, some_column)
+```
+
+You can easily assign the new data to something with the same name, overriding the previous status. 
+But be careful with this, I recommend you use new names for the data after filtering, selecting, and mutating existing columns. These operations change the original data (they remove some information) and should thus be stored in a new object, like `filtered_dass_data`.
+:::
+
+We can do much more interesting things than just placing a constant in the new column. For example, we can use `row_number()` to create a running number of entries in our data - an id of sort.
+
+```{r}
+dass_data <- dass_data %>% 
+  mutate(entry_id = row_number())
+
+dass_data %>% 
+  select(country, testelapse, entry_id) %>% 
+  head()
+```
 
 ## Mutating existing columns
-something about mutating in general
-- make testelapse minutes column
-- make a is_us column
 
-something about rowMeans and rowSums
-- make a dass score
+We can also base our mutation on existing columns. `testelapse` is in seconds right now, let's add a new column that is the elapsed test time in minutes.
 
+```{r}
+dass_data <- dass_data %>% 
+  mutate(
+    testelapse_min = testelapse / 60
+  )
+
+mean(dass_data$testelapse)
+mean(dass_data$testelapse_min)
+
+```
+
+Another function I often use when creating new columns is `ifelse()`. It works using three arguments. 
+```{r}
+a = 5
+b = 3
+
+ifelse(
+  a > b, # The condition
+  "a is greater", # IF yes
+  "a is smaller" # IF no
+)
+
+```
+
+We can use this to make a new column that tells us whether an entry came from the United States.
+```{r}
+dass_data <- dass_data %>% 
+  mutate(is_from_us = ifelse(country == "US", "yes", "no"))
+
+table(dass_data$is_from_us)
+```
+
+## Adding existing columns
+One of the most important uses of `mutate()` is adding together multiple columns. In our data, we have three columns indicating the length of elapsed time during survey completion, `introelapse`, `testelapse` and `surveyelapse`. 
+
+We can compute the sum of these three columns to get the total amount of elapsed time.
+
+```{r}
+dass_data <- dass_data %>%
+  mutate(
+    total_elapse_seconds = introelapse + testelapse + surveyelapse
+  )
+```
+
+::: 
+## Hint: Conduct Sanity Checks
+
+When programming, you will make mistakes. There just is not a way around it. The only way to deal with it is trying to catch your mistakes as early as possible. Sometimes the computer will help you out by issuing an error or a warning. Sometimes it does not, because the code you wrote is technically valid but still does not exactly do what you want it to. 
+
+Therefore, it is important to conduct sanity checks! Try looking at the data and figure out if what you just did makes sense. In our case, let's inspect the new column:
+
+```{r}
+dass_data %>% 
+  select(introelapse, testelapse, surveyelapse, total_elapse_seconds) %>% 
+  head()
+```
+
+This looks good so far!
+:::
+
+Now, this approach works well for a few columns, but gets tedious quickly when attempting to compute the sum or average over multiple columns. For this there exists a special fuction called `rowSums()`. This function takes a dataset, and computes the sums across all columns. 
+
+```{r}
+example_data <- data.frame(
+  x = 1:4,
+  y = 2:5,
+  z = 3:6
+)
+example_data$sum <- rowSums(example_data)
+
+example_data
+```
+
+However, in our case we do not want a sum across *all* columns of our data, but just some of the columns! To do this, we need to use `across()` inside the `rowSums` function to select specific columns.
+
+```{r}
+dass_data %>%
+  mutate(elapse_sum = rowSums(across(c("introelapse", "testelapse", "surveyelapse")))) %>% 
+  select(introelapse, testelapse, surveyelapse, elapse_sum) %>% 
+  head()
+```
+
+Because `across()` also accepts the same input as `select()` we can use the special functions like `starts_with()`, `ends_with()` or `contains()`.
+
+```{r}
+dass_data %>%
+  mutate(elapse_sum = rowSums(across(ends_with("elapse")))) %>% 
+  select(ends_with("elapse"), elapse_sum) %>% 
+  head()
+
+```
+
+Similarly, we can use `rowMeans()` to compute the average test duration. The beautiful thing about `mutate()` is, that we can create multiple columns in one function call!
+
+```{r}
+dass_data %>%
+  mutate(
+    constant_value = "I am a value!",
+    id = row_number(),
+    elapse_sum = rowSums(across(ends_with("elapse"))),
+    elapse_mean = rowMeans(across(ends_with("elapse")))
+  ) %>% 
+  select(id, constant_value, ends_with("elapse"), elapse_sum, elapse_mean) %>% 
+  head()
+```
+
+::: callout
+## Pro Tip: mutate() + across()
 maybe something with mutate_at()
 some renaming using mutate and case_when()
 
-maybe some aspects of mutate(across())
-
-as instructor / callout
-maybe something with mutate_across to make some testelapse stuff for multiple columns
+:::
 
 ## Challenges
-Make the examples with dass data, then introduce the empra dataset in challenges. Make specific challenges and then next chapter is small and has more challenges.
 
+As you complete the challenges, make use of `select()` to conduct sanity checks on the newly created columns!
 
-## Challenges
-The next session is then counting / summarizing and after that is a break to do 
-some exploration with the new dataset. Before going into proper analysis.
+::: challenge
+
+## Challenge 1
+
+Create and save a new column called *participant_id* that includes a unique number per entry in the data.
+
+:::
+
+::: challenge
+
+## Challenge 2
+
+Create a new column that includes the total time the participant took to complete *all* surveys in minutes! 
+Afterwards, filter this data to exclude all participants who took more than 1 hour. Work with this dataset for all following challenges.
+
+:::
+
+::: challenge
+
+## Challenge 3
+
+Create a column that indicates whether participants completed a university degree or not.
+
+:::
+
+::: challenge
+
+## Challenge 4
+
+Use a new function called `case_when()` to create a column that has a translation from the numbers in the `education` column to the verbal represenation. Use `?case_when()` to learn about this function. If that is not enough, try Google / ChatGPT. Write a short description of what it does (1-2 sentences in comments of script).
+:::
+
+::: challenge
+
+## Challenge 5
+
+The following code shows a common error when computing sums across columns.
+
+```{r}
+# DO NOT USE THIS!
+wrong_data <- dass_data %>% 
+  mutate(wrong_elapse = sum(introelapse, testelapse, surveyelapse))
+```
+
+This code will execute without any errors and it looks correct. Can you figure out what went wrong here?
+
+:::
+
+::: challenge
+
+## Challenge 6
+
+Compute a column that contains the sum of all answers to the DASS-questionnaire. Use `rowSums()` and `across()`.
+
+:::: solution
+## Show me the solution
+```{r}
+dass_data <- dass_data %>% 
+  mutate(
+    dass_score = rowSums(across(starts_with("Q") & ends_with("A")))
+  )
+```
+::::
+:::
+
+::: challenge
+
+## Challenge 7
+
+Compute a column that shows the *mean* response to the DASS-questionnaire. Visualize the distribution across the dataset.
+:::
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
 
-- Use `.md` files for episodes when you want static content
-- Use `.Rmd` files for episodes when you need to generate output
-- Run `sandpaper::check_lesson()` to identify any issues with your lesson
-- Run `sandpaper::build_lesson()` to preview your lesson locally
+- Use `mutate()` to create and modify columns in a dataset.
+- Assign constant values, compute values from other columns, or use conditions to define new columns.
+- Use `ifelse()` for conditional column creation.
+- Compute row-wise sums and means efficiently using `rowSums()` and `rowMeans()`.
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
