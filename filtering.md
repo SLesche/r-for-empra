@@ -81,6 +81,7 @@ valid_age_dass <- filter(dass_data, age >= 0 & age <= 100)
 
 Let's check if this worked using a histogram.
 
+
 ``` r
 hist(valid_age_dass$age, breaks = 50)
 ```
@@ -241,6 +242,7 @@ colnames(select(valid_age_dass, !starts_with("Q")))
 Now we will only get those columns that *don't* start with "Q".
 
 ::: callout
+
 ## Selecting a column twice
 You can also use select to reorder the columns in your dataset. For example, notice that the following two bits of code return differently order data:
 
@@ -293,6 +295,7 @@ select(valid_age_dass, age, country, age)
 
 select(valid_age_dass, age, country, everything())
 ```
+
 :::
 
 
@@ -364,6 +367,7 @@ valid_age_dass %>%
 This makes it clear that `valid_age_dass` is the dataset being used, and it improves readability.
 
 ::: callout
+
 ## Using the pipe for the second argument
 By default, the pipe places the output of the previous code as the first argument in the following function. In most cases, this is exactly what we want to have. If you want to be more explicit about where the pipe should place the output, you can do this by placing a `.` as the placeholder for piped-data.
 
@@ -376,6 +380,7 @@ n_bins %>%
 ```
 
 <img src="fig/filtering-rendered-unnamed-chunk-20-1.png" style="display: block; margin: auto;" />
+
 :::
 
 ## Numbered vs. Named Arguments
@@ -433,6 +438,7 @@ Error in `geom_histogram()`:
 
 `geom_histogram` does not expect the number of bins to be the first argument, but rather the mapping! Therefore, we need to declare this properly:
 
+
 ``` r
 valid_age_dass |>
   ggplot(aes(x = age)) +
@@ -440,6 +446,7 @@ valid_age_dass |>
 ```
 
 <img src="fig/filtering-rendered-unnamed-chunk-25-1.png" style="display: block; margin: auto;" />
+
 To learn about the order of arguments of a function, use `?function` and inspect the help file.
 
 ## Common Problems
@@ -539,6 +546,7 @@ valid_age_dass %>%
 ## Challenges
 
 ::: challenge
+
 ## Challenge 1
 Filter the complete `dass_data`. Create one dataset containing only entries with people from the United States and one dataset containing only entries from Great Britain. Compare the number of entries in each dataset. What percentage of the total submissions came from these two countries?
 
@@ -547,34 +555,53 @@ What is the average age of participants from the two countries?
 :::
 
 ::: challenge
+
 ## Challenge 2
 Create a filtered dataset based on the following conditions:
 
-- Length of test is smaller than 30 minutes
-- English is the native language
+- The participant took less than 30 minutes to complete the DASS-part of the survey
+- English is the native language of the participant
 - There is an entry in the field `major`
 
 :::
 
 ::: challenge
+
 ## Challenge 3
 
 What arguments does the `cut()` function take? Make a list of the arguments and the order in which they have to be provided to the function.
 :::
 
 ::: challenge
+
 ## Challenge 4
 
-In a singly chain of functions, create a dataset is filtered based on the columns above and contains only the following variables:
+In a single chain of functions, create a dataset is filtered with the same conditions as above and contains only the following variables:
 
-- all demographic information
+- all demographic information, country information and the duration of the tests
 - all the answers to the DASS (and only the answers, not the position or timing)
+
+:::: solution
+
+
+``` r
+english_unversity_dass <- dass_data %>% 
+  filter(testelapse < 1800) %>% 
+  filter(engnat == 1) %>% 
+  filter(major != "") %>% 
+  select(starts_with("Q") & ends_with("A"), contains("elapse"), country, education:major)
+
+write.csv(english_unversity_dass, "data/english_university_dass_data.csv")
+```
+
+:::: 
+
 :::
 
 ::: challenge
 ## Challenge 5
 
-Save that dataset to a file `english_university_dass_data.csv` in your `processed_data` folder. You may need to use Google to find a function that can do this.
+Save that dataset to a file `english_university_dass_data.csv` in your `processed_data` folder. You may need to use Google to find a function that you can use to save data.
 
 :::
 
