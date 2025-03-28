@@ -134,6 +134,7 @@ colnames(select(valid_age_dass, !starts_with("Q")))
 Now we will only get those columns that *don't* start with "Q".
 
 ::: callout
+
 ## Selecting a column twice
 You can also use select to reorder the columns in your dataset. For example, notice that the following two bits of code return differently order data:
 
@@ -155,6 +156,7 @@ select(valid_age_dass, age, country, age)
 
 select(valid_age_dass, age, country, everything())
 ```
+
 :::
 
 
@@ -207,6 +209,7 @@ valid_age_dass %>%
 This makes it clear that `valid_age_dass` is the dataset being used, and it improves readability.
 
 ::: callout
+
 ## Using the pipe for the second argument
 By default, the pipe places the output of the previous code as the first argument in the following function. In most cases, this is exactly what we want to have. If you want to be more explicit about where the pipe should place the output, you can do this by placing a `.` as the placeholder for piped-data.
 
@@ -216,6 +219,7 @@ n_bins <- 30
 n_bins %>%
   hist(valid_age_dass$age, .)
 ```
+
 :::
 
 ## Numbered vs. Named Arguments
@@ -257,11 +261,13 @@ valid_age_dass |>
 ```
 
 `geom_histogram` does not expect the number of bins to be the first argument, but rather the mapping! Therefore, we need to declare this properly:
+
 ```{r}
 valid_age_dass |>
   ggplot(aes(x = age)) +
   geom_histogram(bins = n_bins)
 ```
+
 To learn about the order of arguments of a function, use `?function` and inspect the help file.
 
 ## Common Problems
@@ -325,6 +331,7 @@ valid_age_dass %>%
 ## Challenges
 
 ::: challenge
+
 ## Challenge 1
 Filter the complete `dass_data`. Create one dataset containing only entries with people from the United States and one dataset containing only entries from Great Britain. Compare the number of entries in each dataset. What percentage of the total submissions came from these two countries?
 
@@ -333,6 +340,7 @@ What is the average age of participants from the two countries?
 :::
 
 ::: challenge
+
 ## Challenge 2
 Create a filtered dataset based on the following conditions:
 
@@ -343,12 +351,14 @@ Create a filtered dataset based on the following conditions:
 :::
 
 ::: challenge
+
 ## Challenge 3
 
 What arguments does the `cut()` function take? Make a list of the arguments and the order in which they have to be provided to the function.
 :::
 
 ::: challenge
+
 ## Challenge 4
 
 In a single chain of functions, create a dataset is filtered with the same conditions as above and contains only the following variables:
@@ -357,6 +367,7 @@ In a single chain of functions, create a dataset is filtered with the same condi
 - all the answers to the DASS (and only the answers, not the position or timing)
 
 :::: solution
+
 ```{r}
 english_unversity_dass <- dass_data %>% 
   filter(testelapse < 1800) %>% 

@@ -49,6 +49,7 @@ unique(dass_data$single_value_column)
 ```
 
 ::: callout
+
 ## Saving progress
 Notice how we had to assign the dataset to itself in order to save the progress we have made.
 If you do not do this, and just write down the pipeline, the end result will be outputted to the console,
@@ -63,6 +64,7 @@ dass_data %>%
 
 You can easily assign the new data to something with the same name, overriding the previous status. 
 But be careful with this, I recommend you use new names for the data after filtering, selecting, and mutating existing columns. These operations change the original data (they remove some information) and should thus be stored in a new object, like `filtered_dass_data`.
+
 :::
 
 We can do much more interesting things than just placing a constant in the new column. For example, we can use `row_number()` to create a running number of entries in our data - an id of sort.
@@ -125,6 +127,7 @@ dass_data <- dass_data %>%
 ```
 
 ::: 
+
 ## Hint: Conduct Sanity Checks
 
 When programming, you will make mistakes. There just is not a way around it. The only way to deal with it is trying to catch your mistakes as early as possible. Sometimes the computer will help you out by issuing an error or a warning. Sometimes it does not, because the code you wrote is technically valid but still does not exactly do what you want it to. 
@@ -138,6 +141,7 @@ dass_data %>%
 ```
 
 This looks good so far!
+
 :::
 
 Now, this approach works well for a few columns, but gets tedious quickly when attempting to compute the sum or average over multiple columns. For this there exists a special fuction called `rowSums()`. This function takes a dataset, and computes the sums across all columns. 
@@ -187,6 +191,7 @@ dass_data %>%
 ```
 
 ::: callout
+
 ## Pro Tip: mutate() + across()
 maybe something with mutate_at()
 some renaming using mutate and case_when()
@@ -252,6 +257,7 @@ This code will execute without any errors and it looks correct. Can you figure o
 Compute a column that contains the sum of all answers to the DASS-questionnaire. Use `rowSums()` and `across()`.
 
 :::: solution
+
 ## Show me the solution
 ```{r}
 dass_data <- dass_data %>% 
@@ -259,6 +265,7 @@ dass_data <- dass_data %>%
     dass_score = rowSums(across(starts_with("Q") & ends_with("A")))
   )
 ```
+
 ::::
 :::
 
@@ -267,6 +274,7 @@ dass_data <- dass_data %>%
 ## Challenge 7
 
 Compute a column that shows the *mean* response to the DASS-questionnaire. Visualize the distribution across the dataset.
+
 :::
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
