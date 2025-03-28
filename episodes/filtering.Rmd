@@ -50,6 +50,7 @@ valid_age_dass <- filter(dass_data, age >= 0 & age <= 100)
 ```
 
 Let's check if this worked using a histogram.
+
 ```{r}
 hist(valid_age_dass$age, breaks = 50)
 ```
@@ -378,7 +379,8 @@ english_unversity_dass <- dass_data %>%
 write.csv(english_unversity_dass, "data/english_university_dass_data.csv")
 ```
 
-:::: solution
+:::: 
+
 :::
 
 ::: challenge

@@ -126,7 +126,7 @@ dass_data <- dass_data %>%
   )
 ```
 
-::: 
+::: callout
 
 ## Hint: Conduct Sanity Checks
 
