@@ -1,5 +1,5 @@
 ---
-title: 'Summarize and Count'
+title: 'Count and Summarize'
 teaching: 15
 exercises: 10
 ---
@@ -13,6 +13,11 @@ exercises: 10
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
+- Get quick overview of the number of appearances in a dataframe
+
+- Compute score, (show in solutioon, let them do it themselves, teach about looking up old code)
+
+- then make summary based on groups, summary of times.
 
 ## Challenges
 
