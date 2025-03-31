@@ -207,13 +207,14 @@ dass_data %>%
       # which will take the place of {.col} and some new value.
     )
   ) %>% 
-  select(contains("elapse"))
+  select(contains("elapse")) %>% 
+  head()
 ```
 
 You don't have to apply this straight away, and using this correctly takes quite a bit of practice.
 But I wanted you to know that this exists, so you might remember it when you need it.
 
-:::
+  :::
 
 ## Challenges
 
