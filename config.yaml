@@ -75,6 +75,7 @@ episodes:
 - filtering.Rmd
 - mutating.Rmd
 - count-and-summarize.Rmd
+- midterms.Rmd
 
 # Information for Learners
 learners: 
