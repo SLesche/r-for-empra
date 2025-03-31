@@ -214,7 +214,7 @@ dass_data %>%
 You don't have to apply this straight away, and using this correctly takes quite a bit of practice.
 But I wanted you to know that this exists, so you might remember it when you need it.
 
-  :::
+:::
 
 ## Challenges
 
