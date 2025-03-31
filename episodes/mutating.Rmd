@@ -193,8 +193,25 @@ dass_data %>%
 ::: callout
 
 ## Pro Tip: mutate() + across()
-maybe something with mutate_at()
-some renaming using mutate and case_when()
+
+Sometimes, you want to mutate multiple columns at once, applying the same function to all of them. For example, when you want to recode some values across all columns that share the incorrect format. Here, you can use `mutate()` in combination with `across()` to apply a function to all of them. In our case, lets compute the elapse time in minutes for all elapse columns.
+
+```{r}
+dass_data %>% 
+  mutate(
+    across(
+      ends_with("elapse"), # Select the columns you want
+      ~ .x / 60, # Write the function to apply to all of them
+      # Use this special function syntax ~ and a .x as the argument to be filled
+      .names = "{.col}_minutes" # Give out new names by using the old name
+      # which will take the place of {.col} and some new value.
+    )
+  ) %>% 
+  select(contains("elapse"))
+```
+
+You don't have to apply this straight away, and using this correctly takes quite a bit of practice.
+But I wanted you to know that this exists, so you might remember it when you need it.
 
 :::
 
