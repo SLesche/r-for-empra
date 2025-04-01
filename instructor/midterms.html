@@ -434,13 +434,13 @@ collected data on physical activity.</p>
 <hr class="half-width"><p>In this episode, there will only be challenges that contain the key
 functions introduced in earlier episodes. The challenges will guide you
 through the process of getting to know the data and applying your
-knowledge to new data. I will not provide solutions to this challenge,
-as you are encouraged to try solving this for yourself. As such, you may
-also use different methods than I, which lead to the same outcome or
-allow similar conclusions.</p>
+knowledge to new data. I will not provide solutions to this challenge in
+the current file, as you are encouraged to try solving this for
+yourself. As such, you may also use different methods than I, which lead
+to the same outcome or allow similar conclusions. If you get stuck, ask
+ChatGPT or a friend, or sleep on it! That often helped me.</p>
 <p>Each challenge will include a short hint to the episode that contains
-information on how to solve it. If you get stuck, ask ChatGPT or a
-friend, or sleep on it! That often helped me.</p>
+information on how to solve it.</p>
 <p>Try to write a “clean” script, using proper variable names and
 comments to describe what you are doing.</p>
 </section><section><h2 class="section-heading" id="challenges">Challenges<a class="anchor" aria-label="anchor" href="#challenges"></a></h2>
@@ -574,7 +574,12 @@ you notice? Are the minimum / maximum values plausible?</p>
 <div class="callout-content">
 <p>Each item had 9 possible answers. Exclude participants who achieved a
 score that was below random chance.</p>
-</div>
+<p>Additionally, the columns beginning with <em>dq_</em> include
+information about <em>disqualification_criteria</em>. Exclude
+participants based on the following criteria:</p>
+<ul><li>dq_meaningless_responses = 3</li>
+<li>dq_distraction = 3</li>
+</ul></div>
 </div>
 </div>
 <div id="challenge-10-count-and-summarize" class="callout discussion">
