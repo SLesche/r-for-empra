@@ -35,9 +35,9 @@ Additionally, a bachelor thesis integrated into the same project collected data 
 
 In this episode, there will only be challenges that contain the key functions introduced in earlier episodes. 
 The challenges will guide you through the process of getting to know the data and applying your knowledge to new data. 
-I will not provide solutions to this challenge, as you are encouraged to try solving this for yourself. As such, you may also use different methods than I, which lead to the same outcome or allow similar conclusions.
+I will not provide solutions to this challenge in the current file, as you are encouraged to try solving this for yourself. As such, you may also use different methods than I, which lead to the same outcome or allow similar conclusions. If you get stuck, ask ChatGPT or a friend, or sleep on it! That often helped me.
 
-Each challenge will include a short hint to the episode that contains information on how to solve it. If you get stuck, ask ChatGPT or a friend, or sleep on it! That often helped me.
+Each challenge will include a short hint to the episode that contains information on how to solve it.
 
 Try to write a "clean" script, using proper variable names and comments to describe what you are doing. 
 
@@ -108,6 +108,11 @@ Compute key summary statistics of the total score of participants. Inspect the d
 ## Challenge 9 (*Filtering data*)
 
 Each item had 9 possible answers. Exclude participants who achieved a score that was below random chance.
+
+Additionally, the columns beginning with *dq_* include information about *disqualification_criteria*. Exclude participants based on the following criteria:
+
+- dq_meaningless_responses = 3
+- dq_distraction = 3
 
 :::
 
