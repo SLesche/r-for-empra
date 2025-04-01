@@ -120,7 +120,7 @@ Additionally, the columns beginning with *dq_* include information about *disqua
 ::: challenge
 ## Challenge 10 (*Count and summarize*)
 
-Count the number of occurrences of each of the three conditions in `fragebogen_der_im_interview_verwendet_wurde`.
+Count the number of occurrences of each of the three conditions in `fragebogen_der_im_interview_verwendet_wurde`. Compute the relative percentages.
 :::
 
 
