@@ -147,7 +147,11 @@ dass_data %>%
 
 First, compute columns with the sum DASS score and mean DASS score for each participant again. You should have code for this in the script from last episode. Go have a look and copy the correct code here. Copying from yourself is highly encouraged in coding! It's very likely that you have spent some time solving a problem already, why not make use of that work.
 
-::: solution
+::: callout
+## Hint: Copy your own code
+If you can't find it or want to use the exact same specification as me, here is a solution.
+
+:::: solution
 ## Solution
 
 ``` r
@@ -157,7 +161,7 @@ dass_data <- dass_data %>%
     mean_dass_score = rowMeans(across(starts_with("Q") & ends_with("A")))
   )
 ```
-
+::::
 :::
 
 `summarize()` works similar to `mutate()` in that you have to specify a new name and a formula to receive your result.
@@ -394,7 +398,7 @@ Get a summary of the mean DASS score based on age groups. Use `mutate()` and `ca
 - 18 - 25 = "youth"
 - 26 - 35 = "adult"
 - 36 - 50 = "middle-age"
-- > 50 = "old"
+- 50+ = "old"
 
 :::: solution
 
