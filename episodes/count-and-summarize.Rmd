@@ -5,28 +5,284 @@ exercises: 10
 ---
 
 :::::::::::::::::::::::::::::::::::::: questions 
+- How does `count()` help in counting categorical data?  
+- How do you compute summary statistics?
+- How can you use `group_by()` to compute summary statistics for specific subgroups?  
+- Why is it useful to combine `count()` with `filter()`?  
+- How can you compute relative frequencies using `group_by()` and `mutate()`?  
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 ::::::::::::::::::::::::::::::::::::: objectives
-
-
+- Understand how to use `count()` to summarize categorical variables.  
+- Learn to compute summary statistics using `summarize()`.  
+- Explore how `group_by()` allows for subgroup analyses.  
+- Use `filter()` to refine data before counting or summarizing.  
+- Compute and interpret relative frequencies using `mutate()`.
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
-- Get quick overview of the number of appearances in a dataframe
+## Computing Summaries 
 
-- Compute score, (show in solutioon, let them do it themselves, teach about looking up old code)
+This lesson will teach you some of the last (and most important) functions used in the process of data exploration and data analysis. Today we will learn how to quickly count the number of appearances for a given value using `count()` and how to compute custom summary statistics using `summarize()`.
 
-- then make summary based on groups, summary of times.
+Taken together, these functions will let you quickly compute frequencies and average values in your data, the last step in descriptive analysis and sometimes a necessary prerequisite for inference methods. The ANOVA, for example, most often requires one value per participant per condition, often requiring you to average over multiple trials.
+
+```{r}
+library(dplyr)
+
+dass_data <- read.csv("data/kaggle_dass/data.csv")
+```
+
+## Counting data
+Let's start with the more simple function of the two, `count()`. This function works with the `tidyverse` framework and can thus easily be used with pipes. Simply pipe in your dataset and give the name of the column you want to receive a count for:
+
+```{r}
+dass_data %>% 
+  count(education)
+```
+
+The count will always be in a column called `n`, including the number of occurrences for any given value (or combination of values) to the left of it.
+
+Notably, you can also include multiple columns to get a count for each combination of values.
+
+```{r}
+dass_data %>% 
+  count(hand, voted)
+```
+
+::: callout
+## Tip: Using comparisons in `count()`
+You are not limited to comparing columns. You can also directly include comparisons in the `count()` function.
+For example, we can count the education status and number of people who concluded the DASS-questionnaire in under 10 minutes.
+
+```{r}
+dass_data %>% 
+  count(testelapse < 600, education)
+```
+
+If you want to receive counts only for a specific part of the data, like in our case people faster than 10 minutes, it may be more clear to `filter()` first.
+
+```{r}
+dass_data %>% 
+  filter(testelapse < 600) %>% 
+  count(education)
+```
+
+:::
+
+## Summarize
+`summarize()` is one of the most powerful functions in `dplyr`. Let's use it to compute average scores for the DASS-questionnaire.
+
+First, compute columns with the sum DASS score and mean DASS score for each participant again. You should have code for this in the script from last episode. Go have a look and copy the correct code here. Copying from yourself is highly encouraged in coding! It's very likely that you have spent some time solving a problem already, why not make use of that work.
+
+::: solution
+## Solution
+```{r}
+dass_data <- dass_data %>% 
+  mutate(
+    sum_dass_score = rowSums(across(starts_with("Q") & ends_with("A"))),
+    mean_dass_score = rowMeans(across(starts_with("Q") & ends_with("A")))
+  )
+```
+
+:::
+
+`summarize()` works similar to `mutate()` in that you have to specify a new name and a formula to receive your result.
+To get the average score of the DASS over all participants, we use the `mean()` function.
+
+```{r}
+dass_data %>% 
+  summarize(
+    mean_sum_dass = mean(sum_dass_score)
+  )
+```
+We can also compute multiple means over both the column containing the sum of DASS scores and the mean DASS score.
+```{r}
+dass_data %>% 
+  summarize(
+    mean_sum_dass = mean(sum_dass_score),
+    mean_mean_dass = mean(mean_dass_score)
+  )
+```
+
+In addition, we can compute other values using any functions we feel are useful. For example, `n()` gives us the number of values, which can be useful when comparing averages for multiple groups.
+
+```{r}
+dass_data %>% 
+  summarize(
+    mean_sum_dass = mean(sum_dass_score),
+    mean_mean_dass = mean(mean_dass_score),
+    n_subjecs = n(),
+    max_total_dass_score = max(sum_dass_score),
+    quantile_5_mean_dass = quantile(mean_dass_score, 0.05),
+    quantile_95_mean_dass = quantile(mean_dass_score, 0.95)
+  )
+```
+
+## Groups
+So far, we could have done all of the above using basic R functions like `mean()` or `nrow()`. One of the benefits of `summarize()` is that it can be used in pipelines, so you could have easily applied filters before summarizing. However, the most important benefit is the ability to group the summary by other columns in the data. In order to do this, you need to call `group_by()`. 
+
+This creates a special type of data format, called a *grouped data frame*. R remembers assigns each row of the data a group based on the values provided in the `group_by()` function. If you then use `summarize()`, R will compute the summary functions for each group separately.
+
+```{r}
+dass_data %>% 
+  group_by(education) %>% 
+  summarize(
+    mean_mean_dass_score = mean(mean_dass_score),
+    n_subjects = n()
+  )
+```
+Now we are able to start learning interesting things about our data. For example, it seems like the average DASS score declines with higher levels of education (excluding the "missing" education = 0).
+
+You can group by as many columns as you like. Summary statistics will then be computed for each combination of the columns:
+```{r}
+dass_data %>% 
+  group_by(education, urban) %>% 
+  summarize(
+    mean_mean_dass_score = mean(mean_dass_score),
+    n_subjects = n()
+  )
+```
+
+Similar to `count()` you can also include comparisons in `group_by()`
+```{r}
+dass_data %>% 
+  group_by(testelapse < 600) %>% 
+  summarize(
+    mean_mean_dass_score = mean(mean_dass_score),
+    n_subjects = n()
+  )
+```
+
+::: callout
+## Warning: Remember to `ungroup()`
+
+:::
+
+## `count()` + `group_by()`
+You can also make use of `group_by()` to compute relative frequencies in count-tables easily. For example,
+counting the education status by handedness is not informative. 
+
+```{r}
+dass_data %>% 
+  filter(hand %in% c(1, 2)) %>% # Focus on right vs. left
+  count(hand, education)
+```
+This just tells us that there are more right-handed people. However, the percentage of education by handedness would be much more interesting. To that end, we can group by handedness and compute the percentage easily. 
+
+```{r}
+dass_data %>% 
+  filter(hand %in% c(1, 2)) %>% # Focus on right vs. left
+  count(hand, education) %>% 
+  group_by(hand) %>% 
+  mutate(percentage = n / sum(n)) %>% 
+  mutate(percentage = round(percentage*100, 2))
+```
+
+As you can see, `group_by()` also works in combination with `mutate()`. This means that calling `sum(n)` computes the total of `n` for the given group. Which is why `n / sum(n)` yields the relative frequency.
 
 ## Challenges
 
+:::
+## Challenge 1
+
+How many of the subjects voted in a national election last year? Use `count()` to receive an overview.
+
+:::
+
+:::
+## Challenge 2
+
+Get an overview of the number of people that voted based on whether their age is greater than 30. Make sure you only include subjects that are older than 18 in this count.
+
+:::
+
+:::
+## Challenge 3
+
+Get a summary of the mean score on the DASS by whether somebody voted in a national election in past year.
+What do you notice? Why might this be the case? There are no right or wrong answers here, just think of some reasons.
+
+:::
+
+:::
+## Challenge 4
+
+Get a summary of the mean DASS score based on age groups. Use `mutate()` and `case_when()` to define a new `age_group` column with the following cutoffs.
+
+- < 18 = "underage"
+- 18 - 25 = "youth"
+- 26 - 35 = "adult"
+- 36 - 50 = "middle-age"
+- > 50 = "old"
+
+:::: solution
+
+```{r}
+dass_data %>% 
+  mutate(
+    age_group = case_when(
+      age < 18 ~ "underage",
+      age >= 18 & age <= 25 ~ "youth",
+      age >= 26 & age <= 35 ~ "adult",
+      age >= 36 & age <= 50 ~ "middle-age",
+      age > 50 ~ "old"
+    )
+  ) %>% 
+  group_by(age_group) %>% 
+  summarize(
+    mean_score = mean(mean_dass_score),
+    n_entries = n()
+  )
+```
+::::
+:::
+
+:::
+## Challenge 5
+
+Compute the relative frequency of whether somebody voted or not based on their age group (defined above). Make sure you compute the percentage of people that voted given their age, not the percentage of age given their voting status. 
+
+:::
+
+::: 
+## Challenge 6
+
+Sort the above output by the relative frequency of people that voted. Use the `arrange()` function after counting and computing the percentage. Use the help `?arrange`, Google or ChatGPT to figure out how to use this function.
+
+:::: solution
+```{r}
+dass_data %>% 
+  filter(voted > 0) %>% # Don't include missing values of voted = 0
+  mutate(
+    age_group = case_when(
+      age < 18 ~ "underage",
+      age >= 18 & age <= 25 ~ "youth",
+      age >= 26 & age <= 35 ~ "adult",
+      age >= 36 & age <= 50 ~ "middle-age",
+      age > 50 ~ "old"
+    )
+  ) %>% 
+  count(age_group, voted) %>% 
+  group_by(age_group) %>% 
+  mutate(
+    percentage = round(n / sum(n) * 100, 2)
+  ) %>% 
+  arrange(desc(percentage))
+```
+
+::::
+
+What can you learn by the output? 
+
+:::
+
 ::::::::::::::::::::::::::::::::::::: keypoints 
 
-- Use `.md` files for episodes when you want static content
-- Use `.Rmd` files for episodes when you need to generate output
-- Run `sandpaper::check_lesson()` to identify any issues with your lesson
-- Run `sandpaper::build_lesson()` to preview your lesson locally
+- Use `count()` to compute the number of occurrences for (combinations) of columns
+- Use `summarize()` to compute any summary statistics for your data
+- Use `group_by()` to group your data so you can receive summaries for each group separately
+- Combine functions like `filter()`, `group_by()` and `summarize()` using the pipe to receive specific results
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
