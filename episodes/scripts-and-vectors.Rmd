@@ -33,7 +33,7 @@ Secondly (and maybe more importantly) you need to actually **save** these script
 The place where you save your script and especially the place you save your data should ideally be a folder in a sensible place. For example, this script is saved in a sub-folder `episodes/` of the workshop folder `r_for_empra/`. 
 This makes it easy for humans to find the script. Aim for similar clarity in your folder structure!
 
-For this lesson, create a folder called `r_for_empra` somewhere on your computer where it makes sense for you. Then, create a new R script by clicking `File > New File > R Script` or hitting `Ctrl + Shift + N`. Save this script as  `episode_projects_and_scripts.R` in the folder `r_for_empra` created above. Follow along with the episode and note down the commands in your script.
+For this lesson, create a folder called `r_for_empra` somewhere on your computer where it makes sense for you. Then, create a new R script by clicking `File > New File > R Script` or hitting `Ctrl + Shift + N`. Save this script as  `episode_scripts_and_vectors.R` in the folder `r_for_empra` created above. Follow along with the episode and note down the commands in your script.
 
 ## Using a script
 Let's start learning about some basic elements of R programming. We have already tried assigning values to variables using the `<-` operator. For example, we might assign the constant `km_to_m` the value 1000.
@@ -89,15 +89,17 @@ numeric_vector_1 <- c(1, 2, 3, 4, 5)
 numeric_vector_2 <- c(6:10) # 6:10 generates the values 6, 7, 8, 9, 10
 
 combined_vector <- c(numeric_vector_1, numeric_vector_2)
+combined_vector
 ```
 
 Recall that all elements have to be of the same type. If you try to combine numeric vectors with character vectors, R will automatically convert everything to a character vector (as this has less restrictions, anything can be a character).
 ```{r}
-character_vector_1 <- c("5", "6", "7")
+character_vector_1 <- c("6", "7", "8")
 # Note that the numbers are now in quotation marks!
 # They will be treated as characters, not numerics!
 
 combining_numeric_and_character <- c(numeric_vector_1, character_vector_1)
+combining_numeric_and_character
 ```
 
 We can fix this issue by converting the vectors to the same type. Note how the characters are also just numbers, but in quotation marks. Sometimes, this happens in real data, too. Some programs store every variable as a character (sometimes also called *string*). We then have to convert the numbers back to the number format:
@@ -180,7 +182,7 @@ hist(mtcars_weight_tons)
 
 ::: callout
 ## Histograms
-Histograms are a more powerful tools than it seems on first glance. They allow you to simply gather knowledge about the distribution of your data. This is especially important for us psychologists. Do we have ceiling effects in the task? Were some response options even used? How is response time distributed?
+Histograms are more powerful tools than it seems on first glance. They allow you to simply gather knowledge about the distribution of your data. This is especially important for us psychologists. Do we have ceiling effects in the task? Were some response options even used? How is response time distributed?
 
 If your histogram is not detailed enough, try adjusting the `breaks` parameter. This tells `hist()` how many bars to print in the plot.
 ```{r}
@@ -193,6 +195,12 @@ The golden rule for the number of breaks is simple: try it until it looks good! 
 Another useful function is `unique()`. This function removes duplicates and only returns unique values. I use it a lot in experimental data. Since every participant contributes multiple trials, but I am sometimes interested in values a participant only contributes once, I can use `unique()` to only retain each value once.
 
 In `mtcars` data, we might want to see how many cylinders are possible in the data. `unique(mtcars$cyl)` is much easier to read at a glance.
+```{r}
+mtcars$cyl
+
+unique(mtcars$cyl)
+```
+
 
 ::: callout
 ## Tip: Unique + Length = Quick Count
@@ -256,7 +264,7 @@ If we were to compute the average accuracy now using `mean()` we would receive a
 mean(accuracy_coded)
 ```
 
-Therefore, we need to exclude all invalid values before continuing our analysis. Before I show you how I would go about doing this, think about it yourself. You do not need to know the code, yet. Just think about some rules and steps that need to be taken.
+Therefore, we need to exclude all invalid values before continuing our analysis. Before I show you how I would go about doing this, think about it yourself. You do not need to know the code, yet. Just think about some rules and steps that need to be taken to clean up the accuracy vector. What comparisons could you use?
 
 ::: callout 
 ## Important: The silent ones are the worst
@@ -265,7 +273,7 @@ The above example illustrates something very important. R will not throw an erro
 
 Now, back to the solution to the wacky accuracy data. Note that R gives us the opportunity to do things in a million different ways. If you came up with something different from what was presented here, great! Make sure it works and if so, use it! 
 
-First, we need to recode the wrong entry. That `11` was supposed to be a `1`, but someone entered the wrong data in the excel. To do this, we can find the index, the element number, where accuracy is 11. Then, we can replace that entry with 1.
+First, we need to recode the wrong entry. That `11` was supposed to be a `1`, but someone entered the wrong data in the excel. To do this, we can find the index, or the element number, where accuracy is 11. Then, we can replace that entry with 1.
 ```{r}
 index_where_accuracy_11 <- which(accuracy_coded == 11)
 
@@ -350,6 +358,14 @@ response_values <- c(91, 82, 69, 74, 62, 19, 84, 61, 92, 53)
 is_response_valid <- c("yes", "yes", "yes", "yes", "yes",
                        "no", "yes", "yes", "yes", "no")
 ```
+
+:::: solution
+```{r}
+valid_responses <- response_values[which(is_response_valid == "yes")]
+mean(valid_responses)
+```
+
+::::
 ::: 
 
 ::::::::::::::::::::::::::::::::::::: keypoints 

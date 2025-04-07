@@ -68,8 +68,7 @@ Feel free to run all code examples provided here in your own RStudio console and
 Much of your time in R will be spent in the R interactive
 console. This is where you will run all of your code, and can be a
 useful environment to try out ideas before adding them to an R script
-file. This console in RStudio is the same as the one you would get if
-you just typed in `R` in your commandline environment.
+file.
 
 The first thing you will see in the R interactive session is a bunch
 of information, followed by a ">" and a blinking cursor. R operates on the idea of a "Read, evaluate,
@@ -327,6 +326,8 @@ dont_be.aMenace_toSociety
 I always use `snake_case` for variable names in R. `camelCase` is often used in other programming languages such as MATLAB or JavaScript.
 
 ::: callout
+## Using = for assignment
+
 It is also possible to use the `=` operator for assignment:
 
 ```{r}

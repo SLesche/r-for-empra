@@ -42,7 +42,7 @@ Some opportunities for improvement are:
 - Is the material sufficiently explained? Can you follow?
 - Are the exercises too difficult / not enough to practice material learned in an episode?
 - Are you missing any information to complete following episodes?
-- Is there information missing or information that you do not require?`
+- Is there information missing or information that you do not require?
 - Are there any typos / wrong examples?
 - Whatever else comes to mind.
 
