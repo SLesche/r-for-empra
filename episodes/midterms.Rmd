@@ -67,7 +67,7 @@ Get to know the data. What are the column names? What type of information does e
 ::: challenge
 ## Challenge 4 (*Data Visualization (1)* / *Filtering data*)
 
-Get an overview of descriptive statistics of the whole dataset. Inspect the mean, minimum and maximum values in the columns you think are relevant. What do you notice? Use `select()` to create a smaller dataset that only includes the items you think are relevant to make the overview simpler.
+Get an overview of descriptive statistics of the whole dataset. Inspect the mean, minimum and maximum values in the columns you think are relevant. What do you notice? Use `select()` to create a smaller dataset that only includes the columns you think are relevant to make the overview simpler.
 
 :::
 

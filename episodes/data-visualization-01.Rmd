@@ -35,6 +35,7 @@ roy_kent_data <- read.csv("data/roy_kent_f_count.csv")
 ```
 
 ![Roy Kent saying Fuck](fig/ted-lasso-roy-kent-fuck.gif){alt='GIF of Roy swearing.'}
+
 ## Getting a glimpse of the data
 
 When starting out with some data you received, it is important to familiarize yourself with the basics of this data first. What columns does it have, what information is contained in each row? What do the columns mean?

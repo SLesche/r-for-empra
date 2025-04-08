@@ -248,7 +248,7 @@ ggplot(
 
 This is what makes this possible:
 ```{r}
-valid_age_dass |>
+valid_age_dass %>%
   ggplot(aes(x = age)) +
   geom_density()
 ```
@@ -256,7 +256,7 @@ valid_age_dass |>
 However, if we try to supply an argument in a place where it doesn't belong, we get an error:
 ```{r}
 n_bins = 50 
-valid_age_dass |>
+valid_age_dass %>%
   ggplot(aes(x = age)) +
   geom_histogram(n_bins)  # This will cause an error!
 ```
@@ -264,7 +264,7 @@ valid_age_dass |>
 `geom_histogram` does not expect the number of bins to be the first argument, but rather the mapping! Therefore, we need to declare this properly:
 
 ```{r}
-valid_age_dass |>
+valid_age_dass %>%
   ggplot(aes(x = age)) +
   geom_histogram(bins = n_bins)
 ```
