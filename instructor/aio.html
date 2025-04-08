@@ -1314,7 +1314,7 @@ These packages will be installed into "~/work/r-for-empra/r-for-empra/renv/profi
 
 # Installing packages --------------------------------------------------------
 - Installing dplyr ...                          OK [linked from cache]
-Successfully installed 1 package in 4.9 milliseconds.</code></pre>
+Successfully installed 1 package in 5.4 milliseconds.</code></pre>
 </div>
 <p>Then, we will need to load the package to make its functions
 available for use. For most packages, this will also print a lot of
@@ -2454,6 +2454,17 @@ directory using:</p>
 </div>
 <p>Now, R will assume all file paths start from
 <code>"C:/Users/YourName/Desktop/MyNewFolder"</code>.</p>
+<p>There are two main ways to define the working directory that R will
+use. You can do this using <code>setwd()</code> and specify a particular
+directory you want to start from. Another way to accomplish this is
+through the use of <strong>R projects</strong>. These projects
+automatically set your working directory to the place that the project
+is located. More about projects in just a second.</p>
+<p>If you prefer declaring your working directory using
+<code>setwd()</code>, you can place this bit of code
+<code>setwd(dirname(rstudioapi::getActiveDocumentContext()$path))</code>
+at the beginning of your script. R will then set the working directory
+to the folder that the script you are working with is located in.</p>
 </div>
 <div class="section level3">
 <h3 id="why-is-the-working-directory-important">Why is the Working Directory Important?<a class="anchor" aria-label="anchor" href="#why-is-the-working-directory-important"></a>
@@ -2472,24 +2483,12 @@ project, others won’t need to change file paths manually.</li>
 </section><section><h2 class="section-heading" id="r-projects">R Projects<a class="anchor" aria-label="anchor" href="#r-projects"></a>
 </h2>
 <hr class="half-width">
-<p>There are two main ways to define the working directory that R will
-use. You can do this using <code>setwd()</code> and specify a particular
-directory you want to start from. Another way to accomplish this is
-through the use of <strong>R projects</strong>. These projects
-automatically set your working directory to the place that the project
-is located.</p>
-<p>If you prefer declaring your working directory using
-<code>setwd()</code>, you can place this bit of code
-<code>setwd(dirname(rstudioapi::getActiveDocumentContext()$path))</code>
-at the beginning of your script. R will then set the working directory
-to the folder that the script you are working with is located in.</p>
-<p>However, I do not recommend this approach for reasons outlined below.
-Instead, I would suggest using R projects. When working in
-<strong>RStudio</strong>, using <strong>R Projects</strong> is one of
-the best ways to keep your work organized, portable, and efficient. An
-<strong>R Project</strong> is essentially a self-contained workspace
-that helps manage files, working directories, and settings
-automatically.</p>
+<p>I do not recommend using <code>setwd()</code>. Instead, I would
+suggest using R projects. When working in <strong>RStudio</strong>,
+using <strong>R Projects</strong> is one of the best ways to keep your
+work organized, portable, and efficient. An <strong>R Project</strong>
+is essentially a self-contained workspace that helps manage files,
+working directories, and settings automatically.</p>
 <p>There are several reasons why I prefer R projects:</p>
 <div class="section level4">
 <h4 id="automatic-working-directory-management">1️⃣ <strong>Automatic Working Directory Management</strong>
@@ -2649,7 +2648,7 @@ into R first.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb7">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -2680,7 +2679,7 @@ said it throughout the series.</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb8">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -2800,9 +2799,7 @@ functions for each format like <code>readxl::read_excel()</code>, or
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">roy_kent_data</span> <span class="op">&lt;-</span> <span class="fu">read.csv</span><span class="op">(</span><span class="st">"data/roy_kent_f_count.csv"</span><span class="op">)</span></span></code></pre>
 </div>
-</section><section><h2 class="section-heading" id="getting-a-glimpse-of-the-data">Getting a glimpse of the data<a class="anchor" aria-label="anchor" href="#getting-a-glimpse-of-the-data"></a>
-</h2>
-<hr class="half-width">
+<p><img src="../fig/ted-lasso-roy-kent-fuck.gif" alt="GIF of Roy swearing." class="figure"> ## Getting a glimpse of the data</p>
 <p>When starting out with some data you received, it is important to
 familiarize yourself with the basics of this data first. What columns
 does it have, what information is contained in each row? What do the
@@ -3225,7 +3222,7 @@ the higher average value?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb23">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -3285,7 +3282,7 @@ of <code>breaks</code>, which seems most interesting to you?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb27">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -3369,8 +3366,6 @@ any links that you are not going to use.
 <li>How can you visualize categorical data?</li>
 <li>How to visualize the relationship of categorical and numerical
 data?</li>
-<li>
-</li>
 </ul>
 </div>
 </div>
@@ -3600,7 +3595,11 @@ the <code>binwidth</code> argument.</p>
 <pre class="warning" tabindex="0"><code>Warning: Removed 2 rows containing missing values or values outside the scale range
 (`geom_bar()`).</code></pre>
 </div>
-<figure><img src="../fig/data-visualization-02-rendered-unnamed-chunk-6-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure></section><section><h2 class="section-heading" id="density-plots">Density plots<a class="anchor" aria-label="anchor" href="#density-plots"></a>
+<figure><img src="../fig/data-visualization-02-rendered-unnamed-chunk-6-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>This gives us a nice overview of the distribution of each possible
+distinct age. It seems to peak around 23 and then slowly decline in
+frequency. This is in line with what you would expect from data from a
+free online personality questionnaire.</p>
+</section><section><h2 class="section-heading" id="density-plots">Density plots<a class="anchor" aria-label="anchor" href="#density-plots"></a>
 </h2>
 <hr class="half-width">
 <p>Often, what interests us is not the number of occurrences for a given
@@ -3902,7 +3901,7 @@ thoughts on the distribution?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb38">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -3957,7 +3956,7 @@ any differences?</p>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution2" aria-expanded="false" aria-controls="collapseSolution2">
   <h4 class="accordion-header" id="headingSolution2"> Show me the solution </h4>
 </button>
-<div id="collapseSolution2" class="accordion-collapse collapse" data-bs-parent="#accordionSolution2" aria-labelledby="headingSolution2">
+<div id="collapseSolution2" class="accordion-collapse collapse" aria-labelledby="headingSolution2" data-bs-parent="#accordionSolution2">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb40">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -6519,7 +6518,7 @@ any links that you are not going to use.
   "creativeWorkStatus": "active",
   "url": "https://SLesche.github.io/r-for-empra/instructor/aio.html",
   "identifier": "https://SLesche.github.io/r-for-empra/instructor/aio.html",
-  "dateCreated": "2025-04-07",
+  "dateCreated": "2025-04-08",
   "dateModified": "2025-04-08",
   "datePublished": "2025-04-08"
 }
