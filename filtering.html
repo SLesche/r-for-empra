@@ -908,7 +908,7 @@ the arguments in the order in which they occur.</p>
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">valid_age_dass</span> <span class="op">|&gt;</span></span>
+<code class="sourceCode R"><span><span class="va">valid_age_dass</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">age</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_density</span><span class="op">(</span><span class="op">)</span></span></code></pre>
 </div>
@@ -919,7 +919,7 @@ belong, we get an error:</p>
 </h3>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">n_bins</span> <span class="op">=</span> <span class="fl">50</span> </span>
-<span><span class="va">valid_age_dass</span> <span class="op">|&gt;</span></span>
+<span><span class="va">valid_age_dass</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">age</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_histogram</span><span class="op">(</span><span class="va">n_bins</span><span class="op">)</span>  <span class="co"># This will cause an error!</span></span></code></pre>
 </div>
@@ -936,7 +936,7 @@ declare this properly:</p>
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="va">valid_age_dass</span> <span class="op">|&gt;</span></span>
+<code class="sourceCode R"><span><span class="va">valid_age_dass</span> <span class="op">%&gt;%</span></span>
 <span>  <span class="fu">ggplot</span><span class="op">(</span><span class="fu">aes</span><span class="op">(</span>x <span class="op">=</span> <span class="va">age</span><span class="op">)</span><span class="op">)</span> <span class="op">+</span></span>
 <span>  <span class="fu">geom_histogram</span><span class="op">(</span>bins <span class="op">=</span> <span class="va">n_bins</span><span class="op">)</span></span></code></pre>
 </div>
