@@ -415,7 +415,7 @@ ggplot(
 This is what makes this possible:
 
 ``` r
-valid_age_dass |>
+valid_age_dass %>%
   ggplot(aes(x = age)) +
   geom_density()
 ```
@@ -426,7 +426,7 @@ However, if we try to supply an argument in a place where it doesn't belong, we 
 
 ``` r
 n_bins = 50 
-valid_age_dass |>
+valid_age_dass %>%
   ggplot(aes(x = age)) +
   geom_histogram(n_bins)  # This will cause an error!
 ```
@@ -440,7 +440,7 @@ Error in `geom_histogram()`:
 
 
 ``` r
-valid_age_dass |>
+valid_age_dass %>%
   ggplot(aes(x = age)) +
   geom_histogram(bins = n_bins)
 ```

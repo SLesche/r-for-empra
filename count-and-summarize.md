@@ -152,7 +152,6 @@ First, compute columns with the sum DASS score and mean DASS score for each part
 If you can't find it or want to use the exact same specification as me, here is a solution.
 
 :::: solution
-## Solution
 
 ``` r
 dass_data <- dass_data %>% 
@@ -162,6 +161,7 @@ dass_data <- dass_data %>%
   )
 ```
 ::::
+
 :::
 
 `summarize()` works similar to `mutate()` in that you have to specify a new name and a formula to receive your result.
@@ -308,6 +308,41 @@ dass_data %>%
 ::: callout
 ## Warning: Remember to `ungroup()`
 
+R remembers the `group_by()` function as long as you don't use `ungroup()` or `summarize()`. This may have unwanted side-effects. Make sure that each `group_by()` is followed by an `ungroup()`.
+
+
+``` r
+dass_data %>% 
+  group_by(education) %>% 
+  mutate(
+    within_education_id = row_number()
+  ) %>% 
+  ungroup()
+```
+
+``` output
+# A tibble: 39,775 × 175
+     Q1A   Q1I   Q1E   Q2A   Q2I   Q2E   Q3A   Q3I   Q3E   Q4A   Q4I   Q4E   Q5A
+   <int> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int> <int>
+ 1     4    28  3890     4    25  2122     2    16  1944     4     8  2044     4
+ 2     4     2  8118     1    36  2890     2    35  4777     3    28  3090     4
+ 3     3     7  5784     1    33  4373     4    41  3242     1    13  6470     4
+ 4     2    23  5081     3    11  6837     2    37  5521     1    27  4556     3
+ 5     2    36  3215     2    13  7731     3     5  4156     4    10  2802     4
+ 6     1    18  6116     1    28  3193     2     2 12542     1     8  6150     3
+ 7     1    20  4325     1    34  4009     2    38  3604     3    40  4826     4
+ 8     1    34  4796     1     9  2618     1    39  5823     1    12  6596     3
+ 9     4     4  3470     4    14  2139     3     1 11043     4    20  1829     3
+10     3    38  5187     2    28  2600     4     9  2015     1     7  3111     4
+# ℹ 39,765 more rows
+# ℹ 162 more variables: Q5I <int>, Q5E <int>, Q6A <int>, Q6I <int>, Q6E <int>,
+#   Q7A <int>, Q7I <int>, Q7E <int>, Q8A <int>, Q8I <int>, Q8E <int>,
+#   Q9A <int>, Q9I <int>, Q9E <int>, Q10A <int>, Q10I <int>, Q10E <int>,
+#   Q11A <int>, Q11I <int>, Q11E <int>, Q12A <int>, Q12I <int>, Q12E <int>,
+#   Q13A <int>, Q13I <int>, Q13E <int>, Q14A <int>, Q14I <int>, Q14E <int>,
+#   Q15A <int>, Q15I <int>, Q15E <int>, Q16A <int>, Q16I <int>, Q16E <int>, …
+```
+
 :::
 
 ## `count()` + `group_by()`
@@ -343,12 +378,12 @@ dass_data %>%
   count(hand, education) %>% 
   group_by(hand) %>% 
   mutate(percentage = n / sum(n)) %>% 
-  mutate(percentage = round(percentage*100, 2))
+  mutate(percentage = round(percentage*100, 2)) %>% 
+  ungroup()
 ```
 
 ``` output
 # A tibble: 10 × 4
-# Groups:   hand [2]
     hand education     n percentage
    <int>     <int> <int>      <dbl>
  1     1         0   434       1.25
