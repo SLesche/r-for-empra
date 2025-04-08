@@ -8,7 +8,6 @@ exercises: 5
 
 - How can you visualize categorical data?
 - How to visualize the relationship of categorical and numerical data?
-- 
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
@@ -172,6 +171,8 @@ Warning: Removed 2 rows containing missing values or values outside the scale ra
 ```
 
 <img src="fig/data-visualization-02-rendered-unnamed-chunk-6-1.png" style="display: block; margin: auto;" />
+
+This gives us a nice overview of the distribution of each possible distinct age. It seems to peak around 23 and then slowly decline in frequency. This is in line with what you would expect from data from a free online personality questionnaire.
 
 ## Density plots
 

@@ -79,17 +79,17 @@ setwd("C:/Users/YourName/Desktop/MyNewFolder")  # Set a new working directory
 
 Now, R will assume all file paths start from `"C:/Users/YourName/Desktop/MyNewFolder"`.  
 
+There are two main ways to define the working directory that R will use. You can do this using `setwd()` and specify a particular directory you want to start from. Another way to accomplish this is through the use of **R projects**. These projects automatically set your working directory to the place that the project is located. More about projects in just a second.
+
+If you prefer declaring your working directory using `setwd()`, you can place this bit of code `setwd(dirname(rstudioapi::getActiveDocumentContext()$path))` at the beginning of your script. R will then set the working directory to the folder that the script you are working with is located in. 
+
 ### Why is the Working Directory Important?  
 - It **saves you from typing long file paths** every time you load data.  
 - It **keeps projects organized** by ensuring all files are in a central location.  
 - It **makes your code portable**, so if you share your project, others won’t need to change file paths manually.
 
 ## R Projects
-There are two main ways to define the working directory that R will use. You can do this using `setwd()` and specify a particular directory you want to start from. Another way to accomplish this is through the use of **R projects**. These projects automatically set your working directory to the place that the project is located.
-
-If you prefer declaring your working directory using `setwd()`, you can place this bit of code `setwd(dirname(rstudioapi::getActiveDocumentContext()$path))` at the beginning of your script. R will then set the working directory to the folder that the script you are working with is located in. 
-
-However, I do not recommend this approach for reasons outlined below. Instead, I would suggest using R projects. When working in **RStudio**, using **R Projects** is one of the best ways to keep your work organized, portable, and efficient. An **R Project** is essentially a self-contained workspace that helps manage files, working directories, and settings automatically.
+I do not recommend using `setwd()`. Instead, I would suggest using R projects. When working in **RStudio**, using **R Projects** is one of the best ways to keep your work organized, portable, and efficient. An **R Project** is essentially a self-contained workspace that helps manage files, working directories, and settings automatically.
 
 There are several reasons why I prefer R projects:
 
