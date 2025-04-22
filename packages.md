@@ -47,11 +47,11 @@ install.packages("dplyr")
 ``` output
 The following package(s) will be installed:
 - dplyr [1.1.4]
-These packages will be installed into "~/work/r-for-empra/r-for-empra/renv/profiles/lesson-requirements/renv/library/linux-ubuntu-jammy/R-4.4/x86_64-pc-linux-gnu".
+These packages will be installed into "~/work/r-for-empra/r-for-empra/renv/profiles/lesson-requirements/renv/library/linux-ubuntu-jammy/R-4.5/x86_64-pc-linux-gnu".
 
 # Installing packages --------------------------------------------------------
 - Installing dplyr ...                          OK [linked from cache]
-Successfully installed 1 package in 6.5 milliseconds.
+Successfully installed 1 package in 4.9 milliseconds.
 ```
 
 Then, we will need to load the package to make its functions available for use. For most packages, this will also print a lot of messages in the console in the bottom left. Again, this is usually harmless. If something does go wrong, you will see the word `Error:` along with a message somewhere. `Warnings:` can often be ignored in package installation. 
