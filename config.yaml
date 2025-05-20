@@ -76,6 +76,7 @@ episodes:
 - mutating.Rmd
 - count-and-summarize.Rmd
 - midterms.Rmd
+- t-test.Rmd
 
 # Information for Learners
 learners: 
