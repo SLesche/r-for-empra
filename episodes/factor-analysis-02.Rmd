@@ -1,5 +1,5 @@
 ---
-title: 'Factor Analysis - EFA'
+title: 'Factor Analysis - CFA'
 teaching: 10
 exercises: 15
 ---
@@ -9,7 +9,7 @@ exercises: 15
 - What is a factor analysis?
 - What is the difference between exploratory and confirmatory factor analysis?
 - How can I run factor analysis in R?
-- How can I interprate the results of a CFA and EFA in R?
+- How can I interpret the results of a CFA and EFA in R?
 
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
