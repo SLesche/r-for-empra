@@ -1,0 +1,109 @@
+---
+title: 'Factor Analysis - EFA'
+teaching: 10
+exercises: 15
+---
+
+:::::::::::::::::::::::::::::::::::::: questions 
+
+- What is a factor analysis?
+- What is the difference between exploratory and confirmatory factor analysis?
+- How can I run factor analysis in R?
+- How can I interprate the results of a CFA and EFA in R?
+
+::::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::: objectives
+
+- Explain the idea behind factor analysis
+- Understand the difference between exploratory and confirmatory factor analysis
+- Learn how to conduct exploratory factor analysis in R
+- Learn how to interpret the results of EFA in R
+- Learn how to conduct confirmatory factor analysis in R
+- Learn how to interpret the results of confirmatory factor analysis in R
+::::::::::::::::::::::::::::::::::::::::::::::::
+
+## Factor analysis
+
+key idea behind factor analysis (factors)
+
+key distinction exploratory vs. confirmatory. 
+exploratory seeks to discover structure
+confirmatory seeks to test structure
+
+this means the in EFA, we are working descriptively
+and in CFA, we are working confirmatory, and thus with inferential statistics
+
+this is just a broad overview, details can be found here:
+https://lavaan.ugent.be/tutorial/cfa.html -- CFA tutorial lavaan
+https://rpubs.com/pjmurphy/758265 -- EFA tutorial Rpubs
+Now need some good citations here aswell
+
+## Examples using DASS data
+So what can we do with this knowledge.
+Lets look at the DASS, we have a questionnaire with a proposed structure:
+
+Which means we can test this structure in the model code using CFA
+
+If we did not have this structure, we could also conduct an EFA. Which we will start with now
+
+## Correlation Matrix
+How to compute the corrplot, how to visualize it, what should you expect?
+
+## Exploratory Factor Analysis (EFA)
+
+Screeplot and Factor selection
+
+Factor loadings
+
+How to select the optimal number of factors?
+
+## Confirmatory Factor Analysis (CFA)
+
+## Model Comparison
+
+::: challenge 
+
+## Challenge 1
+
+Read in data and answer the question: do we have a hypothesis as to how the structure should be?
+
+:::
+
+::: challenge 
+
+## Challenge 2
+
+Run an EFA, how many factors would you extract using the Keiser criterion, how many using the scree-plot
+
+:::
+
+::: challenge 
+
+## Challenge 3
+
+Run a CFA using a one-factor model for all DASS related items. How well does it fit
+
+:::
+
+::: challenge 
+
+## Challenge 4
+
+Run a second CFA using a three factor model with correlated factors. How well does it fit?
+:::
+
+::: challenge 
+
+## Challenge 5
+
+Compare the models from challenge 3 and challenge 4, which one fits better?
+
+:::
+
+::::::::::::::::::::::::::::::::::::: keypoints 
+
+- Something
+
+::::::::::::::::::::::::::::::::::::::::::::::::
+
