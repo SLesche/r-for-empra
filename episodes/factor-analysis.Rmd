@@ -1,0 +1,210 @@
+---
+title: 'Factor Analysis - Introduction & EFA'
+teaching: 10
+exercises: 15
+---
+
+:::::::::::::::::::::::::::::::::::::: questions 
+
+- What is a factor analysis?
+- What is the difference between exploratory and confirmatory factor analysis?
+- How can I run exploratory factor analysis in R?
+- How can I interpret the results of an EFA in R?
+
+::::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::: objectives
+
+- Explain the idea behind factor analysis
+- Understand the difference between exploratory and confirmatory factor analysis
+- Learn how to conduct exploratory factor analysis in R
+- Learn how to interpret the results of EFA in R
+
+::::::::::::::::::::::::::::::::::::::::::::::::
+
+## Factor analysis
+
+Factor analysis is used to identify latent constructs—called factors—that explain the correlation patterns among observed variables. It helps reduce a large number of variables into fewer interpretable components.
+
+It was first developed by Spearman in a field of study near to the heart of the author of this resource. Spearman noticed that students performing well in one subject in school tended to perform well in other subjects - there were high intercorrelations between academic performance. In order to investigate the structure behind these correlations, he used an early version of factor analysis to discover the now well known "g" factor of intelligence. One driving factor at the heart of intercorrelations of cognitive abilities.
+
+This already illustrates several key principles of factor analysis. First, the key object of study are *factors*, mathematical constructs that can explain correlations between measured variables. In some fields such as structural equation modeling, these factors are sometimes referred to as *latent variables*. Latent, because they cannot be measured directly, contrary to *manifest variables* like academic performance. Importantly, these factors can show high validity in measuring a *construct* but are not the same! Construct validation requires a thorough research program before it can conclusively be stated that a certain factors is equal to a construct. For now, keep in mind that factors are mathematical in nature and can be a step towards measuring a construct, but do not necessarily do so.
+
+Secondly, the key data in factor analysis are correlations! The underlying entry in any factor analysis is the covariance (or correlation) matrix. Modern statistical programs also allow us to provide the raw data and handle computing the correlation matrix, but these correlations are the core concept on which factor analysis is built.
+
+Thirdly, there exists a difference between exploratory factor analysis (EFA) and confirmatory factor analysis (CFA).*Exploratory Factor Analysis (EFA)* is used when we do not have a predefined structure. It explores patterns and relationships. This is method is purely descriptive. 
+In contrast *Confirmatory Factor Analysis (CFA)* is used when we do have a theory or structure to test. It evaluates how well the model fits the data. This is confirmatory and inferential, meaning we can test whether a given model fits our data, or doesn't. 
+Depending on whether you seek to explore the structure behind correlations of variables/items or test a hypothesized structure, choose the correct approach. 
+Importantly, you cannot do both. You cannot use the same data to conduct an EFA, and then use this discovery in a subsequent CFA "testing" your factor structure. This needs to be done in an *independent* sample.
+
+This is just a short introduction, details and further tutorial can be found here:
+https://lavaan.ugent.be/tutorial/cfa.html -- CFA tutorial lavaan
+https://rpubs.com/pjmurphy/758265 -- EFA tutorial Rpubs
+
+Or in textbooks:
+- Stemmler et al (2016), Abschn. 2.1.4
+- Tabachnik, B. G., & Fidell, L. S. (2001). Using multivariate
+statistics. 4th Ed. (chapter 13). Boston: Allyn and Bacon.
+
+## Examples using DASS data
+Now, lets apply this theory to some actual data. Recall the DASS data from earlier lessons.
+Here, we have item-wise responses to a questionnaire claiming to measure three constructs, *depression, anxiety, and stress*
+
+```{r}
+library(dplyr)
+
+dass_data <- read.csv("data/kaggle_dass/data.csv")
+```
+
+Let's make our lives a little bit easier by only selecting the relevant columns for the subsequent factor analysis.
+
+```{r}
+fa_data <- dass_data %>% 
+  filter(testelapse < 600) %>% 
+  select(starts_with("Q")& ends_with("A"))
+
+psych::describe(fa_data)
+```
+
+
+::: callout
+## Beware of reversed items
+
+This is especially relevant for EFA, but also for cfa as this might have some adverse impact
+
+:::
+
+In theory, this questionnaire has a well-known proposed factor structure. It's in the name - three factors: depression, anxiety, stress. Since it is also known which items are supposed to measure which factor, this would make the DASS data ideally suited for *CFA*, not EFA. However, for the sake of this exercise, let's forget all of this for a second and pretend like we have no idea how the factor structure might look like.
+
+As a first step, make sure the data is properly cleaned. After this is done, we can start the proper factor analysis process by investigating the correlation matrix of our data. Ideally, we will see high correlations between some items / variables. Should we observe no, or low correlations between all items, factor analysis will have a hard time identifying any underlying factors, as the items do not seem to share common influences.
+
+Let's start by computing the correlation matrix using `cor()`.
+
+```{r}
+corr_mat <- cor(fa_data, use = "pairwise.complete.obs")
+
+# head(corr_mat)
+```
+
+Now, we can visualize this using the package `ggcorrplot`.
+
+```{r}
+ggcorrplot::ggcorrplot(corr_mat)
+```
+
+In our case, we are greeted by a red square. A welcome sign for factor analysis as it indicates high correlations between items. This is even unusually uniform, other examples may show some variables correlating high with each other and low with other items. This is also perfectly normal. It's only important that there are *some* correlations before proceeding with factor analysis.
+
+## Running the EFA
+Now, we can already start running the EFA. In R, the easiest way to do this is using `fa.parallel()` from the package `psych`.
+
+```{r}
+library(psych)
+
+efa_result <- fa.parallel(fa_data, fa = "fa")
+```
+
+Now, this function already gives you a lot of insight. First of all, you get two immediate results - a plot and a message informing you about the number of factors.
+
+As a general rule, I would focus mainly on the plot and discard the message. This message is based on a resampling technique used to simulate new data without an underlying factor structure and then determines how many factors in the true data deviate significantly from this random simulation. In large datasets, this may overestimate the number of factors severly, as is the case in this example.
+
+More important is the plot overall. It is called a *Scree-plot* and shows the eigenvalues of the factor solution. These eigenvalues indicate how much variance is explained by a factor. The larger the eigenvalue, the more variance explained by a factor.
+
+These eigenvalues are already the basis of a selection technique on how many factors should be retained. Kaisers criterion states that all factors with eigenvalues > 1 should be extracted. In our case, these are the eigenvalues:
+
+```{r}
+efa_result$fa.values
+```
+
+
+In this case, 3 factors exceed eigenvalues of 1 and should thus be extracted (which aligns with theory nicely).
+
+Another way of extracting the number of factors is by investigating the shape of the Scree plot directly. Here, we can see that the first factor has by far the largest value and thus already explains substantial variance. We can also see that all the other factors explain roughly the same amount of variance, with a possible exception of number 2 and 3. But certainly after the third factor, the amount of variance is low and decreases linearly.
+
+In this method, we are looking to identify the "elbow" in the eigenvalue progression after which there is a sudden drop off in the variance explained. In this case, there is a strong argument that this occurs right after the first factor. The Scree plot would thus hint at only extracting one factor.
+
+However, be cautious of relying on a single criterion to evaluate the number of factors. Kaisers criterion may be too liberal and the Scree plot may not be informative enough to warrant a certain guess. In the end, you should also select the number of factors that make the most sense psycho*logically* and allow you to interpret the findings. You can not only rely on the eigenvalues to make this choice, but should also investigate the factor loadings of the items for a given number of factors.
+
+## Investigating Factor Loadings
+Factor loadings can be determined for any given number of factors. They tell you how strongly the factor overall is related to a specific item. The higher, the better. The item with the highest loading on a factor is called the "marker item" and may inform you (in conjunction with the other items loading highly) as to what construct this factor actually reflects.
+
+In principle, you are looking for *simple structure*. Items should load highly on one and only one factor while showing low loadings (< 0.3) on the other factors. If this is not the case, attributing an item to a single factor might not be warranted.
+
+In order to obtain the factor loadings, we need to make two important choices. The first concerns the number of factors we want to investigate. For this example, let's look at both one and three factors and investigate their structure.
+The second decision concerns the correlation between factors themselves. If you have strong reason to believe that the factors should be uncorrelated, or want to restrict the factors to be uncorrelated, i.e. independent of each other, you need to apply an *orthoghonal* rotation in the factor analyis. If you believe that the factors may themselves be related, you should apply an *oblique* rotation, which still allows for correlations between factors.
+In the case of only one extracted factor, this does not make a difference. In our specific example with three extracted factors, depression, anxiety, and stress may indeed be related. So we will proceed with the oblique rotation method called *oblimin*.
+
+Let's investigate the factor loadings for a three factor oblique solution.
+
+```{r}
+fa_solution_3 <- psych::fa(fa_data, nfactors = 3, rotate = "oblimin")
+print(fa_solution_3)
+```
+
+Let's take a closer look at the factor loadings:
+```{r}
+print(fa_solution_3$loadings, cutoff = 0.3)
+```
+
+Here, we can see that some items load highly one one of the three factors and do not load on any other factor (like 1-7). However, some items load on two factors (item 9, 12 etc). Here, we may want to investigate the items themselves to figure out which items load highly on which factor and why some of these items cannot be attributed to a single factor.
+
+The marker items for the factors seem to be item 38 for factor 1, item 11 for factor 2, and item 7 for factor three.
+In the codebook, we can look up the item text itself.
+
+- Item 38: "I felt that life was meaningless."
+- Item 11: "I found myself getting upset rather easily."
+- Item 7: "I had a feeling of shakiness (eg, legs going to give way)."
+
+Now, one might see the factors Depression (meaningless life), Anxiety (getting upset) and Stress (shakiness) in these factors. 
+
+We can visualize the factor structure using `fa.diagram()`.
+
+```{r}
+fa.diagram(fa_solution_3, simple = TRUE, cut = 0.3, digits = 2)
+```
+
+
+Lastly, we always have to investigate the correlations between the factors themselves. The plot already reveals substantial correlations of the three factors between 0.6 and 0.7. 
+
+```{r}
+fa_solution_3$score.cor
+```
+This indicates that there might be a higher order factor influencing all three factors. In the next episode, we can define a model testing whether this is the case or not.
+
+::: challenge 
+
+## Challenge 1
+
+Read in data and answer the question: do we have a hypothesis as to how the structure should be?
+
+:::
+
+::: challenge 
+
+## Challenge 2
+
+Run an EFA, how many factors would you extract using the Kaiser criterion, how many using the scree-plot
+
+:::
+
+::: challenge 
+
+## Challenge 3
+
+Choose three factors and investigate the item loadings. Do we have simple structure?
+
+:::
+
+::: challenge 
+
+## Challenge 4
+
+Choose one factor and investigate the item loadings
+
+:::
+
+::::::::::::::::::::::::::::::::::::: keypoints 
+
+- Something
+
+::::::::::::::::::::::::::::::::::::::::::::::::
+

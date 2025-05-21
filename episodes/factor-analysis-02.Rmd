@@ -1,0 +1,241 @@
+---
+title: 'Factor Analysis - CFA'
+teaching: 10
+exercises: 15
+---
+
+:::::::::::::::::::::::::::::::::::::: questions 
+
+- What is a confirmatory factor analysis?
+- How can I run CFA in R?
+- How can I specify CFA models using lavaan?
+- How can I interpret the results of a CFA and EFA in R?
+
+::::::::::::::::::::::::::::::::::::::::::::::::
+
+::::::::::::::::::::::::::::::::::::: objectives
+
+- Understand the difference between exploratory and confirmatory factor analysis
+- Learn how to conduct confirmatory factor analysis in R
+- Learn how to interpret the results of confirmatory factor analysis in R
+
+::::::::::::::::::::::::::::::::::::::::::::::::
+
+## Confirmatory Factor Analysis (CFA)
+In the previous lesson, we approached the DASS as if we had no knowledge about the underlying factor structure. However, this is not really the case, since there is a specific theory proposing three interrelated factors. We can use confirmatory factor analysis to test whether this theory can adequately explain the item correlations found here.
+
+Importantly, we not only need a theory of the number of factors, but also which items are supposed to load on which factor. This will be necessary when establishing our CFA model. Furthermore, we will test whether a one-factor model also is supported by the data and compare these two models, evaluating which one is better.
+
+The main R package we will be using is `lavaan`. This package is widely used for Structural Equation Modeling (SEM) in R. CFA is a specific type of model in the general SEM framework. The lavaan homepage provides a great tutorial on CFA, as well (https://lavaan.ugent.be/tutorial/cfa.html). For a more detailed tutorial in SEM and mathematics behind CFA, please refer to the lavaan homepage or [this introduction](https://stats.oarc.ucla.edu/r/seminars/rsem/).
+
+For now, let's walk through the steps of a CFA in our specific case. First of all, in order to do *confirmatory* factor analysis, we need to have a hypothesis to confirm. How many factors, which variables are supposed to span which factor?
+Secondly, we need to investigate the correlation matrix for any issues (low correlations, correlations = 1). Then, we need to define our model properly using lavaan syntax. And finally, we can run our model and interpret our results.
+
+## Model Specification
+Let's start by defining the theory and the model syntax.
+
+The DASS has 42 items and measures three scales: depression, anxiety, and stress. These scale are said to be intercorrelated, as they share common causes (genetic, environmental etc.). Furthermore, the DASS provides a detailed manual as to which items belong to which scales. The sequence of items and their respective scales is:
+
+```{r}
+library(dplyr)
+
+dass_data <- read.csv("data/kaggle_dass/data.csv")
+
+fa_data <- dass_data %>% 
+  filter(testelapse < 600) %>% 
+  select(starts_with("Q")& ends_with("A"))
+
+item_scales_dass <- c(
+  "S", "A", "D", "A", "D", "S", "A", 
+  "S", "A", "D", "S", "S", "D", "S",
+  "A", "D", "D", "S", "A", "A", "D",
+  "S", "A", "D", "A", "D", "S", "A", 
+  "S", "A", "D", "S", "S", "D", "S",
+  "A", "D", "D", "S", "A", "A", "D"
+)
+
+item_scales_dass_data <- data.frame(
+  item_nr = 1:42,
+  scale = item_scales_dass
+)
+
+item_scales_dass_data
+```
+
+::: callout
+## Scales vs. Factors
+
+There is an important difference between *scales* and *factors*. Again, factors represent mathematical constructs discovered or constructed during factor analysis. Scales represent a collection of items bound together by the authors of the test and said to measure a certain construct. These two words cannot be used synonymously. Scales refer to item collections whereas factors refer to solutions of factor analysis. A scale can build a factor, in fact its items should span a common factor if the scale is constructed well. But a scale is not the same thing as a factor.
+:::
+
+Now, in order to define our model we need to keep the distinction between manifest and latent variables in mind. Our manifest, *measured* variables are the items. The factors are the latent variable. We can also define which manifest variables contribute to which latent variables. In lavaan, this can be specified in the model code using a special syntax.
+
+```{r}
+library(lavaan)
+
+model_cfa_3facs <- c(
+  "
+  # Model Syntax
+  
+  # =~ is like in linear regression
+  # left hand is latent factor, right hand manifest variables contributing
+  
+  # Define which items load on which factor
+  depression =~ Q3A + Q5A + Q10A + Q13A + Q16A + Q17A + Q21A + Q24A + Q26A + Q31A + Q34A + Q37A + Q38A + Q42A
+  
+  anxiety =~ Q2A + Q4A + Q7A + Q9A + Q15A + Q19A + Q20A + Q23A + Q25A + Q28A + Q30A + Q36A + Q40A + Q41A
+  
+  stress =~ Q1A + Q6A + Q8A + Q11A + Q12A + Q14A + Q18A + Q22A + Q27A + Q29A + Q32A + Q33A + Q35A + Q39A
+  
+  # Define correlations between factors using ~~
+  depression ~~ anxiety
+  depression ~~ stress
+  anxiety ~~ stress
+  "
+)
+```
+
+Now, we can fit this model using `cfa()`.
+
+```{r}
+fit_cfa_3facs <- cfa(
+  model = model_cfa_3facs, 
+  data = fa_data,
+  )
+```
+
+To inspect the model results, we use `summary()`.
+
+```{r}
+summary(fit_cfa_3facs, fit.measures = TRUE, standardize = TRUE)
+```
+
+Now, this output contains several key pieces of information: 
+
+- fit statistics for the model
+- information on item loadings on the latent variables (factors)
+- information on the correlations between the latent variables
+- information on the variance of latent and manifest variables
+
+Let's walk through the output one-by-one.
+
+## Fit measures
+
+The model fit is evaluated using three key criteria.
+
+The first is the Chi^2 statistic. This evaluates whether the model adequately reproduces the covariance matrix in the real data or whether there is some deviation. Significant results indicate that the model does not reproduce the covariance matrix. However, this is largely dependent on sample size and not informative in practice. The CFA model is always a reduction of the underlying covariance matrix. That is the whole point of a model. Therefore, do not interpret the chi-square test and its associated p-value. Nonetheless, it is customary to report this information when presenting the model fit.
+
+The following two fit statistics are independent of sample size and widely accepted in practice.
+
+The CFI (Comparative Fit Index) is an indicator of fit. It ranges between 0 and 1 with 0 meaning horrible fit and 1 reflecting perfect fit. Values above 0.8 are acceptable and CFI > 0.9 is considered good. This index is independent of sample size and robust against violations of some assumptions CFA makes. It is however dependent on the number of free parameters as it does not include a penalty for additional parameters. Therefore, models with more parameter will generally have better CFI than parsimonious models with fewer parameters.
+
+The RMSEA (Root Mean Squared Error Approximation) is an indicator of misfit that includes a penalty for the number of parameters. The higher the RMSEA, the worse. Generally, RMSEA < 0.05 is considered good and RMSEA < 0.08 acceptable. Models with RMSEA > 0.10 should not be interpreted. This fit statistic indicates whether the model fits the data well while controlling for the number of parameters specified.
+
+It is customary to report all three of these measures when reporting the results of a CFA. Similarly, you should also interpret both the CFI and RMSEA, as bad fits in both statistics can indicate issues in the model specification. The above model would be reported as follows. 
+
+The model with three correlated factors showed acceptable fit to the data $\chi^2(816) = 107309.08, p < 0.001, CFI = 0.90, RMSEA = 0.06$, 95% CI = $[0.06; 0.06]$.
+
+In a future section, we will explore how you can compare models and select models based on these fit statistics. Here, it is important to focus on fit statistics that incorporate the number of free parameters like the RMSEA. Otherwise, more complex models will always outperform less complex models. 
+
+In addition to the statistics presented above, model comparison is often based on information criteria, like the AIC (Akaike Information Criterion) or the BIC (Bayesian Information Criterion). Here, lower values indicate better models. These information criteria also penalize complexity and are thus well suited for model comparison. More on this in the later section.
+
+## Loadings on latent variables
+The next section in the model summary output display information on the latent variables. Specifically how highly the manifest variables "load" onto the latent variables they were assigned to. Here, loadings > 0.6 are considered high and at least one of the manifest variables should load highly on the latent variables. If all loadings are low, this might indicate that the factor you are trying to define does not really exist, as there is little relation between the manifest variables specified to load on this factor.
+
+Importantly, the output shows two columns with loadings. The first column "Estimate" shows unstandardized loadings (like regression weights in a linear model). The last two columns "std.lv" and "std.all" show two different standardization techniques of the loadings. For now, focus on the "std.all" column. This can be interpreted in similar fashion as the factor loadings in the EFA. 
+
+In our example, these loadings are looking very good, especially for the depression scale. But for all scales, almost all items show standardized loadings of > 0.6, indicating that they reflect the underlying factor well.
+
+::: callout
+## Key Difference between EFA and CFA
+
+These loadings highlight a key difference between CFA and a factor analysis with a fixed number of factors as conducted following an EFA.
+
+In the EFA case, item *cross-loadings* are allowed. An item can load onto all factors. This is not the case in theory (unless explicitly stated). Here, the items only load onto the factor as specified in the model syntax. This is also why we obtain different loadings and correlations between factors in this CFA example compared to the three-factor FA from the previous episode.
+:::
+
+## Correlations between latent variables
+The next section in the output informs us about the covariances between the latent variables. The "Estimate" column again shows the unstandardized solution while the "std.all" column reflects the standardized solution. The "std.all" column can be interpreted like a correlation (only on a latent level).
+
+Here, we can see high correlations > 0.7 between our three factors. Anxiety and stress even correlate to 0.87! Maybe there is one underlying "g" factor of depression in our data after all? We will investigate this further in the section regarding model comparison. 
+
+## Variances
+The last section of the summary output displays the variances of the errors of manifest variables and the variance of the latent variables. Here, you should make sure that all values in "Estimate" are positive and that the variance of the latent variables differs significantly from 0, the results for this test are printed in "P(>|z|)". 
+
+For CFA this section is not that relevant and plays a larger role in other SEM models.
+
+## Model Comparison
+The last thing we will learn in this episode is how to leverage the fit statistics and other model information to compare different models. For example, remember that the EFA showed that the first factor had an extremely large eigenvalue, indicating that one factor already explained a substantial amount of variance.
+
+A skeptic of the DASS might argue that it does not measure three distinct scales after all, but rather one unifying "I'm doing bad" construct. Therefore, this skeptic might generate a competing model of the DASS, with only one factor on which all items are loading.
+
+Let's first test the fit statistics of this model and then compare the two approaches.
+
+```{r}
+model_cfa_1fac <- c(
+  "
+  # Model Syntax G Factor Model DASS
+  
+  # Define only one general factor
+  g_dass =~ Q3A + Q5A + Q10A + Q13A + Q16A + Q17A + Q21A + Q24A + Q26A + Q31A + Q34A + Q37A + Q38A + Q42A +Q2A + Q4A + Q7A + Q9A + Q15A + Q19A + Q20A + Q23A + Q25A + Q28A + Q30A + Q36A + Q40A + Q41A + Q1A + Q6A + Q8A + Q11A + Q12A + Q14A + Q18A + Q22A + Q27A + Q29A + Q32A + Q33A + Q35A + Q39A
+  "
+)
+
+fit_cfa_1fac <- cfa(model_cfa_1fac, data = fa_data)
+
+summary(fit_cfa_1fac, fit.measures = TRUE, standardize = TRUE)
+```
+The one factor model showed a poor fit to the data $\chi^2(819) = 235304.68, p < 0.001, CFI = 0.77, RMSEA = 0.09$, 95% CI = $[0.09; 0.09]$.
+
+This already shows that the idea of only one unifying factor in the DASS does not reflect the data well. We can formally test the difference in the $\chi^2$ statistic using `anova()`, not to be confused with the ANOVA.
+
+```{r}
+anova(fit_cfa_1fac, fit_cfa_3facs)
+```
+This output displays that the three factor model shows better information criteria (AIC and BIC) and that it also has lower (better) $\chi^2$ statistics, significantly so. Coupled with an improved RMSEA for the three factor model, this evidence strongly suggests that the three factor model is better suited to explain the DASS data than the one factor model.
+
+
+::: challenge 
+
+## Challenge 1
+
+Read in data and answer the question: do we have a hypothesis as to how the structure should be?
+
+:::
+
+::: challenge 
+
+## Challenge 2
+
+Run a CFA with three factors
+:::
+
+::: challenge 
+
+## Challenge 3
+
+Interpret some results
+:::
+
+::: challenge 
+
+## Challenge 4
+
+Run a cfa with one factor, interpret some results
+
+:::
+
+::: challenge 
+
+## Challenge 5
+
+Compare the models from challenge 3 and challenge 4, which one fits better?
+
+:::
+
+::::::::::::::::::::::::::::::::::::: keypoints 
+
+- Something
+
+::::::::::::::::::::::::::::::::::::::::::::::::
+
