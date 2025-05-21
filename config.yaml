@@ -77,6 +77,9 @@ episodes:
 - count-and-summarize.Rmd
 - midterms.Rmd
 - t-test.Rmd
+- factor-analysis.Rmd
+- factor-analysis-02.Rmd
+- factor-analysis-03.Rmd
 
 # Information for Learners
 learners: 

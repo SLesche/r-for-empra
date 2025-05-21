@@ -451,6 +451,59 @@ bifactor models</li>
 <p>Nested models</p>
 <p>Hieraschical - exmaple uses and specifications</p>
 <p>Bifactor - example uses and specifcations</p>
+<div class="codewrapper sourceCode" id="cb1">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">model_cfa_bifac</span> <span class="op">&lt;-</span> <span class="fu">c</span><span class="op">(</span></span>
+<span>  <span class="st">"</span></span>
+<span><span class="st">  # Model Syntax</span></span>
+<span><span class="st">  </span></span>
+<span><span class="st">  # =~ is like in linear regression</span></span>
+<span><span class="st">  # left hand is latent factor, right hand manifest variables contributing</span></span>
+<span><span class="st">  </span></span>
+<span><span class="st">  # Define which items load on which factor</span></span>
+<span><span class="st">  depression =~ Q3A + Q5A + Q10A + Q13A + Q16A + Q17A + Q21A + Q24A + Q26A + Q31A + Q34A + Q37A + Q38A + Q42A</span></span>
+<span><span class="st">  </span></span>
+<span><span class="st">  anxiety =~ Q2A + Q4A + Q7A + Q9A + Q15A + Q19A + Q20A + Q23A + Q25A + Q28A + Q30A + Q36A + Q40A + Q41A</span></span>
+<span><span class="st">  </span></span>
+<span><span class="st">  stress =~ Q1A + Q6A + Q8A + Q11A + Q12A + Q14A + Q18A + Q22A + Q27A + Q29A + Q32A + Q33A + Q35A + Q39A</span></span>
+<span><span class="st">  </span></span>
+<span><span class="st">  g_dass =~ Q3A + Q5A + Q10A + Q13A + Q16A + Q17A + Q21A + Q24A + Q26A + Q31A + Q34A + Q37A + Q38A + Q42A +Q2A + Q4A + Q7A + Q9A + Q15A + Q19A + Q20A + Q23A + Q25A + Q28A + Q30A + Q36A + Q40A + Q41A + Q1A + Q6A + Q8A + Q11A + Q12A + Q14A + Q18A + Q22A + Q27A + Q29A + Q32A + Q33A + Q35A + Q39A</span></span>
+<span><span class="st">  </span></span>
+<span><span class="st">  # Define correlations between factors using ~~</span></span>
+<span><span class="st">  depression ~~ anxiety</span></span>
+<span><span class="st">  depression ~~ stress</span></span>
+<span><span class="st">  anxiety ~~ stress</span></span>
+<span><span class="st">  </span></span>
+<span><span class="st">  g_dass ~~ 0*depression</span></span>
+<span><span class="st">  g_dass ~~ 0*stress</span></span>
+<span><span class="st">  g_dass ~~ 0*anxiety</span></span>
+<span><span class="st">  "</span></span>
+<span><span class="op">)</span></span></code></pre>
+</div>
+<div class="codewrapper sourceCode" id="cb2">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="va">fit_cfa_bifac</span> <span class="op">&lt;-</span> <span class="fu">cfa</span><span class="op">(</span><span class="va">model_cfa_bifac</span>, data <span class="op">=</span> <span class="va">fa_data</span><span class="op">)</span></span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="error" tabindex="0"><code>Error in cfa(model_cfa_bifac, data = fa_data): could not find function "cfa"</code></pre>
+</div>
+<div class="codewrapper sourceCode" id="cb4">
+<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu">summary</span><span class="op">(</span><span class="va">fit_cfa_bifac</span>, fit.measures <span class="op">=</span> <span class="cn">TRUE</span>, standardized <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre>
+</div>
+<div class="codewrapper">
+<h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="error" tabindex="0"><code>Error: object 'fit_cfa_bifac' not found</code></pre>
+</div>
 <p>Declaring a winner for our DASS data</p>
 <p>Important note, do not confuse confirmatory with exploratory
 research!</p>
