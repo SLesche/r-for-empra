@@ -117,11 +117,11 @@
   R - Beginners Workshop
 </div>
 
-<aside class="col-md-12 lesson-progress"><div style="width: 94%" class="percentage">
-    94%
+<aside class="col-md-12 lesson-progress"><div style="width: 71%" class="percentage">
+    71%
   </div>
   <div class="progress incubator">
-    <div class="progress-bar incubator" role="progressbar" style="width: 94%" aria-valuenow="94" aria-label="Lesson Progress" aria-valuemin="0" aria-valuemax="100">
+    <div class="progress-bar incubator" role="progressbar" style="width: 71%" aria-valuenow="71" aria-label="Lesson Progress" aria-valuemin="0" aria-valuemax="100">
     </div>
   </div>
 </aside><div class="container">
@@ -314,9 +314,36 @@
 
     <div id="flush-collapsecurrent" class="accordion-collapse collapse show" aria-labelledby="flush-headingcurrent" data-bs-parent="#accordionFlushcurrent">
       <div class="accordion-body">
-        <ul><li><a href="#the-t-test">The t-test</a></li>
+        <ul><li><a href="#inferential-statistics">Inferential statistics</a></li>
         </ul></div><!--/div.accordion-body-->
     </div><!--/div.accordion-collapse-->
+
+  </div><!--/div.accordion-item-->
+</div><!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush14">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading14">
+        <a href="factor-analysis.html">13. Factor Analysis - Introduction &amp; EFA</a>
+    </div><!--/div.accordion-header-->
+
+  </div><!--/div.accordion-item-->
+</div><!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush15">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading15">
+        <a href="factor-analysis-02.html">14. Factor Analysis - CFA</a>
+    </div><!--/div.accordion-header-->
+
+  </div><!--/div.accordion-item-->
+</div><!--/div.accordion-flush-->
+
+<div class="accordion accordion-flush" id="accordionFlush16">
+  <div class="accordion-item">
+    <div class="accordion-header" id="flush-heading16">
+        <a href="factor-analysis-03.html">15. Factor Analysis - Advanced Measurement Models</a>
+    </div><!--/div.accordion-header-->
 
   </div><!--/div.accordion-item-->
 </div><!--/div.accordion-flush-->
@@ -363,7 +390,7 @@
   <div class="col-xl-8 col-lg-12 primary-content">
     <nav class="lesson-content mx-md-4" aria-label="Previous and Next Chapter"><!-- content for small screens --><div class="d-block d-sm-block d-md-none">
         <a class="chapter-link" href="../instructor/midterms.html"><i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>Previous</a>
-        <a class="chapter-link float-end" href="../instructor/index.html">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
+        <a class="chapter-link float-end" href="../instructor/factor-analysis.html">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
       </div>
       <!-- content for large screens -->
       <div class="d-none d-sm-none d-md-block">
@@ -371,14 +398,14 @@
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>
           Previous: Midterms
         </a>
-        <a class="chapter-link float-end" href="../instructor/index.html" rel="next">
-          Home
+        <a class="chapter-link float-end" href="../instructor/factor-analysis.html" rel="next">
+          Next: Factor Analysis -...
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i>
         </a>
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>t-Test</h1>
-        <p>Last updated on 2025-05-20 |
+        <p>Last updated on 2025-05-21 |
 
         <a href="https://github.com/SLesche/r-for-empra/edit/main/episodes/t-test.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -421,21 +448,117 @@ one-sample t-test.</li>
 </div>
 </div>
 </div>
-<section><h2 class="section-heading" id="the-t-test">The t-test<a class="anchor" aria-label="anchor" href="#the-t-test"></a></h2>
-<hr class="half-width"><div id="challenge-1-can-you-do-it" class="callout discussion">
+<section><h2 class="section-heading" id="inferential-statistics">Inferential statistics<a class="anchor" aria-label="anchor" href="#inferential-statistics"></a></h2>
+<hr class="half-width"><p>So far, we have not “tested” anything. We have only described values
+and visualized distributions. We have stayed in the cozy realm of
+<em>descriptive statistics</em>. With descriptive statistics, we can
+describe data, we can look at a graph and say “this bar is higher than
+the other one”. Importantly, these conclusions are only truly valid for
+the present data! Meaning that we cannot generalize our results into
+other data, other samples, and more generally <em>the population</em>.
+Today, we will venture out into the different, scary world of
+<em>inferential statistics</em> that aims to address this problem.</p>
+<p>Importantly, generalizing the results to a population is most often
+the goal of (psychological) research. Whatever a current sample does is
+irrelevant, we want to know whether the effect, the correlation, or the
+factor structure is present for the whole population from which we
+randomly selected some participants for our study.</p>
+<p>This can be addressed by inferential (frequentist) statistics, asking
+the key question: “is this finding <em>significant</em>?”. Or, is my
+finding of an effect in a sample likely to be the result from a true
+effect in a population (significant) or just due to random sampling
+error.</p>
+<p>Inferential statistics encompasses a large number of methods:
+t-tests, ANOVAs, linear regression only to name a few. For now, we will
+start out with the t-test which is useful when investigating mean
+values: Is the mean value of one group significantly higher than another
+group? Is my mean value significantly different from 0? This allows us
+to go beyond</p>
+<p>Somehting about I will not go into details of statistical tests
+(recommendation).</p>
+<p>Just broadly, we assume some distribution of the key statistic of
+interest (the test statistic) in the population given a null hypothesis
+(mean is 0, means are identical). This test statistic is… Then, we check
+our empirical test statistic. We can place this into the distribution to
+see how likely we are to observe this, given our assumptions in the
+test. In psychology we say that if it is less than 5% likely, we reject
+our assumptions of a null hypothesis.</p>
+<p>This is true for all frequentists tests, they make some assumptions
+of a null hypothesis and the p-value indicates how likely we are to
+observe our current data given this null hypothesis. If we are less than
+5% likely, we say that the null hypothesis is not true and reject
+it.</p>
+<p>For example, something with mean value in dass data. Show some group
+differences based on education. Then illustrate the basic logic of the
+t-test.</p>
+<p>show the basic t-test formula in r</p>
+<p>then discuss assumptions of the t-test- - independence, random
+sampling, (approx) normal dist, variance - talk about robustness</p>
+<p>show how to check the assumptions of the t-test. When is that an
+issue, when not?</p>
+<p>There are different types of t-tests. Show what each of them are and
+show example uses in the dass data (maybe with half-splits in DASS?,
+check against two groups and criterium).</p>
+<p>Now show how to interpret the t-test. Show and discuss the summary
+output. Explain how to report it in text and go over effect sizes!!</p>
+<p>Show how to compute cohens d and why this is important.</p>
+<p>Give personal recommendations. Focus on effect sizes, report
+p-values. Same when reading some paper. p-value is necessary, but it is
+mainly a function of sample size. So take with caution. Say something
+about no evidence for null. Something with BAYES</p>
+<p>Now what if multiple groups? Outlook for next time: ANOVA</p>
+<div id="challenge-1" class="callout discussion">
 <div class="callout-square">
 <i class="callout-icon" data-feather="message-circle"></i>
 </div>
-<div id="challenge-1-can-you-do-it" class="callout-inner">
-<h3 class="callout-title">Challenge 1: Can you do it?</h3>
+<div id="challenge-1" class="callout-inner">
+<h3 class="callout-title">Challenge 1</h3>
 <div class="callout-content">
-<p>What is the output of this command?</p>
-<div class="codewrapper sourceCode" id="cb1">
-<h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
-</h3>
-<pre class="downlit sourceCode r">
-<code class="sourceCode R"><span><span class="fu">paste</span><span class="op">(</span><span class="st">"This"</span>, <span class="st">"new"</span>, <span class="st">"lesson"</span>, <span class="st">"looks"</span>, <span class="st">"good"</span><span class="op">)</span></span></code></pre>
+<p>Read in data and compute mean</p>
 </div>
+</div>
+</div>
+<div id="challenge-2" class="callout discussion">
+<div class="callout-square">
+<i class="callout-icon" data-feather="message-circle"></i>
+</div>
+<div id="challenge-2" class="callout-inner">
+<h3 class="callout-title">Challenge 2</h3>
+<div class="callout-content">
+<p>Check the assumptions of a t tesrt</p>
+</div>
+</div>
+</div>
+<div id="challenge-3" class="callout discussion">
+<div class="callout-square">
+<i class="callout-icon" data-feather="message-circle"></i>
+</div>
+<div id="challenge-3" class="callout-inner">
+<h3 class="callout-title">Challenge 3</h3>
+<div class="callout-content">
+<p>compute several t-tests, one-sample and independent samples</p>
+</div>
+</div>
+</div>
+<div id="challenge-4" class="callout discussion">
+<div class="callout-square">
+<i class="callout-icon" data-feather="message-circle"></i>
+</div>
+<div id="challenge-4" class="callout-inner">
+<h3 class="callout-title">Challenge 4</h3>
+<div class="callout-content">
+<p>compute t.test with different vectors and t-test using formula</p>
+</div>
+</div>
+</div>
+<div id="challenge-5" class="callout discussion">
+<div class="callout-square">
+<i class="callout-icon" data-feather="message-circle"></i>
+</div>
+<div id="challenge-5" class="callout-inner">
+<h3 class="callout-title">Challenge 5</h3>
+<div class="callout-content">
+<p>write a report of a t-test with effect size aswell.</p>
 </div>
 </div>
 </div>
@@ -457,7 +580,7 @@ any links that you are not going to use.
 </section></div> <!-- / div.lesson-content -->
     </main><!-- / main#main-content.main-content --><nav class="bottom-pagination mx-md-4" aria-label="Previous and Next Chapter"><div class="d-block d-sm-block d-md-none">
         <a class="chapter-link" href="../instructor/midterms.html"><i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>Previous</a>
-        <a class="chapter-link float-end" href="../instructor/index.html">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
+        <a class="chapter-link float-end" href="../instructor/factor-analysis.html">Next<i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i></a>
       </div>
       <!-- content for large screens -->
       <div class="d-none d-sm-none d-md-block">
@@ -465,8 +588,8 @@ any links that you are not going to use.
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-left"></i>
           Previous: Midterms
         </a>
-        <a class="chapter-link float-end" href="../instructor/index.html" rel="next">
-          Home
+        <a class="chapter-link float-end" href="../instructor/factor-analysis.html" rel="next">
+          Next: Factor Analysis -...
           <i aria-hidden="true" class="small-arrow" data-feather="arrow-right"></i>
         </a>
       </div>
@@ -511,9 +634,9 @@ any links that you are not going to use.
   "creativeWorkStatus": "active",
   "url": "https://SLesche.github.io/r-for-empra/instructor/t-test.html",
   "identifier": "https://SLesche.github.io/r-for-empra/instructor/t-test.html",
-  "dateCreated": "2025-05-20",
-  "dateModified": "2025-05-20",
-  "datePublished": "2025-05-20"
+  "dateCreated": "2025-05-21",
+  "dateModified": "2025-05-21",
+  "datePublished": "2025-05-21"
 }
 
   </script><script>
