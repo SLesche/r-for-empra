@@ -133,34 +133,67 @@ The RMSEA (Root Mean Squared Error Approximation) is an indicator of misfit that
 
 It is customary to report all three of these measures when reporting the results of a CFA. Similarly, you should also interpret both the CFI and RMSEA, as bad fits in both statistics can indicate issues in the model specification. The above model would be reported as follows. 
 
-The model with three correlated factors showed acceptable fit to the data $\chi^2(816) = 107309.08, p < 0.001, CFI = 0.90, RMSEA = 0.06, 90% CI = [0.06; 0.06]$.
+The model with three correlated factors showed acceptable fit to the data $\chi^2(816) = 107309.08, p < 0.001, CFI = 0.90, RMSEA = 0.06$, 95% CI = $[0.06; 0.06]$.
 
-note that for model comparison, sometimes the information criteria are used (AIC/BIC). More on this later RMSEA can also be used.
+In a future section, we will explore how you can compare models and select models based on these fit statistics. Here, it is important to focus on fit statistics that incorporate the number of free parameters like the RMSEA. Otherwise, more complex models will always outperform less complex models. 
+
+In addition to the statistics presented above, model comparison is often based on information criteria, like the AIC (Akaike Information Criterion) or the BIC (Bayesian Information Criterion). Here, lower values indicate better models. These information criteria also penalize complexity and are thus well suited for model comparison. More on this in the later section.
 
 ## Loadings on latent variables
+The next section in the model summary output display information on the latent variables. Specifically how highly the manifest variables "load" onto the latent variables they were assigned to. Here, loadings > 0.6 are considered high and at least one of the manifest variables should load highly on the latent variables. If all loadings are low, this might indicate that the factor you are trying to define does not really exist, as there is little relation between the manifest variables specified to load on this factor.
 
-Standardized vs. no
+Importantly, the output shows two columns with loadings. The first column "Estimate" shows unstandardized loadings (like regression weights in a linear model). The last two columns "std.lv" and "std.all" show two different standardization techniques of the loadings. For now, focus on the "std.all" column. This can be interpreted in similar fashion as the factor loadings in the EFA. 
 
-What loading is "good"
-
-Same thing with marker items
+In our example, these loadings are looking very good, especially for the depression scale. But for all scales, almost all items show standardized loadings of > 0.6, indicating that they reflect the underlying factor well.
 
 ::: callout
 ## Key Difference between EFA and CFA
 
-There is one fundamental difference between a CFA and an 
+These loadings highlight a key difference between CFA and a factor analysis with a fixed number of factors as conducted following an EFA.
 
-Key difference between CFA and EFA are item loadings. CFA only allows items to load on one factor, EFA on all
+In the EFA case, item *cross-loadings* are allowed. An item can load onto all factors. This is not the case in theory (unless explicitly stated). Here, the items only load onto the factor as specified in the model syntax. This is also why we obtain different loadings and correlations between factors in this CFA example compared to the three-factor FA from the previous episode.
 :::
 
 ## Correlations between latent variables
-Notice how this is different than in the EFA!
-Depending on your theory, you might be looking at different things
+The next section in the output informs us about the covariances between the latent variables. The "Estimate" column again shows the unstandardized solution while the "std.all" column reflects the standardized solution. The "std.all" column can be interpreted like a correlation (only on a latent level).
+
+Here, we can see high correlations > 0.7 between our three factors. Anxiety and stress even correlate to 0.87! Maybe there is one underlying "g" factor of depression in our data after all? We will investigate this further in the section regarding model comparison. 
 
 ## Variances
-This may be useful in some cases if you check whether there is a certain latent factor. For example, when testing for another overarching factor
+The last section of the summary output displays the variances of the errors of manifest variables and the variance of the latent variables. Here, you should make sure that all values in "Estimate" are positive and that the variance of the latent variables differs significantly from 0, the results for this test are printed in "P(>|z|)". 
+
+For CFA this section is not that relevant and plays a larger role in other SEM models.
 
 ## Model Comparison
+The last thing we will learn in this episode is how to leverage the fit statistics and other model information to compare different models. For example, remember that the EFA showed that the first factor had an extremely large eigenvalue, indicating that one factor already explained a substantial amount of variance.
+
+A skeptic of the DASS might argue that it does not measure three distinct scales after all, but rather one unifying "I'm doing bad" construct. Therefore, this skeptic might generate a competing model of the DASS, with only one factor on which all items are loading.
+
+Let's first test the fit statistics of this model and then compare the two approaches.
+
+```{r}
+model_cfa_1fac <- c(
+  "
+  # Model Syntax G Factor Model DASS
+  
+  # Define only one general factor
+  g_dass =~ Q3A + Q5A + Q10A + Q13A + Q16A + Q17A + Q21A + Q24A + Q26A + Q31A + Q34A + Q37A + Q38A + Q42A +Q2A + Q4A + Q7A + Q9A + Q15A + Q19A + Q20A + Q23A + Q25A + Q28A + Q30A + Q36A + Q40A + Q41A + Q1A + Q6A + Q8A + Q11A + Q12A + Q14A + Q18A + Q22A + Q27A + Q29A + Q32A + Q33A + Q35A + Q39A
+  "
+)
+
+fit_cfa_1fac <- cfa(model_cfa_1fac, data = fa_data)
+
+summary(fit_cfa_1fac, fit.measures = TRUE, standardize = TRUE)
+```
+The one factor model showed a poor fit to the data $\chi^2(819) = 235304.68, p < 0.001, CFI = 0.77, RMSEA = 0.09$, 95% CI = $[0.09; 0.09]$.
+
+This already shows that the idea of only one unifying factor in the DASS does not reflect the data well. We can formally test the difference in the $\chi^2$ statistic using `anova()`, not to be confused with the ANOVA.
+
+```{r}
+anova(fit_cfa_1fac, fit_cfa_3facs)
+```
+This output displays that the three factor model shows better information criteria (AIC and BIC) and that it also has lower (better) $\chi^2$ statistics, significantly so. Coupled with an improved RMSEA for the three factor model, this evidence strongly suggests that the three factor model is better suited to explain the DASS data than the one factor model.
+
 
 ::: challenge 
 
@@ -174,23 +207,22 @@ Read in data and answer the question: do we have a hypothesis as to how the stru
 
 ## Challenge 2
 
-Run an EFA, how many factors would you extract using the Keiser criterion, how many using the scree-plot
-
+Run a CFA with three factors
 :::
 
 ::: challenge 
 
 ## Challenge 3
 
-Run a CFA using a one-factor model for all DASS related items. How well does it fit
-
+Interpret some results
 :::
 
 ::: challenge 
 
 ## Challenge 4
 
-Run a second CFA using a three factor model with correlated factors. How well does it fit?
+Run a cfa with one factor, interpret some results
+
 :::
 
 ::: challenge 
