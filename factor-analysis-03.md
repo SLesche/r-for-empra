@@ -32,6 +32,55 @@ Hieraschical
 Bifactor
 - example uses and specifcations
 
+
+``` r
+model_cfa_bifac <- c(
+  "
+  # Model Syntax
+  
+  # =~ is like in linear regression
+  # left hand is latent factor, right hand manifest variables contributing
+  
+  # Define which items load on which factor
+  depression =~ Q3A + Q5A + Q10A + Q13A + Q16A + Q17A + Q21A + Q24A + Q26A + Q31A + Q34A + Q37A + Q38A + Q42A
+  
+  anxiety =~ Q2A + Q4A + Q7A + Q9A + Q15A + Q19A + Q20A + Q23A + Q25A + Q28A + Q30A + Q36A + Q40A + Q41A
+  
+  stress =~ Q1A + Q6A + Q8A + Q11A + Q12A + Q14A + Q18A + Q22A + Q27A + Q29A + Q32A + Q33A + Q35A + Q39A
+  
+  g_dass =~ Q3A + Q5A + Q10A + Q13A + Q16A + Q17A + Q21A + Q24A + Q26A + Q31A + Q34A + Q37A + Q38A + Q42A +Q2A + Q4A + Q7A + Q9A + Q15A + Q19A + Q20A + Q23A + Q25A + Q28A + Q30A + Q36A + Q40A + Q41A + Q1A + Q6A + Q8A + Q11A + Q12A + Q14A + Q18A + Q22A + Q27A + Q29A + Q32A + Q33A + Q35A + Q39A
+  
+  # Define correlations between factors using ~~
+  depression ~~ anxiety
+  depression ~~ stress
+  anxiety ~~ stress
+  
+  g_dass ~~ 0*depression
+  g_dass ~~ 0*stress
+  g_dass ~~ 0*anxiety
+  "
+)
+```
+
+
+``` r
+fit_cfa_bifac <- cfa(model_cfa_bifac, data = fa_data)
+```
+
+``` error
+Error in cfa(model_cfa_bifac, data = fa_data): could not find function "cfa"
+```
+
+``` r
+summary(fit_cfa_bifac, fit.measures = TRUE, standardized = TRUE)
+```
+
+``` error
+Error: object 'fit_cfa_bifac' not found
+```
+
+
+
 Declaring a winner for our DASS data
 
 Important note, do not confuse confirmatory with exploratory research!
