@@ -83,7 +83,7 @@ Let's start by computing the correlation matrix using `cor()`.
 ```{r}
 corr_mat <- cor(fa_data, use = "pairwise.complete.obs")
 
-head(corr_mat)
+# head(corr_mat)
 ```
 
 Now, we can visualize this using the package `ggcorrplot`.
@@ -120,24 +120,55 @@ In this case, 3 factors exceed eigenvalues of 1 and should thus be extracted (wh
 
 Another way of extracting the number of factors is by investigating the shape of the Scree plot directly. Here, we can see that the first factor has by far the largest value and thus already explains substantial variance. We can also see that all the other factors explain roughly the same amount of variance, with a possible exception of number 2 and 3. But certainly after the third factor, the amount of variance is low and decreases linearly.
 
-In this method, we are looking to identify the "bend" in the eigenvalue progression after which there is a sudden drop off in the variance explained. In this case, there is a strong argument that this occurs right after the first factor. The Scree plot would thus hint at only extracting one factor.
+In this method, we are looking to identify the "elbow" in the eigenvalue progression after which there is a sudden drop off in the variance explained. In this case, there is a strong argument that this occurs right after the first factor. The Scree plot would thus hint at only extracting one factor.
 
-It is art, and also why you should always report the eigenvalues (at least top 10)
-
-Screeplot and Factor selection
+However, be cautious of relying on a single criterion to evaluate the number of factors. Kaisers criterion may be too liberal and the Scree plot may not be informative enough to warrant a certain guess. In the end, you should also select the number of factors that make the most sense psycho*logically* and allow you to interpret the findings. You can not only rely on the eigenvalues to make this choice, but should also investigate the factor loadings of the items for a given number of factors.
 
 ## Investigating Factor Loadings
-What to do after selection, and how to make sense of factor structure
+Factor loadings can be determined for any given number of factors. They tell you how strongly the factor overall is related to a specific item. The higher, the better. The item with the highest loading on a factor is called the "marker item" and may inform you (in conjunction with the other items loading highly) as to what construct this factor actually reflects.
 
-Factor loadings, investigate them for a select number
+In principle, you are looking for *simple structure*. Items should load highly on one and only one factor while showing low loadings (< 0.3) on the other factors. If this is not the case, attributing an item to a single factor might not be warranted.
 
-How to select the optimal number of factors?
-- Different criteria and their uses
-- Keiser criterion with everything > 1 is okay
-- Scree plot "looking for the bend in eigenvalues", the scree
-- Sometimes it is also about psycho*logical* selection. Which number of factors makes the most sense
+In order to obtain the factor loadings, we need to make two important choices. The first concerns the number of factors we want to investigate. For this example, let's look at both one and three factors and investigate their structure.
+The second decision concerns the correlation between factors themselves. If you have strong reason to believe that the factors should be uncorrelated, or want to restrict the factors to be uncorrelated, i.e. independent of each other, you need to apply an *orthoghonal* rotation in the factor analyis. If you believe that the factors may themselves be related, you should apply an *oblique* rotation, which still allows for correlations between factors.
+In the case of only one extracted factor, this does not make a difference. In our specific example with three extracted factors, depression, anxiety, and stress may indeed be related. So we will proceed with the oblique rotation method called *oblimin*.
 
-Key difference between CFA and EFA are item loadings. CFA only allows items to load on one factor, EFA on all
+Let's investigate the factor loadings for a three factor oblique solution.
+
+```{r}
+fa_solution_3 <- psych::fa(fa_data, nfactors = 3, rotate = "oblimin")
+print(fa_solution_3)
+```
+
+Let's take a closer look at the factor loadings:
+```{r}
+print(fa_solution_3$loadings, cutoff = 0.3)
+```
+
+Here, we can see that some items load highly one one of the three factors and do not load on any other factor (like 1-7). However, some items load on two factors (item 9, 12 etc). Here, we may want to investigate the items themselves to figure out which items load highly on which factor and why some of these items cannot be attributed to a single factor.
+
+The marker items for the factors seem to be item 38 for factor 1, item 11 for factor 2, and item 7 for factor three.
+In the codebook, we can look up the item text itself.
+
+- Item 38: "I felt that life was meaningless."
+- Item 11: "I found myself getting upset rather easily."
+- Item 7: "I had a feeling of shakiness (eg, legs going to give way)."
+
+Now, one might see the factors Depression (meaningless life), Anxiety (getting upset) and Stress (shakiness) in these factors. 
+
+We can visualize the factor structure using `fa.diagram()`.
+
+```{r}
+fa.diagram(fa_solution_3, simple = TRUE, cut = 0.3, digits = 2)
+```
+
+
+Lastly, we always have to investigate the correlations between the factors themselves. The plot already reveals substantial correlations of the three factors between 0.6 and 0.7. 
+
+```{r}
+fa_solution_3$score.cor
+```
+This indicates that there might be a higher order factor influencing all three factors. In the next episode, we can define a model testing whether this is the case or not.
 
 ::: challenge 
 
@@ -151,7 +182,7 @@ Read in data and answer the question: do we have a hypothesis as to how the stru
 
 ## Challenge 2
 
-Run an EFA, how many factors would you extract using the Keiser criterion, how many using the scree-plot
+Run an EFA, how many factors would you extract using the Kaiser criterion, how many using the scree-plot
 
 :::
 
@@ -168,11 +199,6 @@ Choose three factors and investigate the item loadings. Do we have simple struct
 ## Challenge 4
 
 Choose one factor and investigate the item loadings
-:::
-
-::: challenge 
-
-## Challenge 5
 
 :::
 
