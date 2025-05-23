@@ -22,9 +22,13 @@ exercises: 15
 
 ## Measurement Models
 
+So far, we have looked at only 1-factor and correlated multiple factor models in CFAs. This lesson, we will extend our approaches 
+
+EFA in more factors, partitioning variance 
+
 Something about MMS in general
 
-Nested models
+This is the principle of SEMs (something for another lesson)
 
 Hieraschical
 - exmaple uses and specifications
@@ -80,12 +84,13 @@ Error: object 'fit_cfa_bifac' not found
 ```
 
 
+Nested models, and comparisons of models
 
 Declaring a winner for our DASS data
 
 Important note, do not confuse confirmatory with exploratory research!
 
-
+Outlook, SEM? Correlation of anxiety with big 5 estimates?
 ::: challenge 
 
 ## Challenge 1
