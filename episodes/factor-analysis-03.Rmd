@@ -17,33 +17,23 @@ exercises: 15
 - Understand the difference between hierarchical, non-hierarchical and bifactor models
 - Learn how to specify a hierarchical model
 - Learn how to specify a bifactor model
-- Learn how to evaluate hierachical and bifactor models
+- Learn how to evaluate hierarchical and bifactor models
 ::::::::::::::::::::::::::::::::::::::::::::::::
 
 ## Measurement Models
 
-So far, we have looked at only 1-factor and correlated multiple factor models in CFAs. This lesson, we will extend our approaches 
+So far, we have looked at only 1-factor and correlated multiple factor models in CFAs. This lesson, we will extend this approach to more general models. For example, CFA models can not only incorporate a number of factors correlating with each other, but also support a kind of "second CFA" on the levels of factors. If you have multiple factors that correlate highly with each other, they might themselves have a higher order factor that can account for their covariation.
 
-EFA in more factors, partitioning variance 
+This is called a "hierarchical" model. We can simply extend our three factor model as follows.
 
-Something about MMS in general
-
-This is the principle of SEMs (something for another lesson)
-
-Hieraschical
-- exmaple uses and specifications
-
-Bifactor
-- example uses and specifcations
+## Hierarchical Models
 
 ```{r}
-model_cfa_bifac <- c(
+library(lavaan)
+
+model_cfa_hierarch <- c(
   "
   # Model Syntax
-  
-  # =~ is like in linear regression
-  # left hand is latent factor, right hand manifest variables contributing
-  
   # Define which items load on which factor
   depression =~ Q3A + Q5A + Q10A + Q13A + Q16A + Q17A + Q21A + Q24A + Q26A + Q31A + Q34A + Q37A + Q38A + Q42A
   
@@ -51,12 +41,70 @@ model_cfa_bifac <- c(
   
   stress =~ Q1A + Q6A + Q8A + Q11A + Q12A + Q14A + Q18A + Q22A + Q27A + Q29A + Q32A + Q33A + Q35A + Q39A
   
+  # Now, not correlation between factors, but hierarchy
+  high_level_fac =~ depression + anxiety + stress
+  "
+)
+```
+
+Let's load the data again and investigate this model:
+
+```{r}
+library(dplyr)
+
+dass_data <- read.csv("data/kaggle_dass/data.csv")
+
+fa_data <- dass_data %>% 
+  filter(testelapse < 600) %>% 
+  select(starts_with("Q")& ends_with("A"))
+
+fit_cfa_hierarch <- cfa(
+  model = model_cfa_hierarch, 
+  data = fa_data,
+  )
+
+summary(fit_cfa_hierarch, fit.measures = TRUE, standardized = TRUE)
+```
+Again, let's look at the fit indices first. The hierarchical model with three factors showed acceptable fit to the data $\chi^2(816) = 107309.08, p < 0.001, CFI = 0.90, RMSEA = 0.06$, 95% CI = $[0.06; 0.06]$. Similarly, the loadings on the first-order factors (depression, anxiety, stress) also look good and we do not observe any issues in the variance.
+
+If you have a good memory, you might notice that the fit statistics are identical to those in the correlated 3-factors model. This is because the higher order factor in this case only restructures the bivariate correlations into factor loadings. However, this is not true for all number of factors. In models with more than 3 first-order factors, establishing a second-order factor loading on all of them introduces more constraints than allowing the factors to correlate freely.
+
+```{r}
+# Semplot here?
+```
+
+The hierarchical model allows us to investigate two very important things. Firstly, we can investigate the presence of a higher order factor. This is only the case if 1) the model fit is acceptable, 2) the factor loadings on this second-order factor are high enough and 3) the variance of the second-order factor is significantly different from 0. In this case, all three things are true, supporting the conclusion that a model with a higher order factor that contributes variance to all lower factors fits the data well.
+
+Secondly, they are extremely useful in Structural Equation Models (SEM), as this higher-order factor can then itself be correlated to other outcomes, and allows researchers to investigate how much the general factor is associated with other items.
+
+
+## Bi-Factor Models
+
+In this hierarchical case, we assume that the higher-order factor captures the shared variance of all first-order factors. So the higher-order factor only contributes variance to the observed variables *indirectly* through the first-order factors (depression etc.). 
+
+Bi-factor models change this behavior significantly. They do not impose a hierarchical structure but rather partition the variance in the observed variables into a general factor and specific factors. In the case of the DASS, a bifactor model would assert that each item is mostly determined by a general "I'm doing bad factor" and depending on the item context, depression, anxiety, or stress specifically contribute to the response on the specific item. 
+
+In contrast to a hierarchical model, this g-factor is directly influencing responses in the items and is *not related* to the specific factors. These models are often employed when researchers have good reason to believe that there are some specific factors unrelated to general response, as for example when using multiple tests measuring the same construct. One might introduce a general factor for construct and several specific factors capturing measurement specific variance (e.g. g factor for Openness, specific factors for self-rating vs. other-rating).
+
+The model syntax displays this direct loading and the uncorrelated latent variables:
+```{r}
+model_cfa_bifac <- c(
+  "
+  # Model Syntax
+  # Define which items load on which factor
+  depression =~ Q3A + Q5A + Q10A + Q13A + Q16A + Q17A + Q21A + Q24A + Q26A + Q31A + Q34A + Q37A + Q38A + Q42A
+  
+  anxiety =~ Q2A + Q4A + Q7A + Q9A + Q15A + Q19A + Q20A + Q23A + Q25A + Q28A + Q30A + Q36A + Q40A + Q41A
+  
+  stress =~ Q1A + Q6A + Q8A + Q11A + Q12A + Q14A + Q18A + Q22A + Q27A + Q29A + Q32A + Q33A + Q35A + Q39A
+  
+  # Direct loading of the items on the general factor
   g_dass =~ Q3A + Q5A + Q10A + Q13A + Q16A + Q17A + Q21A + Q24A + Q26A + Q31A + Q34A + Q37A + Q38A + Q42A +Q2A + Q4A + Q7A + Q9A + Q15A + Q19A + Q20A + Q23A + Q25A + Q28A + Q30A + Q36A + Q40A + Q41A + Q1A + Q6A + Q8A + Q11A + Q12A + Q14A + Q18A + Q22A + Q27A + Q29A + Q32A + Q33A + Q35A + Q39A
   
   # Define correlations between factors using ~~
-  depression ~~ anxiety
-  depression ~~ stress
-  anxiety ~~ stress
+  depression ~~ 0*anxiety
+  depression ~~ 0*stress
+  anxiety ~~ 0*stress
   
   g_dass ~~ 0*depression
   g_dass ~~ 0*stress
@@ -71,14 +119,23 @@ fit_cfa_bifac <- cfa(model_cfa_bifac, data = fa_data)
 summary(fit_cfa_bifac, fit.measures = TRUE, standardized = TRUE)
 ```
 
+This model shows good fit to the data $\chi^2(777) = 72120.79, p < 0.001, CFI = 0.93, RMSEA = 0.05$, 95% CI = $[0.05; 0.05]$. We can additionally observe no issues in the loadings on the general factor. For the specific factors, there are items that do not seem to measure anything factor-specific in addition to the general factor, as they show loadings near zero on their specific factor. From this model, we 
 
+
+## Model Comparison - Nested models
 Nested models, and comparisons of models
 
 Declaring a winner for our DASS data
 
+::: callout
+## Important - CFA vs. EFA
 Important note, do not confuse confirmatory with exploratory research!
 
+:::
+
+## A look to SEM
 Outlook, SEM? Correlation of anxiety with big 5 estimates?
+
 ::: challenge 
 
 ## Challenge 1
