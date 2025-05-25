@@ -513,13 +513,120 @@ Variances:
     g_dass            0.418    0.006   65.244    0.000    1.000    1.000
 ```
 
-This model shows good fit to the data $\chi^2(777) = 72120.79, p < 0.001, CFI = 0.93, RMSEA = 0.05$, 95% CI = $[0.05; 0.05]$. We can additionally observe no issues in the loadings on the general factor. For the specific factors, there are items that do not seem to measure anything factor-specific in addition to the general factor, as they show loadings near zero on their specific factor. From this model, we 
+This model shows good fit to the data $\chi^2(777) = 72120.79, p < 0.001, CFI = 0.93, RMSEA = 0.05$, 95% CI = $[0.05; 0.05]$. We can additionally observe no issues in the loadings on the general factor. For the specific factors, there are items that do not seem to measure anything factor-specific in addition to the general factor, as they show loadings near zero on their specific factor. 
 
+From this model, we seomthing general factor, specific is  abit low. But good fit
+
+What might this mean for DASS - general score supported. Some specific subtests might not measure their things but something else entirely
 
 ## Model Comparison - Nested models
 Nested models, and comparisons of models
 
 Declaring a winner for our DASS data
+
+
+``` r
+model_cfa_1fac <- c(
+  "
+  # Model Syntax G Factor Model DASS
+  
+  # Define only one general factor
+  g_dass =~ Q3A + Q5A + Q10A + Q13A + Q16A + Q17A + Q21A + Q24A + Q26A + Q31A + Q34A + Q37A + Q38A + Q42A +Q2A + Q4A + Q7A + Q9A + Q15A + Q19A + Q20A + Q23A + Q25A + Q28A + Q30A + Q36A + Q40A + Q41A + Q1A + Q6A + Q8A + Q11A + Q12A + Q14A + Q18A + Q22A + Q27A + Q29A + Q32A + Q33A + Q35A + Q39A
+  "
+)
+
+fit_cfa_1fac <- cfa(model_cfa_1fac, data = fa_data)
+
+model_cfa_3facs <- c(
+  "
+  # Model Syntax
+  # Define which items load on which factor
+  depression =~ Q3A + Q5A + Q10A + Q13A + Q16A + Q17A + Q21A + Q24A + Q26A + Q31A + Q34A + Q37A + Q38A + Q42A
+  
+  anxiety =~ Q2A + Q4A + Q7A + Q9A + Q15A + Q19A + Q20A + Q23A + Q25A + Q28A + Q30A + Q36A + Q40A + Q41A
+  
+  stress =~ Q1A + Q6A + Q8A + Q11A + Q12A + Q14A + Q18A + Q22A + Q27A + Q29A + Q32A + Q33A + Q35A + Q39A
+  
+  # Define correlations between factors using ~~
+  depression ~~ anxiety
+  depression ~~ stress
+  anxiety ~~ stress
+  "
+)
+fit_cfa_3facs <- cfa(
+  model = model_cfa_3facs, 
+  data = fa_data,
+  )
+```
+
+
+``` r
+fitmeasures(fit_cfa_1fac, c("df", "chisq", "pvalue", "cfi", "rmsea"))
+```
+
+``` output
+        df      chisq     pvalue        cfi      rmsea 
+   819.000 235304.681      0.000      0.774      0.088 
+```
+
+``` r
+fitmeasures(fit_cfa_3facs, c("df", "chisq", "pvalue", "cfi", "rmsea"))
+```
+
+``` output
+        df      chisq     pvalue        cfi      rmsea 
+   816.000 107309.084      0.000      0.897      0.059 
+```
+
+``` r
+fitmeasures(fit_cfa_hierarch, c("df", "chisq", "pvalue", "cfi", "rmsea"))
+```
+
+``` output
+        df      chisq     pvalue        cfi      rmsea 
+   816.000 107309.084      0.000      0.897      0.059 
+```
+
+``` r
+fitmeasures(fit_cfa_bifac, c("df", "chisq", "pvalue", "cfi", "rmsea"))
+```
+
+``` output
+       df     chisq    pvalue       cfi     rmsea 
+  777.000 72120.789     0.000     0.931     0.050 
+```
+
+Something about the fit-stats
+
+
+``` r
+anova(fit_cfa_1fac, fit_cfa_3facs, fit_cfa_hierarch, fit_cfa_bifac)
+```
+
+``` warning
+Warning: lavaan->lavTestLRT():  
+   some models have the same degrees of freedom
+```
+
+``` output
+
+Chi-Squared Difference Test
+
+                  Df     AIC     BIC  Chisq Chisq diff   RMSEA Df diff
+fit_cfa_bifac    777 3679384 3680458  72121                           
+fit_cfa_3facs    816 3714494 3715236 107309      35188 0.15556      39
+fit_cfa_hierarch 816 3714494 3715236 107309          0 0.00000       0
+fit_cfa_1fac     819 3842484 3843200 235305     127996 1.07032       3
+                 Pr(>Chisq)    
+fit_cfa_bifac                  
+fit_cfa_3facs     < 2.2e-16 ***
+fit_cfa_hierarch               
+fit_cfa_1fac      < 2.2e-16 ***
+---
+Signif. codes:  0 '***' 0.001 '**' 0.01 '*' 0.05 '.' 0.1 ' ' 1
+```
+
+
 
 ::: callout
 ## Important - CFA vs. EFA
