@@ -121,14 +121,13 @@ summary(fit_cfa_bifac, fit.measures = TRUE, standardized = TRUE)
 
 This model shows good fit to the data $\chi^2(777) = 72120.79, p < 0.001, CFI = 0.93, RMSEA = 0.05$, 95% CI = $[0.05; 0.05]$. We can additionally observe no issues in the loadings on the general factor. For the specific factors, there are items that do not seem to measure anything factor-specific in addition to the general factor, as they show loadings near zero on their specific factor. 
 
-From this model, we seomthing general factor, specific is  abit low. But good fit
+From this model, we can learn two things. First, a general factor seems to be well supported by the data. Indicating that one could take all the items of the DASS scale and compute one general "distress" score that can be meaningfully interpreted. Second, there remains some specific variance in the items attributable to each scale. Together with the findings from the 3 factor model, this supports the interpretation that the DASS measures general distress and a small specific contribution of stress, anxiety and depression. However, some of the items load considerably more on general distress than on the specific factors.
 
-What might this mean for DASS - general score supported. Some specific subtests might not measure their things but something else entirely
 
 ## Model Comparison - Nested models
-Nested models, and comparisons of models
+Lets formally compare the four models we tested here to declare a "winner", the model that fits our present data best. To do this, we will investigate the fit index RMSEA, the information criteria and conduct a chi-square differences test. The model with the best RMSEA and AIC/BIC and acceptable CFI will be crowned our winner.
 
-Declaring a winner for our DASS data
+Let's recompute the one-factor and three-factor model.
 
 ```{r}
 model_cfa_1fac <- c(
@@ -164,67 +163,68 @@ fit_cfa_3facs <- cfa(
   )
 ```
 
+Now, lets look at the fit indices.
 ```{r}
-fitmeasures(fit_cfa_1fac, c("df", "chisq", "pvalue", "cfi", "rmsea"))
-fitmeasures(fit_cfa_3facs, c("df", "chisq", "pvalue", "cfi", "rmsea"))
-fitmeasures(fit_cfa_hierarch, c("df", "chisq", "pvalue", "cfi", "rmsea"))
-fitmeasures(fit_cfa_bifac, c("df", "chisq", "pvalue", "cfi", "rmsea"))
+fit_results <- data.frame(
+  c("1fac", "3fac", "hierarch", "bifac")
+)
+
+fit_results[, 2:6] <- 0
+
+colnames(fit_results) <- c("model", "df", "chisq", "pvalue", "cfi", "rmsea")
+fit_results[1, 2:6] <- fitmeasures(fit_cfa_1fac, c("df", "chisq", "pvalue", "cfi", "rmsea"))
+fit_results[2, 2:6] <- fitmeasures(fit_cfa_3facs, c("df", "chisq", "pvalue", "cfi", "rmsea"))
+fit_results[3, 2:6] <- fitmeasures(fit_cfa_hierarch, c("df", "chisq", "pvalue", "cfi", "rmsea"))
+fit_results[4, 2:6] <- fitmeasures(fit_cfa_bifac, c("df", "chisq", "pvalue", "cfi", "rmsea"))
+
+fit_results
 ```
 
-Something about the fit-stats
+In this comparison, the bifactor model clearly winds out. It shows the lowest RMSEA despite having more free parameters and shows good CFI. Using `anova()`, we can formally test this.
 
 ```{r}
 anova(fit_cfa_1fac, fit_cfa_3facs, fit_cfa_hierarch, fit_cfa_bifac)
 ```
 
-
-
 ::: callout
 ## Important - CFA vs. EFA
-Important note, do not confuse confirmatory with exploratory research!
+Important note, do not confuse confirmatory with exploratory research! You cannot use the same data and first run an EFA, then define some models and run a CFA to confirm your "best" model. It should be clearly stated then that this is exploratory research only. True model difference tests to confirm hypothesis can only be conducted if these hypothesis allow specification of the model *before* the data is seen!
 
 :::
 
 ## A look to SEM
-Outlook, SEM? Correlation of anxiety with big 5 estimates?
+What we have investigated so far is also called a *measurement model*, because it allows the specification of latent factors that are supposed to measure certain constructs. In the broader context of Structural Equation Modelling (SEM), we can extend this CFA measurement model by combining multiple measurement models and investigating the relationship between latent factors of different measurement models in a *regression model*.
 
-::: challenge 
+For example, we can use the bifactor model as a measurement model for general distress and then relate this factor to the measures of the big 5.
 
-## Challenge 1
+```{r}
+big5_distress_model <- c(
+  "
+  # Model Syntax
+  # Define which items load on which factor
+  depression =~ Q3A + Q5A + Q10A + Q13A + Q16A + Q17A + Q21A + Q24A + Q26A + Q31A + Q34A + Q37A + Q38A + Q42A
+  
+  anxiety =~ Q2A + Q4A + Q7A + Q9A + Q15A + Q19A + Q20A + Q23A + Q25A + Q28A + Q30A + Q36A + Q40A + Q41A
+  
+  stress =~ Q1A + Q6A + Q8A + Q11A + Q12A + Q14A + Q18A + Q22A + Q27A + Q29A + Q32A + Q33A + Q35A + Q39A
+  
+  # Direct loading of the items on the general factor
+  g_dass =~ Q3A + Q5A + Q10A + Q13A + Q16A + Q17A + Q21A + Q24A + Q26A + Q31A + Q34A + Q37A + Q38A + Q42A +Q2A + Q4A + Q7A + Q9A + Q15A + Q19A + Q20A + Q23A + Q25A + Q28A + Q30A + Q36A + Q40A + Q41A + Q1A + Q6A + Q8A + Q11A + Q12A + Q14A + Q18A + Q22A + Q27A + Q29A + Q32A + Q33A + Q35A + Q39A
+  
+  # Define correlations between factors using ~~
+  depression ~~ 0*anxiety
+  depression ~~ 0*stress
+  anxiety ~~ 0*stress
+  
+  g_dass ~~ 0*depression
+  g_dass ~~ 0*stress
+  g_dass ~~ 0*anxiety
+  
+  
+  "
+)
+```
 
-Read in data and answer the question: do we have a hypothesis as to how the structure should be?
-
-:::
-
-::: challenge 
-
-## Challenge 2
-
-Run a CFA with three factors
-:::
-
-::: challenge 
-
-## Challenge 3
-
-Interpret some results
-:::
-
-::: challenge 
-
-## Challenge 4
-
-Run a cfa with one factor, interpret some results
-
-:::
-
-::: challenge 
-
-## Challenge 5
-
-Compare the models from challenge 3 and challenge 4, which one fits better?
-
-:::
 
 ::::::::::::::::::::::::::::::::::::: keypoints 
 
