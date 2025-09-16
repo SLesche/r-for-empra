@@ -409,7 +409,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Factor Analysis - Introduction &amp; EFA</h1>
-        <p>Last updated on 2025-09-09 |
+        <p>Last updated on 2025-09-16 |
 
         <a href="https://github.com/SLesche/r-for-empra/edit/main/episodes/factor-analysis.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -643,6 +643,18 @@ share common influences.</p>
 <pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu">ggcorrplot</span><span class="fu">::</span><span class="fu">ggcorrplot</span><span class="op">(</span><span class="va">corr_mat</span><span class="op">)</span></span></code></pre>
 </div>
+<div class="codewrapper">
+<h3 class="code-label">WARNING<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
+</h3>
+<pre class="warning" tabindex="0"><code>Warning: `aes_string()` was deprecated in ggplot2 3.0.0.
+ℹ Please use tidy evaluation idioms with `aes()`.
+ℹ See also `vignette("ggplot2-in-packages")` for more information.
+ℹ The deprecated feature was likely used in the ggcorrplot package.
+  Please report the issue at &lt;https://github.com/kassambara/ggcorrplot/issues&gt;.
+This warning is displayed once every 8 hours.
+Call `lifecycle::last_lifecycle_warnings()` to see where this warning was
+generated.</code></pre>
+</div>
 <figure><img src="fig/factor-analysis-rendered-unnamed-chunk-4-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>In our case, we are greeted by a red square. A welcome sign for
 factor analysis as it indicates high correlations between items. This is
 even unusually uniform, other examples may show some variables
@@ -653,7 +665,7 @@ correlations before proceeding with factor analysis.</p>
 <hr class="half-width"><p>Now, we can already start running the EFA. In R, the easiest way to
 do this is using <code>fa.parallel()</code> from the package
 <code>psych</code>.</p>
-<div class="codewrapper sourceCode" id="cb10">
+<div class="codewrapper sourceCode" id="cb11">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -683,7 +695,7 @@ The larger the eigenvalue, the more variance explained by a factor.</p>
 how many factors should be retained. Kaisers criterion states that all
 factors with eigenvalues &gt; 1 should be extracted. In our case, these
 are the eigenvalues:</p>
-<div class="codewrapper sourceCode" id="cb12">
+<div class="codewrapper sourceCode" id="cb13">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -751,7 +763,7 @@ depression, anxiety, and stress may indeed be related. So we will
 proceed with the oblique rotation method called <em>oblimin</em>.</p>
 <p>Let’s investigate the factor loadings for a three factor oblique
 solution.</p>
-<div class="codewrapper sourceCode" id="cb14">
+<div class="codewrapper sourceCode" id="cb15">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -762,7 +774,7 @@ solution.</p>
 </h3>
 <pre class="output" tabindex="0"><code>Loading required namespace: GPArotation</code></pre>
 </div>
-<div class="codewrapper sourceCode" id="cb16">
+<div class="codewrapper sourceCode" id="cb17">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -854,7 +866,7 @@ Multiple R square of scores with factors          0.96 0.93 0.92
 Minimum correlation of possible factor scores     0.92 0.85 0.83</code></pre>
 </div>
 <p>Let’s take a closer look at the factor loadings:</p>
-<div class="codewrapper sourceCode" id="cb18">
+<div class="codewrapper sourceCode" id="cb19">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -931,7 +943,7 @@ way).”</li>
 (getting upset) and Stress (shakiness) in these factors.</p>
 <p>We can visualize the factor structure using
 <code>fa.diagram()</code>.</p>
-<div class="codewrapper sourceCode" id="cb20">
+<div class="codewrapper sourceCode" id="cb21">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -940,7 +952,7 @@ way).”</li>
 <figure><img src="fig/factor-analysis-rendered-unnamed-chunk-9-1.png" style="display: block; margin: auto;" class="figure mx-auto d-block"></figure><p>Lastly, we always have to investigate the correlations between the
 factors themselves. The plot already reveals substantial correlations of
 the three factors between 0.6 and 0.7.</p>
-<div class="codewrapper sourceCode" id="cb21">
+<div class="codewrapper sourceCode" id="cb22">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="downlit sourceCode r">
@@ -1081,8 +1093,8 @@ any links that you are not going to use.
   "url": "https://SLesche.github.io/r-for-empra/factor-analysis.html",
   "identifier": "https://SLesche.github.io/r-for-empra/factor-analysis.html",
   "dateCreated": "2025-05-28",
-  "dateModified": "2025-09-09",
-  "datePublished": "2025-09-09"
+  "dateModified": "2025-09-16",
+  "datePublished": "2025-09-16"
 }
 
   </script><script>

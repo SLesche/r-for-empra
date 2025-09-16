@@ -411,7 +411,7 @@
       </div>
       <hr></nav><main id="main-content" class="main-content"><div class="container lesson-content">
         <h1>Filtering data</h1>
-        <p>Last updated on 2025-09-09 |
+        <p>Last updated on 2025-09-16 |
 
         <a href="https://github.com/SLesche/r-for-empra/edit/main/episodes/filtering.Rmd" class="external-link">Edit this page <i aria-hidden="true" data-feather="edit"></i></a></p>
 
@@ -966,7 +966,8 @@ belong, we get an error:</p>
 <h3 class="code-label">ERROR<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
 </h3>
 <pre class="error" tabindex="0"><code>Error in `geom_histogram()`:
-! `mapping` must be created by `aes()`.</code></pre>
+! `mapping` must be created by `aes()`.
+✖ You've supplied a number.</code></pre>
 </div>
 <p><code>geom_histogram</code> does not expect the number of bins to be
 the first argument, but rather the mapping! Therefore, we need to
@@ -1053,6 +1054,7 @@ that is a little more informative:</p>
 </h3>
 <pre class="error" tabindex="0"><code>Error in `geom_density()` at magrittr/R/pipe.R:136:3:
 ! `mapping` must be created by `aes()`.
+✖ You've supplied a &lt;ggplot2::ggplot&gt; object.
 ℹ Did you use `%&gt;%` or `|&gt;` instead of `+`?</code></pre>
 </div>
 </div>
@@ -1173,7 +1175,7 @@ or timing)</li>
 <button class="accordion-button solution-button collapsed" type="button" data-bs-toggle="collapse" data-bs-target="#collapseSolution1" aria-expanded="false" aria-controls="collapseSolution1">
   <h4 class="accordion-header" id="headingSolution1"> Show me the solution </h4>
 </button>
-<div id="collapseSolution1" class="accordion-collapse collapse" aria-labelledby="headingSolution1" data-bs-parent="#accordionSolution1">
+<div id="collapseSolution1" class="accordion-collapse collapse" data-bs-parent="#accordionSolution1" aria-labelledby="headingSolution1">
 <div class="accordion-body">
 <div class="codewrapper sourceCode" id="cb53">
 <h3 class="code-label">R<i aria-hidden="true" data-feather="chevron-left"></i><i aria-hidden="true" data-feather="chevron-right"></i>
@@ -1284,8 +1286,8 @@ any links that you are not going to use.
   "url": "https://SLesche.github.io/r-for-empra/instructor/filtering.html",
   "identifier": "https://SLesche.github.io/r-for-empra/instructor/filtering.html",
   "dateCreated": "2025-05-28",
-  "dateModified": "2025-09-09",
-  "datePublished": "2025-09-09"
+  "dateModified": "2025-09-16",
+  "datePublished": "2025-09-16"
 }
 
   </script><script>
