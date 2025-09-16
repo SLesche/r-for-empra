@@ -434,6 +434,7 @@ valid_age_dass %>%
 ``` error
 Error in `geom_histogram()`:
 ! `mapping` must be created by `aes()`.
+✖ You've supplied a number.
 ```
 
 `geom_histogram` does not expect the number of bins to be the first argument, but rather the mapping! Therefore, we need to declare this properly:
@@ -502,6 +503,7 @@ valid_age_dass %>%
 ``` error
 Error in `geom_density()` at magrittr/R/pipe.R:136:3:
 ! `mapping` must be created by `aes()`.
+✖ You've supplied a <ggplot2::ggplot> object.
 ℹ Did you use `%>%` or `|>` instead of `+`?
 ```
 
