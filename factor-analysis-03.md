@@ -34,7 +34,7 @@ library(lavaan)
 ```
 
 ``` output
-This is lavaan 0.6-20
+This is lavaan 0.6-21
 lavaan is FREE software! Please report any bugs.
 ```
 
@@ -95,7 +95,7 @@ summary(fit_cfa_hierarch, fit.measures = TRUE, standardized = TRUE)
 ```
 
 ``` output
-lavaan 0.6-20 ended normally after 38 iterations
+lavaan 0.6-21 ended normally after 38 iterations
 
   Estimator                                         ML
   Optimization method                           NLMINB
@@ -306,7 +306,7 @@ summary(fit_cfa_bifac, fit.measures = TRUE, standardized = TRUE)
 ```
 
 ``` output
-lavaan 0.6-20 ended normally after 90 iterations
+lavaan 0.6-21 ended normally after 90 iterations
 
   Estimator                                         ML
   Optimization method                           NLMINB
